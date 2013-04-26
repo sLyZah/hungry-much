@@ -15,7 +15,7 @@ exports.find = function(req, res){
     .find(query)
     .success(function(group){
       if(group === null) {
-        res.status(400)
+        res.status(404)
         res.json({});
       } else {
         res.json(group);
