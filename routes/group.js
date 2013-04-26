@@ -47,15 +47,3 @@ exports.save = function(req, res){
 exports.delete = function(req, res){
   res.json({'msg' : 'group delete'});
 };
-
-exports.sync = function(req, res){
-  Group
-    .sync()
-    .success(function() {
-      res.json({'msg' : 'Group model synced'});
-    })
-    .error(function(error) {
-      res.status(500);
-      res.json({'err' : 'Something went wrong syncing the model', 'msg' : error});
-    })
-};
