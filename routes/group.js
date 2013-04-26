@@ -1,7 +1,30 @@
 var Group = app.get('models').Group;
 
 exports.fetch = function(req, res){
-  res.json({'msg' : 'group list'});
+  num = parseInt(req.param('num'))
+  limit = (num !== 'NaN') && num < 100 ?  num : 20;
+
+  page = parseInt(req.param('page'))
+  offset = (page !== 'NaN') ? page : 0;
+
+  order = req.param('order')
+  orderBy = (order != undefined) ? order + ' ASC' : 'id';
+
+  query = { limit : limit, offset : offset, order : orderBy }
+
+  Group
+    .findAll(query)
+    .success(function(group){
+      if(group === null) {
+        res.status(404)
+        res.json({});
+      } else {
+        res.json(group);
+      }
+    })
+    .error(function(error){
+      res.json({'err' : 'Something went wrong saving the model', 'msg' : error});
+    });
 };
 
 exports.find = function(req, res){
