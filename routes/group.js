@@ -1,4 +1,5 @@
-var Group = app.get('models').Group;
+var Group = app.get('models').Group,
+    keyHelper = require('../helpers/keys.js');
 
 exports.fetch = function(req, res){
   num = parseInt(req.param('num'))
@@ -10,10 +11,8 @@ exports.fetch = function(req, res){
   order = req.param('order')
   orderBy = (order != undefined) ? order + ' ASC' : 'id';
 
-  query = { limit : limit, offset : offset, order : orderBy }
-
   Group
-    .findAll(query)
+    .findAll({ limit : limit, offset : offset, order : orderBy })
     .success(function(group){
       if(group === null) {
         res.status(404)
@@ -50,12 +49,18 @@ exports.find = function(req, res){
 };
 
 exports.save = function(req, res){
+  name = req.param('name') != undefined ? req.param('name') : null
+  admin = req.param('admin') != undefined ? req.param('admin') : null
+
+  tresholdParam = parseInt(req.param('treshold'))
+  treshold = (tresholdParam != 'NaN') ? tresholdParam : null
+
   Group
     .build({
-      name: 'group-test',
-      admin: 'test@test.com',
-      treshold: 3,
-      key: 'ABC123'
+      name: name,
+      admin: admin,
+      treshold: treshold,
+      key: keyHelper.generate(8)
     })
     .save()
     .success(function(savedGroup) {
