@@ -6,14 +6,15 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
-  , group = require('./routes/group')
   , path = require('path')
   , Sequelize = require('sequelize');
 
 var app = express();
+GLOBAL.app = app;
 
 // all environments
 app.set('port', process.env.PORT || 3000);
+app.set('models', require('./models'));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -29,8 +30,10 @@ app.get('/', function(req, res){
 });
 //app.get('/groups', user.list);
 
+group = require('./routes/group')
 app.get('/groups', group.fetch);
-app.get('/groups/:id', group.find);
+app.get('/groups/sync', group.sync);
+app.get('/group/:id', group.find);
 app.post('/groups', group.save);
 app.del('/groups/:id', group.delete);
 
