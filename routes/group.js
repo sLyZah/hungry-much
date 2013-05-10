@@ -1,6 +1,9 @@
 var Group = app.get('models').Group,
     keyHelper = require('../helpers/keys.js');
 
+/**
+ * Find list of groups with pagination and ordering
+ */
 exports.findAll = function(req, res){
   num = parseInt(req.param('num'))
   limit = (num !== 'NaN') && num < 100 ?  num : 20;
@@ -11,8 +14,17 @@ exports.findAll = function(req, res){
   order = req.param('order')
   orderBy = (order != undefined) ? order + ' ASC' : 'id';
 
+  query = (req.param('q') != undefined) 
+    ? [ 'name LIKE ?', req.param('q') ]
+    : null
+
   Group
-    .findAll({ limit : limit, offset : offset, order : orderBy })
+    .findAll({ 
+      where : query,
+      limit : limit, 
+      offset : offset, 
+      order : orderBy 
+    })
     .success(function(group){
       if(group === null) {
         res.status(404)
@@ -26,12 +38,12 @@ exports.findAll = function(req, res){
     });
 };
 
+/**
+ * Find group by id (numeric input) or name
+ */
 exports.find = function(req, res){
   // Id to find
   query = req.param('id');
-  if(typeof query !== 'number' && isNaN(query)) {
-    query = { 'where' : { 'name' : query } }
-  }
 
   Group
     .find(query)
@@ -48,6 +60,9 @@ exports.find = function(req, res){
     });
 };
 
+/**
+ * Save group with given details
+ */
 exports.save = function(req, res){
   name = req.param('name') != undefined ? req.param('name') : null
   admin = req.param('admin') != undefined ? req.param('admin') : null
@@ -72,6 +87,9 @@ exports.save = function(req, res){
     });
 };
 
+/**
+ * Delete group by id
+ */
 exports.delete = function(req, res){
   Group
     .find(req.param('id'))

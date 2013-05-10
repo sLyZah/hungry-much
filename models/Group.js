@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     key: DataTypes.STRING
   }, {
     instanceMethods: {
-      countTasks: function() {
+      countGroups: function() {
         // how to implement this method ?
       }
     }
