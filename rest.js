@@ -31,7 +31,7 @@ app.get('/', function(req, res){
 //app.get('/groups', user.list);
 
 group = require('./routes/group')
-app.get('/groups', group.fetch);
+app.get('/groups', group.findAll);
 app.get('/groups/:id', group.find);
 app.post('/groups', group.save);
 app.del('/groups/:id', group.delete);

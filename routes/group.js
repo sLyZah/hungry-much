@@ -1,7 +1,7 @@
 var Group = app.get('models').Group,
     keyHelper = require('../helpers/keys.js');
 
-exports.fetch = function(req, res){
+exports.findAll = function(req, res){
   num = parseInt(req.param('num'))
   limit = (num !== 'NaN') && num < 100 ?  num : 20;
 
@@ -73,5 +73,26 @@ exports.save = function(req, res){
 };
 
 exports.delete = function(req, res){
-  res.json({'msg' : 'group delete'});
+  Group
+    .find(req.param('id'))
+    .success(function(group) {
+      if(group === null) {
+        res.status(404)
+        res.json({});
+      } else {
+        group
+          .destroy()
+          .success(function() {
+            res.json({});
+          })
+          .error(function(error){
+            res.status(500);
+            res.json({'err' : 'Something went wrong deleting model', 'msg' : error});
+          });
+      }
+    })
+    .error(function(error){
+      res.status(500);
+      res.json({'err' : 'Something went wrong finding to be deleted model', 'msg' : error});
+    });
 };
