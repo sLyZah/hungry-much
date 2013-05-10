@@ -19,19 +19,19 @@ var sequelize = new Sequelize(
 
 // load models
 var models = [
-  'Group'
+  'Group', 
+  'User'
 ];
 models.forEach(function(model) {
   module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
 
 // describe relationships
-// (function(m) {
-//   m.PhoneNumber.belongsTo(m.User);
-//   m.Task.belongsTo(m.User);
-//   m.User.hasMany(m.Task);
-//   m.User.hasMany(m.PhoneNumber);
-// })(module.exports);
+(function(m) {
+  m.User.hasMany(m.Group)
+  m.Group.hasOne(m.User, { as: 'Admin', foreignKey: 'AdminGroupId' })
+  m.Group.hasMany(m.User, { as: 'Members'})
+})(module.exports);
 
 // export connection
 module.exports.sequelize = sequelize;

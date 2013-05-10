@@ -1,4 +1,5 @@
 var Group = app.get('models').Group,
+    User = app.get('models').User,
     keyHelper = require('../helpers/keys.js');
 
 /**
@@ -70,21 +71,25 @@ exports.save = function(req, res){
   tresholdParam = parseInt(req.param('treshold'))
   treshold = (tresholdParam != 'NaN') ? tresholdParam : null
 
-  Group
-    .build({
+  User.findOrCreate(
+    { email : admin },
+    { name : admin }
+  ).success(function(user) {
+    Group.create({
       name: name,
-      admin: admin,
       treshold: treshold,
       key: keyHelper.generate(8)
-    })
-    .save()
-    .success(function(savedGroup) {
+    }).success(function(savedGroup) {
+      savedGroup.setAdmin(user);
       res.json(savedGroup);
-    })
-    .error(function(error){
+    }).error(function(error){
       res.status(500);
       res.json({'err' : 'Something went wrong saving the model', 'msg' : error});
     });
+  }).error(function(error){
+    res.status(500);
+    res.json({'err' : 'Something went wrong with finding/creating the user', 'msg' : error});
+  });
 };
 
 /**
