@@ -95,12 +95,12 @@ exports.save = function(req, res){
 /**
  * Delete group by id
  */
-exports.del = function(req, res){
+exports.delete = function(req, res){
   Group
     .find(req.param('id'))
     .success(function(group) {
       if(group === null) {
-        res.status(404);
+        res.status(404)
         res.json({});
       } else {
         group
