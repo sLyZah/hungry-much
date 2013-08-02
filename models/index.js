@@ -10,16 +10,16 @@ var sequelize = new Sequelize(
   config.pass,
   {
     host: config.host,
-    define: { 
+    define: {
       charset: 'utf8',
-      collate: 'utf8_general_ci' 
+      collate: 'utf8_general_ci'
     }
   }
 );
 
 // load models
 var models = [
-  'Group', 
+  'Group',
   'User'
 ];
 models.forEach(function(model) {
@@ -28,9 +28,9 @@ models.forEach(function(model) {
 
 // describe relationships
 (function(m) {
-  m.User.hasMany(m.Group)
-  m.Group.hasOne(m.User, { as: 'Admin', foreignKey: 'AdminGroupId' })
-  m.Group.hasMany(m.User, { as: 'Members'})
+  m.User.hasMany(m.Group, { as: 'Group' });
+  m.Group.hasOne(m.User, { as: 'Admin', foreignKey: 'AdminGroupId' });
+  m.Group.hasMany(m.User, { as: 'Members'});
 })(module.exports);
 
 // export connection
