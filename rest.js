@@ -30,11 +30,18 @@ app.get('/', function(req, res){
 });
 //app.get('/groups', user.list);
 
-group = require('./routes/group')
+group = require('./routes/group');
 app.get('/groups', group.findAll);
 app.get('/groups/:id', group.find);
 app.post('/groups', group.save);
 app.del('/groups/:id', group.delete);
+
+user = require("./routes/user");
+app.get("/users", user.findAll);
+app.get("/users/:id", user.find);
+app.post("/users", user.save);
+app.put("/users/:id", user.save);
+// app.del("/users/:id", user.delete);
 
 var click = require('./routes/click');
 app.get('/clicks', click.findAll);
