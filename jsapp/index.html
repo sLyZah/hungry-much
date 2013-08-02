@@ -22,11 +22,19 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
-        <script src="js/lib/hm-api.js"></script>
+        <script src="js/lib/hmapi.js"></script>
         <script src="js/main.js"></script>
         <script>
             $( document ).ready(function() {
+
                 console.log( "ready!" );
+
+                var test = $('body').hmapi('getAllRooms', function(data){
+                    $(this).html('<pre>'+data+'</pre>');
+                });
+
+                /*** examples  ***
+
                 var test = $('body').hmapi('getRoomByName', 'woorank', function(data){
                     console.log('callback received : getRoomByName');
                     console.log(data)
@@ -50,6 +58,8 @@
                     console.log('callback received 3 : getRoomById');
                     console.log(data)
                 });
+                
+                /* */
             });
         </script>
     </body>
