@@ -15,13 +15,42 @@
             <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
         <![endif]-->
     </head>
-    <body>
+    <body class="bodyClass">
 
         <p>Hello world! This is HTML5 Boilerplate.</p>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
+        <script src="js/lib/hm-api.js"></script>
         <script src="js/main.js"></script>
+        <script>
+            $( document ).ready(function() {
+                console.log( "ready!" );
+                var test = $('body').hmapi('getRoomByName', 'woorank', function(data){
+                    console.log('callback received : getRoomByName');
+                    console.log(data)
+                });
+
+                console.log(test);
+                console.log('------------------------------\n\n');
+
+                var test2 = $('body').hmapi('GetRoomById', 10, function(data){
+                    console.log('callback received 2 : getRoomById');
+                    console.log(data)
+                }).attr('class');
+
+                console.log(test2);
+                console.log('------------------------------\n\n');
+
+                $('body').hmapi('getRoomByName', 'woorank3', function(data){
+                    console.log('callback received 3 : getRoomByName');
+                    console.log(data)
+                }).hmapi('GetRoomById', 14, function(data){
+                    console.log('callback received 3 : getRoomById');
+                    console.log(data)
+                });
+            });
+        </script>
     </body>
 </html>
