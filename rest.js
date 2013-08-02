@@ -43,6 +43,10 @@ app.post("/users", user.save);
 app.put("/users/:id", user.save);
 // app.del("/users/:id", user.delete);
 
+var click = require('./routes/click');
+app.get('/clicks', click.findAll);
+app.post('/clicks', click.save);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
