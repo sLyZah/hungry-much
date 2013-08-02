@@ -33,10 +33,11 @@ exports.find = function(req, res) {
 };
 
 exports.save = function(req, res){
-  var name = req.param('name') !== "undefined" ? req.param('name') : null;
-  var email = req.param('email') !== "undefined" ? req.param('email') : null;
+  var id   = typeof req.param("id") !== "undefined" ? req.param('id') : null;
+  var name = typeof req.param('name') !== "undefined" ? req.param('name') : null;
+  var email = typeof req.param('email') !== "undefined" ? req.param('email') : null;
 
-  User.create({
+  User.save({
     name: name,
     email: email
   }).success(function(user){
