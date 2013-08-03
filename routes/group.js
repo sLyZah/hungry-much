@@ -28,7 +28,7 @@ exports.findAll = function(req, res){
     })
     .success(function(group){
       if(group === null) {
-        res.status(404)
+        res.status(404);
         res.json({});
       } else {
         res.json(group);
@@ -95,7 +95,7 @@ exports.save = function(req, res){
 /**
  * Delete group by id
  */
-exports.delete = function(req, res){
+exports.del = function(req, res){
   Group
     .find(req.param('id'))
     .success(function(group) {

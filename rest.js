@@ -34,7 +34,7 @@ group = require('./routes/group');
 app.get('/groups', group.findAll);
 app.get('/groups/:id', group.find);
 app.post('/groups', group.save);
-app.del('/groups/:id', group.delete);
+app.del('/groups/:id', group.del);
 
 user = require("./routes/user");
 app.get("/users", user.findAll);
