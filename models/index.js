@@ -18,27 +18,27 @@ var sequelize = new Sequelize(
 );
 
 // load models
-var models = [
+[
   'Group',
   'User',
   'Click'
-];
-models.forEach(function(model) {
+].forEach(function(model) {
   module.exports[model] = sequelize.import(__dirname + '/' + model);
 });
 
 // describe relationships
 (function(m) {
-  m.User.hasMany(m.Group);
-  m.User.hasMany(m.Click, { as: 'Clicks' });
-
-  m.Group.hasOne(m.User, { as: 'Admin', foreignKey: 'AdminGroupId' });
   m.Group.hasMany(m.User, { as: 'Members' });
-  m.Group.hasMany(m.Click, { as: 'Clicks' });
+  m.User.hasMany(m.Group);
+  
 
+  m.Group.hasMany(m.Click, { as: 'Clicks' });
+  m.User.hasMany(m.Click, { as: 'Clicks' });
   m.Click.belongsTo(m.User);
   m.Click.belongsTo(m.Group);
 })(module.exports);
 
 // export connection
 module.exports.sequelize = sequelize;
+
+sequelize.sync({force: false});

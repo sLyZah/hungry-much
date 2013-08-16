@@ -119,3 +119,161 @@ exports.del = function(req, res){
       res.json({'err' : 'Something went wrong finding to be deleted model', 'msg' : error});
     });
 };
+
+
+
+var Promise = require("promise");
+
+var groups = app.get('services').groups;
+
+var ERR_USER_NOT_FOUND  = 'User not found',
+    ERR_GROUP_NOT_FOUND = 'Group not found',
+    ERR_UNKNOWN         = 'Error unknown';
+
+var DEFAULT_TRESHOLD = 5;
+
+
+
+function handle(groupPromise, response) {
+  return groupPromise.then(function success(group) {
+    response.status(200);
+    response.json(group);
+    return group;
+  }, function fail(error) {
+    response.status(500);
+    response.json(error);
+    return error;
+  });
+}
+
+exports.init = function (app) {
+  
+  app.get('/groups', function (req, res) {
+    var name = req.param('name');
+    
+    if (!name) {
+      res.status(500);
+      res.json('"name" not specified');
+      return;
+    }
+    
+    handle(groups.getGroupByName(name), res);
+    
+  });
+  
+  app.post('/groups', function (req, res) {
+    var name     = req.param('name');
+    var admin    = req.param('admin');
+    var treshold = req.param('treshold') || DEFAULT_TRESHOLD;
+    
+    if (!name) {
+      res.status(500);
+      res.json('"name" not specified');
+      return;
+    }
+    
+    if (!admin) {
+      res.status(500);
+      res.json('"admin" not specified');
+      return;
+    }
+    
+    handle(groups.addGroup({
+      name: name,
+      adminId: admin,
+      treshold: treshold
+    }), res);
+  });
+  
+  app.get('/groups/:groupId', function (req, res) {
+    var groupId = req.param('groupId');
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    handle(groups.getGroup(groupId), res);
+  });
+  
+  app.put('/groups/:groupId', function (req, res) {
+    var groupId  = req.param('groupId');
+    var admin    = req.param('admin');
+    var name     = req.param('name');
+    var treshold = req.param('treshold');
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    var config = {};
+    
+    if (name) {
+      config.name = name;
+    }
+    
+    if (name) {
+      config.treshold = treshold;
+    }
+    
+    if (admin) {
+      config.admin = admin;
+    }
+    
+    handle(groups.changeGroup(groupId, config), res);
+  });
+  
+  app.post('/groups/:groupId/users', function (req, res) {
+    var groupId = req.param('groupId');
+    var userId  = req.param('userId');
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    if (!userId) {
+      res.status(500);
+      res.json('"userId" not specified');
+      return;
+    }
+    
+    handle(groups.addUser(groupId, userId), res);
+  });
+  
+  app.get('/groups/:groupId/users', function (req, res) {
+    var groupId = req.param('groupId');
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    handle(groups.getUsers(groupId), res);
+  });
+  
+  app.delete('/groups/:groupId/users/:userId', function (req, res) {
+    var groupId = req.param('groupId');
+    var userId  = req.param('userId');
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    if (!userId) {
+      res.status(500);
+      res.json('"userId" not specified');
+      return;
+    }
+    
+    handle(groups.removeUser(groupId, userId), res);
+  });
+  
+};

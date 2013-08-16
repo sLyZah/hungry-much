@@ -12,6 +12,7 @@
     "mysql": "*",
     "sequelize": "*",
     "jade": "*",
-    "css": "*"
+    "css": "*",
+    "promise": "~3.2.0"
   }
 }

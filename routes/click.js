@@ -7,7 +7,8 @@ var models    = app.get('models'),
     Click     = models.Click,
     User      = models.User,
     Group     = models.Group,
-    Sequelize = require('Sequelize');
+    Sequelize = require('Sequelize'),
+    clicks    = app.get('services').clicks;
 
 
 
@@ -77,7 +78,7 @@ exports.save = function (req, res) {
   
   chainer.runSerially().success(function (results) {
     var user  = results[0],
-      group = results[1];
+        group = results[1];
     
     if (!user) {
       res.status(500);
@@ -114,3 +115,58 @@ exports.save = function (req, res) {
   });
   
 };
+
+function addClick(config, callback) {
+  callback('addClick not implemented', null);
+}
+
+
+
+function handle(groupPromise, response) {
+  return groupPromise.then(function success(click) {
+    response.status(200);
+    response.json(click);
+    return click;
+  }, function fail(error) {
+    response.status(500);
+    response.json(error);
+    return error;
+  });
+}
+
+exports.init = function (app) {
+  app.get('/clicks', function (req, res) {
+    var groupId = req.param('groupId');
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    handle(Click.getClicks(groupId), res);
+  });
+  
+  app.post('/clicks', function (req, res) {
+    var userId  = req.param('userId');
+    var groupId = req.param('groupId');
+    
+    if (!userId) {
+      res.status(500);
+      res.json('"userId" not specified');
+      return;
+    }
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    handle(Click.addClick({
+      userId: userId,
+      groupId: groupId
+    }), res);
+  });
+};
+
