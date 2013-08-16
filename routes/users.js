@@ -1,30 +1,13 @@
-/*jslint devel: true, node: true, indent: 2, vars: true, white: true */
+/*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
 /*global app */
 
 'use strict';
 
-var users = app.get('services').users;
-var Promise = require("promise");
-
-var ERR_USER_NOT_FOUND = 'User not found',
-    ERR_UNKNOWN        = 'Error unknown';
-
-
-
-
-function handle(userPromise, response) {
-  return userPromise.then(function success(user) {
-    response.status(200);
-    response.json(user);
-    return user;
-  }, function fail(error) {
-    response.status(500);
-    response.json(error);
-    return error;
-  });
-}
+var utils = require("./utils");
 
 exports.init = function (app) {
+  
+  var models = app.get('models');
   
   app.get('/users', function (req, res) {
     var name  = req.param('name');
@@ -35,7 +18,7 @@ exports.init = function (app) {
       return;
     }
     
-    handle(users.getUserByName(name), res);
+    utils.handlePromiseResponse(models.User.getUserByName(name), res);
   });
   
   app.post('/users', function (req, res) {
@@ -54,7 +37,7 @@ exports.init = function (app) {
       return;
     }
     
-    handle(users.addUser({
+    utils.handlePromiseResponse(models.User.addUser({
       name: name,
       email: email
     }), res);
@@ -69,7 +52,7 @@ exports.init = function (app) {
       return;
     }
     
-    handle(users.getUser(userId), res);
+    utils.handlePromiseResponse(models.User.getUser(userId), res);
   });
   
   app.put('/users/:userId', function (req, res) {
@@ -93,7 +76,7 @@ exports.init = function (app) {
       config.email = email;
     }
     
-    handle(users.changeUser(userId, config), res);
+    utils.handlePromiseResponse(models.User.changeUser(userId, config), res);
   });
   
 };

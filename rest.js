@@ -20,14 +20,18 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 
+// CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-console.log('init services');
-app.set('services', require('./services'));
-console.log('init routes');
 routes.init(app);
 
 http.createServer(app).listen(app.get('port'), function(){
