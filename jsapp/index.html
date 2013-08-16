@@ -7,22 +7,107 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/main.css">
 
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
         <![endif]-->
-    </head>
-    <body class="bodyClass">
 
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <!--[if IE 7]>
+            <link rel="stylesheet" href="css/fontello-ie7.css">
+        <![endif]-->
+    </head>
+    <body>
+
+        <div class="message">
+            <form class="form-horizontal" id="formSignIn">
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">Email</label>
+                <div class="controls">
+                  <input type="text" id="inputEmail" placeholder="Email">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputPassword">Password</label>
+                <div class="controls">
+                  <input type="password" id="inputPassword" placeholder="Password">
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button type="submit" class="btn btn-info">Sign in</button>
+                  <button type="button" class="btn btn-link btn-cancel">Cancel</button>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="view" id="home">
+            <h1>Lunch App</h1>
+            <a href="#" class="btn btn-primary btn-large" id="signIn">Sign In</a>
+            <a href="#groups" class="btn btn-primary btn-large showView">Join Group</a>
+        </div>
+
+        <div class="view" id="groups">
+            <h1>Join a group</h1>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td>Woorank</td>
+                        <td><a href="#hungry" class="btn btn-primary btn showView">Join</a></td>
+                    </tr>
+                    <tr>
+                        <td>Google</td>
+                        <td><a href="#hungry" class="btn btn-primary btn showView">Join</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="view" id="hungry">
+            <h1>Are you hungry ?</h1>
+            <a href="#timetable" class="btn btn-success btn-large showView">Yes <i class="icon-emo-angry"></i></a>
+            <p><a href="#home" class="btn btn-small showView">Finally no</a></p>
+        </div>
+
+        <div class="view" id="timetable">
+            <h1>Starved people</h1>
+            <p><em>List of starved people...</em></p>
+            <a href="#options" class="btn btn-small showView">Account settings</a>
+        </div>
+
+        <div class="view" id="options">
+            <h1>Account settings</h1>
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Email</label>
+                    <div class="controls">
+                        <input type="text" id="inputEmail" placeholder="Email" value="myemail@website.com">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Password</label>
+                    <div class="controls">
+                        <input type="password" id="inputPassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-info">Submit</button>
+                        <a href="#timetable" class="btn btn showView">Back</a>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+ 
+        <script src="js/lib/hm-api.js"></script>
+        <script src="js/bootstrap-modal.js"></script>
 
-        <script src="js/lib/hmapi.js"></script>
         <script src="js/main.js"></script>
         <script>
             $( document ).ready(function() {
