@@ -13,50 +13,171 @@
     $ this
 
   $.hmapi = (elem, options, arg, callback) ->
-    ### get a room by Name ###
-    getRoomByName = (arg) ->
-      data =
-        id: 0
-        name: arg
-        threshold: 1
-        currentClick: 0
-
-      $.hmapi._this.trigger "getRoomByName", data
-      data
-
-    ### get a room by Id ###
-    GetRoomById = (arg) ->
-      data =
-        id: arg
-        name: ""
-        threshold: 1
-        currentClick: 0
-
-      $.hmapi._this.trigger "GetRoomById", data
-      data
-
-    ### get all rooms ###
-    getAllRooms = ->
-      module = 'groups'
-      method = 'GET'
-      param = ''
-
-      console.log $.hmapi.defaults.apiUrl + module
+    ### update a user ###
+    updateUserById = (arg) ->
+      module = 'users'
+      method = 'PUT'
+      id = arg.id if arg.id? else throw new Error "updateUserById(): argument.id must be set (user id)"
+      data = {}
+      data.name = arg.name if arg.name?
+      data.email = arg.email if arg.email?
 
       # ajax call
       $.ajax
         type: method
-        data: param
+        cache: false
+        data: data
+        url: $.hmapi.defaults.apiUrl + module + '/'+ id
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "updateUserById", json
+
+    ### get a user by Id ###
+    getUserById = (arg) ->
+      module = 'users'
+      method = 'GET'
+      id = arg if arg? and typeof arg is 'int' else throw new Error "getUserById(): argument must be user id "
+
+      # ajax call
+      $.ajax
+        type: method
+        cache: false
+        url: $.hmapi.defaults.apiUrl + module + '/'+ id
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "getUserById", json
+
+    ### add a user in db ###
+    addUser = (arg) ->
+      module = 'users'
+      method = 'POST'
+      data = {}
+      data.name = arg.name if arg.name? else throw new Error "addUser(): argument.name must be set"
+      data.email = arg.email if arg.email? else throw new Error "addUser(): argument.email must be set"
+
+      # ajax call
+      $.ajax
+        type: method
+        cache: false
+        data: data
+        url: $.hmapi.defaults.apiUrl + module
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "addUser", json
+
+    ### get all rooms ###
+    getAllGroup = ->
+      module = 'groups'
+      method = 'GET'
+
+      # ajax call
+      $.ajax
+        type: method
         cache: false
         url: $.hmapi.defaults.apiUrl + module
         async: true
         dataType: "json"
         success: (json) ->
-          console.log 'result !!'
-          console.log json
           $.hmapi._callback json
-          $.hmapi._this.trigger "getAllRooms", json
+          $.hmapi._this.trigger "getAllGroup", json
 
+    getGroupByName = (arg) ->
+      module = 'groups'
+      method = 'GET'
+      data = {}
+      data.name = arg if arg? else throw new Error "getGroupByName(): argument must be name (group name)"
+
+      # ajax call
+      $.ajax
+        type: method
+        cache: false
+        data: data
+        url: $.hmapi.defaults.apiUrl + module
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "getGroupByName", json
+
+    getGroupById = (arg) ->
+      module = 'groups'
+      method = 'GET'
+      data = {}
+      id = arg if arg? else throw new Error "getGroupById(): argument must be id (group id)"
+
+      # ajax call
+      $.ajax
+        type: method
+        cache: false
+        url: $.hmapi.defaults.apiUrl + module + '/' + id
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "getGroupById", json
+
+    addGroup = (arg) ->
+      module = 'groups'
+      method = 'POST'
+      data = {}
+      data.name = arg.name if arg.name? else throw new Error "addGroup(): argument.name must be set"
+      data.admin = arg.admin if arg.admin? else throw new Error "addGroup(): argument.admin must be set (user id)"
+      data.treshold = arg.treshold if arg.treshold?
+
+      # ajax call
+      $.ajax
+        type: method
+        cache: false
+        data: data
+        url: $.hmapi.defaults.apiUrl + module
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "addGroup", json
+
+    userIsHungryInGroupId = (arg) ->
+      module = 'clicks'
+      method = 'POST'
+      data = {}
+      data.userId = arg.userId if arg.userId? else throw new Error "userIsHungryInGroupId(): argument.userId must be set"
+      data.groupId = arg.groupId if arg.groupId? else throw new Error "userIsHungryInGroupId(): argument.groupId must be set"
+
+      # ajax call
+      $.ajax
+        type: method
+        cache: false
+        data: data
+        url: $.hmapi.defaults.apiUrl + module
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "userIsHungryInGroupId", json
+
+    addUserInGroup = (arg) ->
+      module = 'groups'
+      method = 'POST'
+      data.userId = arg.userId if arg.userId? else throw new Error "addUserInGroup(): argument.userId must be set"
+      id = arg.groupId if arg.groupId? else throw new Error "addUserInGroup(): argument.groupId must be set"
+
+      # ajax call
+      $.ajax
+        type: method
+        cache: false
+        data: data
+        url: $.hmapi.defaults.apiUrl + module + '/' + id + '/users'
+        async: true
+        dataType: "json"
+        success: (json) ->
+          $.hmapi._callback json
+          $.hmapi._this.trigger "userIsHungryInGroupId", json
 
     ### ---------------- ###
     ### var assignements ###
@@ -71,14 +192,17 @@
     ### ----------------- ###
     if options and typeof options is "string"
 
-      if options is "getRoomByName"
-        getRoomByName(arg)
+      if options is "editUserById"
+        editUserById(arg)
 
-      else if options is "GetRoomById"
-        GetRoomById(arg)  
+      else if options is "getUserById"
+        getUserById(arg)  
 
-      else if options is "getAllRooms"
-        getAllRooms()
+      else if options is "addUser"
+        addUser(arg)
+
+      else if options is "getAllGroup"
+        getAllGroup()
 
       return
 
