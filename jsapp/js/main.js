@@ -100,7 +100,10 @@
 			var groupsCounter 	= 0,
 				html 			= '';
 
-			$('body').hmapi('getAllRooms', function(data){
+			$('body').hmapi('getUserById', 1, function(data){
+
+
+				console.log(data);
 
 				groupsCounter = data.length;
 
