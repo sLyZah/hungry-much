@@ -21,6 +21,10 @@
     </head>
     <body>
 
+        <header>
+            Lunch App
+        </header>
+
         <div class="message">
             <form class="form-horizontal" id="formSignIn">
               <div class="control-group">
@@ -45,9 +49,8 @@
         </div>
 
         <div class="view" id="home">
-            <h1>Lunch App</h1>
             <a href="#" class="btn btn-primary btn-large" id="signIn">Sign In</a>
-            <a href="#groups" class="btn btn-primary btn-large showView">Join Group</a>
+            <a href="#groups" class="btn btn-primary btn-large showView" id="btnJoin">Join Group</a>
         </div>
 
         <div class="view" id="groups">
@@ -55,12 +58,7 @@
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <td>Woorank</td>
-                        <td><a href="#hungry" class="btn btn-primary btn showView">Join</a></td>
-                    </tr>
-                    <tr>
-                        <td>Google</td>
-                        <td><a href="#hungry" class="btn btn-primary btn showView">Join</a></td>
+                        <td colspan="2">No group no lunch.</td>
                     </tr>
                 </tbody>
             </table>
@@ -105,18 +103,24 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
  
-        <script src="js/lib/hm-api.js"></script>
+        <script src="js/lib/hmapi.js"></script>
         <script src="js/bootstrap-modal.js"></script>
 
         <script src="js/main.js"></script>
         <script>
             $( document ).ready(function() {
 
+
+                /***
                 console.log( "ready!" );
 
                 var test = $('body').hmapi('getAllRooms', function(data){
-                    $(this).html('<pre>'+data+'</pre>');
+
+                    alert(data);
+                    
+
                 });
+                ***/
 
                 /*** examples  ***
 

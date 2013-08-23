@@ -90,7 +90,7 @@
     }
   };
   $.hmapi.defaults = {
-    apiUrl: "http://10.0.2.80:3000/"
+    apiUrl: "http://127.0.0.1:3000/"
   };
   $.hmapi._this = null;
   return $.hmapi._callback = null;

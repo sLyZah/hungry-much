@@ -40,7 +40,7 @@
 		$('#home').show();
 
 		// Display a view when the user click on showView
-		$('.showView').on('click', function() {
+		$('body').on('click', '.showView', function() {
 
 			var view = $(this).attr('href');
 
@@ -89,6 +89,39 @@
 			return false;
 
 		});
+
+
+		// ********************************************************************
+		// Join a group
+		// ********************************************************************
+
+		$('#btnJoin').on('click', function(){
+
+			var groupsCounter 	= 0,
+				html 			= '';
+
+			$('body').hmapi('getAllRooms', function(data){
+
+				groupsCounter = data.length;
+
+				if(groupsCounter !== 0) {
+
+					$('#groups tbody').first('tr').hide();
+
+					for(var i = 0; i < groupsCounter; i++) {
+
+						html+= '<tr><td>' + data[i].name + '</td><td><a href="#hungry" class="btn btn-primary btn showView" data-groupId="' + data[i].id + '">Join</a></td></tr>';
+
+					}
+
+					$(html).insertAfter($('#groups tbody').first('tr'));
+					
+				}         
+
+            });
+
+
+		} );
 	
 	
 
