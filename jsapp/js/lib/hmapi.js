@@ -12,53 +12,261 @@
     }
   });
   $.hmapi = function(elem, options, arg, callback) {
-    /* get a room by Name*/
+    /* update a user*/
 
-    var GetRoomById, getAllRooms, getRoomByName;
-    getRoomByName = function(arg) {
-      var data;
-      data = {
-        id: 0,
-        name: arg,
-        threshold: 1,
-        currentClick: 0
-      };
-      $.hmapi._this.trigger("getRoomByName", data);
-      return data;
+    var addGroup, addUser, addUserInGroup, getAllGroup, getGroupById, getGroupByName, getUserById, updateUserById, userIsHungryInGroupId;
+    updateUserById = function(arg) {
+      var data, id, method, module;
+      module = 'users';
+      method = 'PUT';
+      id = arg.id((function() {
+        if (arg.id != null) {
+
+        } else {
+          throw new Error("updateUserById(): argument.id must be set (user id)");
+        }
+      })());
+      data = {};
+      if (arg.name != null) {
+        data.name = arg.name;
+      }
+      if (arg.email != null) {
+        data.email = arg.email;
+      }
+      return $.ajax({
+        type: method,
+        cache: false,
+        data: data,
+        url: $.hmapi.defaults.apiUrl + module + '/' + id,
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("updateUserById", json);
+        }
+      });
     };
-    /* get a room by Id*/
+    /* get a user by Id*/
 
-    GetRoomById = function(arg) {
-      var data;
-      data = {
-        id: arg,
-        name: "",
-        threshold: 1,
-        currentClick: 0
-      };
-      $.hmapi._this.trigger("GetRoomById", data);
-      return data;
+    getUserById = function(arg) {
+      var id, method, module;
+      module = 'users';
+      method = 'GET';
+      id = arg((function() {
+        if ((arg != null) && typeof arg === 'int') {
+
+        } else {
+          throw new Error("getUserById(): argument must be user id ");
+        }
+      })());
+      return $.ajax({
+        type: method,
+        cache: false,
+        url: $.hmapi.defaults.apiUrl + module + '/' + id,
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("getUserById", json);
+        }
+      });
+    };
+    /* add a user in db*/
+
+    addUser = function(arg) {
+      var data, method, module;
+      module = 'users';
+      method = 'POST';
+      data = {};
+      data.name = arg.name((function() {
+        if (arg.name != null) {
+
+        } else {
+          throw new Error("addUser(): argument.name must be set");
+        }
+      })());
+      data.email = arg.email((function() {
+        if (arg.email != null) {
+
+        } else {
+          throw new Error("addUser(): argument.email must be set");
+        }
+      })());
+      return $.ajax({
+        type: method,
+        cache: false,
+        data: data,
+        url: $.hmapi.defaults.apiUrl + module,
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("addUser", json);
+        }
+      });
     };
     /* get all rooms*/
 
-    getAllRooms = function() {
-      var method, module, param;
+    getAllGroup = function() {
+      var method, module;
       module = 'groups';
       method = 'GET';
-      param = '';
-      console.log($.hmapi.defaults.apiUrl + module);
       return $.ajax({
         type: method,
-        data: param,
         cache: false,
         url: $.hmapi.defaults.apiUrl + module,
         async: true,
         dataType: "json",
         success: function(json) {
-          console.log('result !!');
-          console.log(json);
           $.hmapi._callback(json);
-          return $.hmapi._this.trigger("getAllRooms", json);
+          return $.hmapi._this.trigger("getAllGroup", json);
+        }
+      });
+    };
+    getGroupByName = function(arg) {
+      var data, method, module;
+      module = 'groups';
+      method = 'GET';
+      data = {};
+      data.name = arg((function() {
+        if (arg != null) {
+
+        } else {
+          throw new Error("getGroupByName(): argument must be name (group name)");
+        }
+      })());
+      return $.ajax({
+        type: method,
+        cache: false,
+        data: data,
+        url: $.hmapi.defaults.apiUrl + module,
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("getGroupByName", json);
+        }
+      });
+    };
+    getGroupById = function(arg) {
+      var data, id, method, module;
+      module = 'groups';
+      method = 'GET';
+      data = {};
+      id = arg((function() {
+        if (arg != null) {
+
+        } else {
+          throw new Error("getGroupById(): argument must be id (group id)");
+        }
+      })());
+      return $.ajax({
+        type: method,
+        cache: false,
+        url: $.hmapi.defaults.apiUrl + module + '/' + id,
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("getGroupById", json);
+        }
+      });
+    };
+    addGroup = function(arg) {
+      var data, method, module;
+      module = 'groups';
+      method = 'POST';
+      data = {};
+      data.name = arg.name((function() {
+        if (arg.name != null) {
+
+        } else {
+          throw new Error("addGroup(): argument.name must be set");
+        }
+      })());
+      data.admin = arg.admin((function() {
+        if (arg.admin != null) {
+
+        } else {
+          throw new Error("addGroup(): argument.admin must be set (user id)");
+        }
+      })());
+      if (arg.treshold != null) {
+        data.treshold = arg.treshold;
+      }
+      return $.ajax({
+        type: method,
+        cache: false,
+        data: data,
+        url: $.hmapi.defaults.apiUrl + module,
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("addGroup", json);
+        }
+      });
+    };
+    userIsHungryInGroupId = function(arg) {
+      var data, method, module;
+      module = 'clicks';
+      method = 'POST';
+      data = {};
+      data.userId = arg.userId((function() {
+        if (arg.userId != null) {
+
+        } else {
+          throw new Error("userIsHungryInGroupId(): argument.userId must be set");
+        }
+      })());
+      data.groupId = arg.groupId((function() {
+        if (arg.groupId != null) {
+
+        } else {
+          throw new Error("userIsHungryInGroupId(): argument.groupId must be set");
+        }
+      })());
+      return $.ajax({
+        type: method,
+        cache: false,
+        data: data,
+        url: $.hmapi.defaults.apiUrl + module,
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("userIsHungryInGroupId", json);
+        }
+      });
+    };
+    addUserInGroup = function(arg) {
+      var id, method, module;
+      module = 'groups';
+      method = 'POST';
+      data.userId = arg.userId((function() {
+        if (arg.userId != null) {
+
+        } else {
+          throw new Error("addUserInGroup(): argument.userId must be set");
+        }
+      })());
+      id = arg.groupId((function() {
+        if (arg.groupId != null) {
+
+        } else {
+          throw new Error("addUserInGroup(): argument.groupId must be set");
+        }
+      })());
+      return $.ajax({
+        type: method,
+        cache: false,
+        data: data,
+        url: $.hmapi.defaults.apiUrl + module + '/' + id + '/users',
+        async: true,
+        dataType: "json",
+        success: function(json) {
+          $.hmapi._callback(json);
+          return $.hmapi._this.trigger("userIsHungryInGroupId", json);
         }
       });
     };
@@ -80,12 +288,14 @@
     /* -----------------*/
 
     if (options && typeof options === "string") {
-      if (options === "getRoomByName") {
-        getRoomByName(arg);
-      } else if (options === "GetRoomById") {
-        GetRoomById(arg);
-      } else if (options === "getAllRooms") {
-        getAllRooms();
+      if (options === "editUserById") {
+        editUserById(arg);
+      } else if (options === "getUserById") {
+        getUserById(arg);
+      } else if (options === "addUser") {
+        addUser(arg);
+      } else if (options === "getAllGroup") {
+        getAllGroup();
       }
     }
   };
