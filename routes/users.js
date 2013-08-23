@@ -9,27 +9,10 @@ exports.init = function (app) {
   
   var models = app.get('models');
   
-  app.get('/users', function (req, res) {
-    var name  = req.param('name');
-    
-    if (!name) {
-      res.status(500);
-      res.json('"name" not specified');
-      return;
-    }
-    
-    utils.handlePromiseResponse(models.User.getUserByName(name), res);
-  });
+  app.all('/users*', utils.ensureAuthentication);
   
-  app.post('/users', function (req, res) {
-    var name  = req.param('name');
-    var email = req.param('email');
-    
-    if (!name) {
-      res.status(500);
-      res.json('"name" not specified');
-      return;
-    }
+  app.get('/users', function (req, res) {
+    var email  = req.param('email');
     
     if (!email) {
       res.status(500);
@@ -37,10 +20,7 @@ exports.init = function (app) {
       return;
     }
     
-    utils.handlePromiseResponse(models.User.addUser({
-      name: name,
-      email: email
-    }), res);
+    utils.handlePromiseResponse(models.User.getUserByEmail(email), res);
   });
   
   app.get('/users/:userId', function (req, res) {

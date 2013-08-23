@@ -5,9 +5,11 @@
 
 var utils = require('./utils');
 
-exports.init = function (app) {
+exports.init = function (app, passport) {
   
   var models = app.get('models');
+  
+  app.all('/clicks*', utils.ensureAuthentication);
   
   app.get('/clicks', function (req, res) {
     var groupId = req.param('groupId');
@@ -22,12 +24,19 @@ exports.init = function (app) {
   });
   
   app.post('/clicks', function (req, res) {
+    
     var userId  = req.param('userId');
     var groupId = req.param('groupId');
     
     if (!userId) {
       res.status(500);
       res.json('"userId" not specified');
+      return;
+    }
+    
+    if (parseInt(userId, 10) !== req.user.id) {
+      res.status(401);
+      res.json('Unauthorized');
       return;
     }
     

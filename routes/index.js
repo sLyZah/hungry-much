@@ -3,14 +3,15 @@
 
 'use strict';
 
-function initRoutes(app) {
-  [ 'users', 'clicks', 'groups' ].forEach(function(route) {
-    require(__dirname + '/' + route).init(app);
+function initRoutes(app, passport) {
+  
+  [ 'auth', 'users', 'clicks', 'groups' ].forEach(function(route) {
+    require(__dirname + '/' + route).init(app, passport);
   });
 }
 
-exports.init = function (app) {
-  initRoutes(app);
+exports.init = function (app, passport) {
+  initRoutes(app, passport);
   
   
   app.get('/', function(req, res){
