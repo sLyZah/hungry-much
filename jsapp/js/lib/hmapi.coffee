@@ -194,16 +194,26 @@
 
       if options is "editUserById"
         editUserById(arg)
-
       else if options is "getUserById"
-        getUserById(arg)  
-
+        getUserById(arg)
       else if options is "addUser"
         addUser(arg)
-
       else if options is "getAllGroup"
         getAllGroup()
-
+      else if options is "getGroupByName"
+        getGroupByName(arg)
+      else if options is "getGroupById"
+        getGroupById(arg)
+      else if options is "addGroup"
+        addGroup(arg)
+      else if options is "userIsHungryInGroupId"
+        userIsHungryInGroupId(arg)
+      else if options is "addGroupInUser"
+        addGroupInUser(arg)
+      else if options is "addUserInGroup"
+        addUserInGroup(arg)
+      else
+        throw new Error options + "(): method not available"
       return
 
   $.hmapi.defaults = apiUrl: "http://10.0.2.80:3000/"

@@ -296,11 +296,25 @@
         addUser(arg);
       } else if (options === "getAllGroup") {
         getAllGroup();
+      } else if (options === "getGroupByName") {
+        getGroupByName(arg);
+      } else if (options === "getGroupById") {
+        getGroupById(arg);
+      } else if (options === "addGroup") {
+        addGroup(arg);
+      } else if (options === "userIsHungryInGroupId") {
+        userIsHungryInGroupId(arg);
+      } else if (options === "addGroupInUser") {
+        addGroupInUser(arg);
+      } else if (options === "addUserInGroup") {
+        addUserInGroup(arg);
+      } else {
+        throw new Error(options + "(): method not available");
       }
     }
   };
   $.hmapi.defaults = {
-    apiUrl: "http://127.0.0.1:3000/"
+    apiUrl: "http://10.0.2.80:3000/"
   };
   $.hmapi._this = null;
   return $.hmapi._callback = null;
