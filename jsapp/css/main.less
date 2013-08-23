@@ -1,13 +1,39 @@
 @import "normalize.less";
 @import "default.less";
-@import "fontello.less";
 
+html{
+	font-family: "Open Sans";
+}
 body{
-	width: 960px;
-	margin: 30px auto;
+	width: 100%;
+	margin: 0 auto;
+	background-color: rgb(240,240,240);
 }
 
 header{
+	background-color: rgb(50,50,50);
+	color: white;
+
+	.span12{
+		margin: 30px 0 20px 0;
+	}
+
+	i{
+		top: -4px;
+		position: relative;
+		font-size: 28px;
+	}
+
+	h1{
+		font-family: "Open Sans";
+		font-size: 28px;
+		font-weight: 300;
+		display: inline;
+		color: white;
+	}
+}
+
+footer{
 	background-color: orange;
 }
 .view{
@@ -16,19 +42,19 @@ header{
 	min-height: 200px;
 }
 
-.message{
+.box{
 	background-color: white;
 	border: 1px solid black;
 	width: 470px;
 	margin: 0 auto;
 	padding: 20px;
-	position: relative;
+	position: absolute;
 	top: -400px;
 	margin-bottom: -200px;
 
 }
 
-.message form{
+.box form{
 	margin-top: 30px;
 }
 
@@ -45,4 +71,9 @@ header{
 
 #groups .table td+td{
 	text-align: right;
+}
+
+.row{
+	max-width: 1000px;
+	margin: 0 auto;
 }
