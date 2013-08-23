@@ -1,14 +1,15 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
-/*global app */
+/*global */
 
-var Promise = require("promise");
+var Promise = require("promise"),
+    Sequelize = require('sequelize');
 
 var ERR_USER_NOT_FOUND = 'User not found',
     ERR_UNKNOWN        = 'Error unknown';
 
 
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, app) {
   'use strict';
   
   function reject(value) {
@@ -25,8 +26,8 @@ module.exports = function(sequelize, DataTypes) {
   }
   
   var User = sequelize.define('User', {
-    name: { type: DataTypes.STRING, allowNull: false },
-    email: { type: DataTypes.STRING, validate: { isEmail: true } }
+    name: { type: Sequelize.STRING, allowNull: false },
+    email: { type: Sequelize.STRING, validate: { isEmail: true } }
   }, {
   
     classMethods: {

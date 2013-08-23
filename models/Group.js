@@ -1,12 +1,14 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
-/*global app */
+/*global */
 
-var Promise = require("promise");
+var Promise = require("promise"),
+    Sequelize = require('sequelize'),
+    sqlQuery   = require('sql-query');
 
 var ERR_GROUP_NOT_FOUND = 'Group not found',
     ERR_UNKNOWN         = 'Error unknown';
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, app) {
   'use strict';
   
   function reject(value) {
@@ -23,10 +25,9 @@ module.exports = function(sequelize, DataTypes) {
   }
   
   var Group = sequelize.define('Group', {
-    name: { type: DataTypes.STRING, allowNull: false, unique: true },
-    treshold: { type: DataTypes.INTEGER, defaultValue: 3 },
-    key: DataTypes.STRING,
-    adminId: { type: DataTypes.INTEGER }
+    name: { type: Sequelize.STRING, allowNull: false, unique: true },
+    treshold: { type: Sequelize.INTEGER, defaultValue: 3 },
+    adminId: { type: Sequelize.INTEGER }
   }, {
     classMethods: {
       
@@ -103,17 +104,43 @@ module.exports = function(sequelize, DataTypes) {
             return Group.getGroup(groupId);
           });
         });
+      },
+      
+      getDistinctClicks: function (groupId, after) {
+        var models = app.get('models');
+        
+        return Group.getGroup(groupId).then(function (group) {
+          return group.getDistinctClicks(after);
+        });
       }
 
 
     },
     instanceMethods: {
-      getUniqueClicks: function (config) {
-        var after = config.after;
+      getDistinctClicks: function (after) {
+        var models = app.get('models');
         
-        return this.getClicks({
-          where: { }
-        });
+        var conditions = [
+          {
+            groupId: this.id
+          }
+        ];
+        
+        if (after) {
+          conditions.push({
+            timestamp: sqlQuery.gt(after)
+          });
+        }
+        
+        var q = new sqlQuery.Query().select()
+          .from('Clicks')
+          .groupBy('groupId', 'userId')
+          .where({
+            and: conditions
+          }).build();
+        
+        return sequelize.query(q, models.Click);
+        
       }
     }
   });

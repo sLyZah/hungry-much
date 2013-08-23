@@ -1,5 +1,5 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
-/*global app */
+/*global */
 'use strict';
 
 exports.handlePromiseResponse = function (promise, response) {
