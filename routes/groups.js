@@ -1,5 +1,5 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
-/*global app */
+/*global */
 
 'use strict';
 
@@ -137,4 +137,21 @@ exports.init = function (app) {
     utils.handlePromiseResponse(models.Group.removeUser(groupId, userId), res);
   });
   
+    
+  app.get('/groups/:groupId/clicks', function (req, res) {
+    var groupId = req.param('groupId');
+    var after   = req.param('after');
+    
+    if (!groupId) {
+      res.status(500);
+      res.json('"groupId" not specified');
+      return;
+    }
+    
+    var cfg = {};
+    cfg.after = after;
+    cfg.groupId = groupId;
+    
+    utils.handlePromiseResponse(models.Group.getDistinctClicks(groupId, after), res);
+  });
 };
