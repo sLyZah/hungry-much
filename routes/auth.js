@@ -11,7 +11,16 @@ exports.init = function (app, passport) {
   
   var models = app.get('models');
   
-  app.post('/auth/signin', passport.authenticate('local'), function (req, res) {
+  app.post('/auth/signin', utils.validate({
+    email: {
+      scope: 'body',
+      required: true
+    },
+    password: {
+      scope: 'body',
+      required: true
+    }
+  }), passport.authenticate('local'), function (req, res) {
     if (req.user) {
       res.status(httpStatus.OK);
       res.json(req.user.serialize());      
@@ -25,27 +34,24 @@ exports.init = function (app, passport) {
     res.send(httpStatus.OK);
   });
   
-  app.post('/auth/signup', function (req, res) {
-    var name     = req.body.name;
-    var email    = req.body.email;
-    var password = req.body.password;
-    
-    if (!name) {
-      return res.send(httpStatus.BAD_REQUEST, '"name" not specified');
+  app.post('/auth/signup', utils.validate({
+    name: {
+      scope: 'body',
+      required: true
+    },
+    email: {
+      scope: 'body',
+      required: true
+    },
+    password: {
+      scope: 'body',
+      required: true
     }
-    
-    if (!email) {
-      return res.send(httpStatus.BAD_REQUEST, '"email" not specified');
-    }
-    
-    if (!password) {
-      return res.send(httpStatus.BAD_REQUEST, '"password" not specified');
-    }
-    
-    var addUserPromise = models.User.addUser({
-      name    : name,
-      email   : email,
-      password: models.User.encryptPassword(password)
+  }), function (req, res) {
+    models.User.create({
+      name    : req.body.name,
+      email   : req.body.email,
+      password: models.User.encryptPassword(req.body.password)
     }).then(function onSuccess(user) {
       req.login(user, function (err) {
         

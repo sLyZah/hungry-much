@@ -9,7 +9,8 @@ var express       = require('express'),
     path          = require('path'),
     Sequelize     = require('sequelize'),
     passport      = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    expressValidator = require('express-validator');
 
 var app = express();
 
@@ -43,8 +44,12 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   var models = app.get('models');
     
-  models.User.getUser(id).then(function (user) {
-    done(null, user);
+  models.User.find(id).then(function (user) {
+    if (user) {
+      done(null, user);
+    } else {
+      done('User not found');
+    }
   }, function onError(err) {
     done(err);
   });
@@ -57,10 +62,10 @@ require('./models').init(app);
 
 app.use(express.static('jsapp'));
 app.use(express.bodyParser());
+app.use(expressValidator());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'fuckyeahimasessionsecretpleasemakememoresecure'}));
-
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -2,6 +2,9 @@
 /*global */
 'use strict';
 
+
+var httpStatus = require('./httpStatus');
+
 exports.handlePromiseResponse = function (promise, response) {
   return promise.then(function success(result) {
     response.status(200);
@@ -23,59 +26,50 @@ exports.ensureAuthentication = function (req, res, next) {
 };
 
 
-
-
-var validator  = require('validator'),
-    httpStatus = require('./httpStatus');
-
-function Rule(paramName, config) {
-  this.paramName = paramName;
-  this.validators = [];
-  
-  var method;
-  for (method in config) {
-    if (config.hasOwnProperty(method)) {
-      var validate = validator.validators[method];
-      this.validators.push(validate);
-    }
-  }
-}
-
-Rule.prototype.validate = function (request) {
-  var param   = request.param(this.paramName),
-      checker = validator.check(param);
-  
-  this.validators.forEach(function (validate) {
-    validate.apply(checker, [param]);
-  });
+exports.dbErrorHandler = function (res) {
+  return function (error) {
+    res.send(httpStatus.INTERNAL_SERVER_ERROR, error);
+  };
 };
+
 
 // creates a middleware for validating parameters
 exports.validate = function (config) {
-  var rules = [],
-      paramName;
-  
-  for (paramName in config) {
-    if (config.hasOwnProperty(paramName)) {
-      var paramConfig = config[paramName];
-      rules.push(new Rule(paramName, paramConfig));
-    }
-  }
-  
   return function (req, res, next) {
-    var validationSuccess = true;
-    rules.forEach(function (rule) {
-      try {
-        rule.validate(req);
-      } catch (err) {
-        res.send(httpStatus.BAD_REQUEST, '"' + rule.paramName + '": ' + err.message);
-        validationSuccess = false;
-        return false;
-      }
-    });
     
-    if (validationSuccess) {
-      next();
+    req.valid = {};
+    
+    function sendError(paramName, message) {
+      return res.send(
+        httpStatus.BAD_REQUEST,
+        'parameter "' + paramName + '": ' + message
+      );
     }
+    
+    var paramName;
+    for (paramName in config) {
+      var paramRules = config[paramName],
+          paramValue;
+      
+      switch (paramRules.scope) {
+        case 'body':
+          paramValue = req.body[paramName];
+          break;
+        case 'query':
+          paramValue = req.query[paramName];
+          break;
+        default:
+          paramValue = req.param(paramName);
+      }
+      
+      req.valid[paramName] = paramValue;
+      
+      if (paramRules.required && !paramValue) {
+        return sendError(paramName, 'required');
+      }
+    }
+    
+    next();
   };
+  
 };

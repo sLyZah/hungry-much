@@ -25,21 +25,13 @@ exports.init = function (app, passport) {
     utils.handlePromiseResponse(models.Click.getClicks(groupId), res);
   });
   
-  app.post('/clicks', function (req, res) {
-    
-    var groupId = req.body.groupId;
-    var userId = req.user.id;
-    
-    // TODO: check if user belongs to group
-    
-    if (!groupId) {
-      return res.send(httpStatus.BAD_REQUEST, '"groupId" not specified');
+  app.post('/clicks', utils.validate({
+    groupId: {
+      scope: 'body',
+      required: true
     }
-    
-    utils.handlePromiseResponse(models.Click.addClick({
-      userId: userId,
-      groupId: groupId
-    }), res);
+  }), function (req, res) {
+    utils.handlePromiseResponse(req.user.click(req.valid.groupId), res);
   });
   
 };

@@ -60,11 +60,6 @@ module.exports = function(sequelize, app) {
       },
       
       
-      addUser: function (config) {
-        return User.create(config).then(null, handleDBError);
-      },
-      
-      
       changeUser: function (userId, config) {
         return User.update(config, {
           id: userId
@@ -82,6 +77,27 @@ module.exports = function(sequelize, app) {
           id: this.id,
           email: this.email
         };
+      },
+      
+      click: function (groupId) {
+        var models = app.get('models');
+        
+        var user = this;
+        
+        return this.getGroups({where: {id: groupId}}).then(function (groups) {
+          if (groups) {
+            return models.Click.create({
+              UserId: user.id,
+              GroupId: groupId,
+              timestamp: new Date().getTime()
+            });
+          } else {
+            // user doesn't belong to this group
+            return null;
+          }
+        }, function (err) {
+          console.log('fail', err);
+        });
       }
     }
     

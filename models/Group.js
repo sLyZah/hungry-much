@@ -51,7 +51,7 @@ module.exports = function(sequelize, app) {
         return models.User.getUser(config.adminId).then(function (admin) {
           return Group.create(config).then(function (group) {
             return group.addMember(admin).then(function () {
-              return Group.getGroup(group.id);
+              return Group.find(group.id);
             });
           });
         });
@@ -94,7 +94,7 @@ module.exports = function(sequelize, app) {
       
       removeUser: function (groupId, userId) {
         var models = app.get('models');
-        return Q.all([
+        return Promise.all([
           Group.find(groupId),
           models.User.find(userId)
         ]).spread(function (group, user) {
