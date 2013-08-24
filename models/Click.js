@@ -49,7 +49,9 @@ module.exports = function(sequelize, app) {
     },
     
     instanceMethods: {
-      
+      serialize: function () {
+        return this;
+      }
     }
     
   });

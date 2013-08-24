@@ -79,7 +79,14 @@ module.exports = function(sequelize, app) {
         }, handleDBError);
       }
       
+    },
+    
+    instanceMethods: {
+      serialize: function () {
+        return this;
+      }
     }
+    
   });
 
 

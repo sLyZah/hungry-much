@@ -3,36 +3,25 @@
 
 'use strict';
 
-var Promise = require('promise'),
-    utils   = require('./utils');
+var Q          = require('q'),
+    httpStatus = require('./httpStatus');
 
 exports.init = function (app, passport) {
   
   var models = app.get('models');
   
   app.post('/auth/signin', passport.authenticate('local'), function (req, res) {
-    
-    var email    = req.param('email');
-    var password = req.param('password');
-    
-    if (!email) {
-      res.status(500);
-      res.json('"email" not specified');
-      return;
+    if (req.user) {
+      res.status(httpStatus.OK);
+      res.json(req.user.serialize());      
+    } else {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR);
     }
-    
-    if (!password) {
-      res.status(500);
-      res.json('"password" not specified');
-      return;
-    }
-    
-    utils.handlePromiseResponse(Promise.from(req.user), res);
-    
   });
   
-  app.post('/auth/signout', function (req, res) {
-    
+  app.get('/auth/signout', function (req, res) {
+    req.logout();
+    res.send(httpStatus.OK);
   });
   
   app.post('/auth/signup', function (req, res) {
@@ -41,19 +30,19 @@ exports.init = function (app, passport) {
     var password = req.param('password');
     
     if (!name) {
-      res.status(500);
+      res.status(httpStatus.BAD_REQUEST);
       res.json('"name" not specified');
       return;
     }
     
     if (!email) {
-      res.status(500);
+      res.status(httpStatus.BAD_REQUEST);
       res.json('"email" not specified');
       return;
     }
     
     if (!password) {
-      res.status(500);
+      res.status(httpStatus.BAD_REQUEST);
       res.json('"password" not specified');
       return;
     }
@@ -63,22 +52,21 @@ exports.init = function (app, passport) {
       email   : email,
       password: models.User.encryptPassword(password)
     }).then(function (user) {
-      // log the new user in
-      req.login(user, function(err) {
-        var p = new Promise();
+      req.login(user, function (err) {
         
         if (err) {
-          p.reject();
+          res.send(httpStatus.INTERNAL_SERVER_ERROR);
         } else {
-          p.resolve(user);
+          res.status(httpStatus.OK);
+          res.json(user.serialize());
         }
         
-        return p;
       });
-      
+    },function (err) {
+      // TODO: better error handling (duplicate user = 400)
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
     });
     
-    utils.handlePromiseResponse(addUserPromise, res);
   });
   
 };
