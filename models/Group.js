@@ -4,7 +4,8 @@
 var Q          = require('q'),
     Promise = require("promise"),
     Sequelize = require('sequelize'),
-    sqlQuery   = require('sql-query');
+    sqlQuery   = require('sql-query'),
+    Error = require('./Modelerror');
 
 var ERR_GROUP_NOT_FOUND = 'Group not found',
     ERR_UNKNOWN         = 'Error unknown';
@@ -28,32 +29,25 @@ module.exports = function(sequelize, app) {
   var Group = sequelize.define('Group', {
     name: { type: Sequelize.STRING, allowNull: false, unique: true },
     treshold: { type: Sequelize.INTEGER, defaultValue: 3 },
-    adminId: { type: Sequelize.INTEGER }
+    adminId: { type: Sequelize.INTEGER, allowNull: false }
   }, {
     classMethods: {
       
       getGroup: function (id) {
-        return Group.find({
-          where: { id: id }
-        }).then(function (group) {
-          return group !== null ? group : reject({msg: ERR_GROUP_NOT_FOUND});
-        }, handleDBError);
+        return Group.find(id).then(function (group) {
+          if (group) {
+            return group;
+          } else {
+            return Q.reject(
+              new Error(Error.NOT_FOUND, 'Group not found')
+            );
+          }
+        });
       },
       
       getGroupByName: function (name) {
         return Group.find({
           where: { name: name }
-        });
-      },
-      
-      addGroup: function (config) {
-        var models = app.get('models');
-        return models.User.getUser(config.adminId).then(function (admin) {
-          return Group.create(config).then(function (group) {
-            return group.addMember(admin).then(function () {
-              return Group.find(group.id);
-            });
-          });
         });
       },
       
@@ -128,40 +122,85 @@ module.exports = function(sequelize, app) {
         return Group.getGroup(groupId).then(function (group) {
           return group.getDistinctClicks(after);
         });
+      },
+      
+      
+      serializeAll: function (groups) {
+        return Q.all(groups.map(function (group) {
+          return group.serialize();
+        }));
       }
 
 
     },
     instanceMethods: {
-      serialize: function () {
-        return {
+      serialize: function (deep) {
+        var models = app.get('models');
+        
+        var json = {
           name: this.name,
-          id: this.id,
-          admin: this.adminId
+          id: this.id
         };
+        
+        if (deep) {
+          return Q.all([
+            this.getAdmin().then(function (admin) {
+              return admin.serialize();
+            }),
+            this.getMembers().then(function (members) {
+              return models.User.serializeAll(members);
+            })
+          ]).spread(function(adminJson, membersJson) {
+            json.admin   = adminJson;
+            json.members = membersJson;
+            return json;
+          });
+        } else {
+          return Q.when(json);
+        }
+      },
+      
+      getAdmin: function () {
+        var models = app.get('models');
+        return models.User.getUser(this.adminId);
+      },
+      
+      ensureAdminRights: function (user) {
+        if (this.adminId === user.id) {
+          return this;
+        } else {
+          return Q.reject(
+            new Error(Error.UNAUTHORIZED, 'User is no administrator for this group')
+          );
+        }
+      },
+      
+      removeUser: function (user) {
+        if (this.adminId === user.id) {
+          return Q.reject(
+            new Error(Error.REFUSED, 'Cannot remove administrator')
+          );
+        } else {
+          return this.removeMember(user);
+        }
       },
       
       getDistinctClicks: function (after) {
         var models = app.get('models');
         
-        var conditions = [
-          {
-            groupId: this.id
-          }
-        ];
-        
-        if (after) {
-          conditions.push({
-            timestamp: sqlQuery.gt(after)
-          });
-        }
-        
         var q = new sqlQuery.Query().select()
           .from('Clicks')
           .groupBy('groupId', 'userId')
           .where({
-            and: conditions
-          }).build();
+            and: [
+              {
+                groupId: this.id
+              }, {
+                timestamp: sqlQuery.gt(after || 0)
+              }
+            ]
+          })
+          .build();
         
         return sequelize.query(q, models.Click);
         

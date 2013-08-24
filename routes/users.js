@@ -4,98 +4,132 @@
 'use strict';
 
 var utils      = require("./utils"),
-    httpStatus = require('./httpStatus');
+    httpStatus = require('./httpStatus'),
+    Q = require('q');
 
 exports.init = function (app) {
   
   var models = app.get('models');
   
-  app.all('/users*', utils.ensureAuthentication);
-  
-  
-  
-  app.get('/users', utils.validate({
-    email: {
-      required: true
-    }
-  }), function (req, res) {
-    models.User.getUserByEmail(req.param('email')).then(
-      function onSuccess(user) {
-        if (user) {
-          res.status(httpStatus.OK);
-          res.json(user.serialize());
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      utils.dbErrorHandler(res)
-    );
+  /**
+    * GET /users
+    * returns: array of all users
+    */
+  app.get('/users', function (req, res) {
+    
+    var promise = models.User.findAll()
+      .then(function onSuccess(users) {
+        return utils.serializeAll(users);
+      }).then(function (json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
   
-  
-  app.get('/users/me', function (req, res) {
-    res.redirect('/users/' + req.user.id);
+  /**
+    * GET /users/me
+    * authenticated
+    * returns: the currently logged in user
+    */
+  app.get('/users/me', utils.authenticate, function (req, res) {
+    var promise = req.user.serialize(true).then(function (json) {
+      res.status(httpStatus.OK);
+      res.json(json);
+    });
+    
+    utils.handleModelError(promise, res);
   });
   
+  /**
+    * GET /users/:userId
+    * returns: the user with id 'userId'
+    */
   app.get('/users/:userId', utils.validate({
     userId: {
       required: true
     }
   }), function (req, res) {
-    models.User.find(req.param('userId')).then(
-      function onSuccess(user) {
-        if (user) {
-          res.status(httpStatus.OK);
-          res.json(user.serialize());
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      utils.dbErrorHandler(res)
-    );
+    
+    var promise = models.User.getUser(req.param('userId'))
+      .then(function onSuccess(user) {
+        return user.serialize(true);
+      }).then(function (json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
+  });
+  
+  
+  /**
+    * PUT /users/me
+    * Changes the properties of the currently logged in user
+    * authenticated
+    * params:
+    *   name
+    *   email
+    * returns: the user after the change
+    */
+  app.put('/users/me', utils.authenticate, utils.validate({
+    name: {
+      scope: 'body'
+    },
+    email: {
+      scope: 'body'
+    }
+  }), function (req, res) {
+    
+    var attributes = {};
+    if (req.valid.name) { attributes.name = req.valid.name; }
+    if (req.valid.email) { attributes.email = req.valid.email; }
+    
+    var promise = req.user.updateAttributes(attributes)
+      .then(function (user) {
+        return user.serialize(true);
+      }).then(function (json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
   
   
-  app.put('/users/me', function (req, res) {
-    res.redirect('/users/' + req.user.id);
-  });
-  
-  app.put('/users/:userId', utils.validate({
-    userId: {
+  /**
+    * POST /users/me/clicks
+    * Add a click for this user
+    * authenticated
+    * params:
+    *   groupId
+    * returns: the click
+    */
+  app.put('/users/me', utils.authenticate, utils.validate({
+    groupId: {
+      scope: 'body',
       required: true
     }
   }), function (req, res) {
-    var userId = parseInt(req.param('userId'), 10);
-    var name   = req.body.name;
-    var email  = req.body.email;
     
-    if (userId !== req.user.id) {
-      return res.send(httpStatus.UNAUTHORIZED, 'this is not you');
-    }
-    
-    var config = {};
-    
-    if (name) {
-      config.name = name;
-    }
-    
-    if (email) {
-      config.email = email;
-    }
-    
-    models.User.changeUser(userId, config).then(function onSuccess(user) {
-      if (user) {
+    var promise = req.user.click(req.valid.groupId)
+      .then(function (click) {
+        return click.serialize(true);
+      }).then(function (json) {
         res.status(httpStatus.OK);
-        res.json(user.serialize());
-      } else {
-        res.send(httpStatus.NOT_FOUND);
-      }
-    }, function onError(err) {
-      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-    });
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
+  
   
 };
 

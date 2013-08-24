@@ -4,36 +4,35 @@
 'use strict';
 
 var utils      = require('./utils'),
-    httpStatus = require('./httpStatus');
+    httpStatus = require('./httpStatus'),
+    Q = require('q');
 
 exports.init = function (app) {
   
   var models = app.get('models');
   
-  app.all('/groups*', utils.ensureAuthentication);
+  //app.all('/groups*', utils.ensureAuthentication);
   
-  app.get('/groups', utils.validate({
-    name: {
-      scope: 'query',
-      required: true
-    }
-  }), function (req, res) {
-    models.Group.getGroupByName(req.valid.name).then(
-      function onSuccess(group) {
-        if (group) {
-          res.status(httpStatus.OK);
-          res.json(group.serialize());
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      function onError(err) {
-        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-      }
-    );
+  
+  
+  
+  app.get('/groups', function (req, res) {
+    
+    var promise = models.Group.findAll()
+      .then(function onSuccess(groups) {
+        return Q.all(groups.map(function (group) {
+          return group.serialize();
+        }));
+      }).then(function onSerialized(json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
-  app.post('/groups', utils.validate({
+  app.post('/groups', utils.authenticate, utils.validate({
     name: {
       scope: 'body',
       required: true
@@ -42,23 +41,19 @@ exports.init = function (app) {
       scope: 'body'
     }
   }), function (req, res) {
-    models.Group.addGroup({
+    var promise = models.Group.create({
       name    : req.valid.name,
       adminId : req.user.id,
       treshold: req.valid.treshold
-    }).then(
-      function onSuccess(group) {
-        res.status(httpStatus.OK);
-        res.json(group.serialize());
-      },
-      function onError(err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-          res.send(httpStatus.BAD_REQUEST, 'Group already exists');
-        } else {
-          res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-        }
-      }
-    );
+    }).then(function onSuccess(group) {
+      return group.serialize(true);
+    }).then(function onSerialized(json) {
+      res.status(httpStatus.OK);
+      res.json(json);
+    });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
   app.get('/groups/:groupId', utils.validate({
@@ -66,22 +61,23 @@ exports.init = function (app) {
       required: true
     }
   }), function (req, res) {
-    models.Group.find(req.valid.groupId).then(
-      function onSuccess(group) {
-        if (group) {
-          res.status(httpStatus.OK);
-          res.json(group.serialize());
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      function onError(err) {
-        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-      }
-    );
+    
+    var promise = models.Group.getGroup(req.valid.groupId)
+      .then(function onSuccess(group) {
+        return group.serialize(true);
+      }).then(function onSerialized(json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
-  app.put('/groups/:groupId', utils.validate({
+  
+  
+  
+  app.put('/groups/:groupId', utils.authenticate, utils.validate({
     groupId: {
       required: true
     },
@@ -95,44 +91,41 @@ exports.init = function (app) {
       scope: 'body'
     }
   }), function (req, res) {
-    var config = {};
+    var attributes = {};
     
     if (req.valid.name) {
-      config.name = req.valid.name;
+      attributes.name = req.valid.name;
     }
     
     if (req.valid.treshold) {
-      config.treshold = req.valid.treshold;
+      attributes.treshold = req.valid.treshold;
     }
     
     if (req.valid.adminId) {
-      config.admin = req.valid.adminId;
+      attributes.admin = req.valid.adminId;
     }
     
-    models.Group.isAdminForGroup(req.valid.groupId, req.user.id).then(
-      function (isAdmin) {
-        if (isAdmin) {
-          return models.Group.changeGroup(req.valid.groupId, config);
-        } else {
-          res.send(httpStatus.UNAUTHORIZED, 'You are not the admin of this group');
-        }
-      }
-    ).then(
-      function onSuccess(group) {
+    var promise = models.Group.getGroup(req.valid.groupId)
+      .then(function (group) {
+        return group.ensureAdminRights(req.user);
+      }).then(function (group) {
+        return group.updateAttributes(attributes);
+      }).then(function (group) {
+        return group.serialize(true);
+      }).then(function (json) {
         res.status(httpStatus.OK);
-        res.json(group.serialize());
-      },
-      function onError(err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-          return res.send(httpStatus.BAD_REQUEST, 'Group already exists');
-        } else {
-          res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-        }
-      }
-    );
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
-  app.post('/groups/:groupId/users', utils.validate({
+  
+  
+  
+  
+  app.post('/groups/:groupId/users', utils.authenticate, utils.validate({
     groupId: {
       required: true
     },
@@ -141,31 +134,25 @@ exports.init = function (app) {
       required: true
     }
   }), function (req, res) {
-    models.Group.isAdminForGroup(req.valid.groupId, req.user.id).then(
-      function (isAdmin) {
-        if (isAdmin) {
-          return models.Group.addUser(req.valid.groupId, req.valid.userId);
-        } else {
-          res.send(httpStatus.UNAUTHORIZED, 'You are not the admin of this group');
-        }
-      }
-    ).then(
-      function onSuccess(group) {
-        if (group) {
-          res.status(httpStatus.OK);
-          res.json(group.serialize());
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      function onError(err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-          return res.send(httpStatus.BAD_REQUEST, 'Group already exists');
-        } else {
-          res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-        }
-      }
-    );
+    
+    var promise = models.Group.getGroup(req.valid.groupId)
+      .then(function (group) {
+        return group.ensureAdminRights(req.user);
+      }).then(function (group) {
+        return models.User.getUser(req.valid.userId).then(function (user) {
+          return group.addMember(user);
+        }).then(function (member) {
+          return group.getMembers();
+        });
+      }).then(function (members) {
+        return utils.serializeAll(members);
+      }).then(function (json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
   app.get('/groups/:groupId/users', utils.validate({
@@ -173,24 +160,22 @@ exports.init = function (app) {
       required: true
     }
   }), function (req, res) {
-    models.Group.getUsers(req.valid.groupId).then(
-      function (users) {
-        if (users) {
-          res.status(httpStatus.OK);
-          res.json(users.map(function (user) {
-            return user.serialize();
-          }));
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      function (err) {
-        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-      }
-    );
+    
+    var promise = models.Group.getGroup(req.valid.groupId)
+      .then(function (group) {
+        return group.getMembers();
+      }).then(function (members) {
+        return utils.serializeAll(members);
+      }).then(function (json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
-  app.delete('/groups/:groupId/users/:userId', utils.validate({
+  app.delete('/groups/:groupId/users/:userId', utils.authenticate, utils.validate({
     groupId: {
       required: true
     },
@@ -198,30 +183,25 @@ exports.init = function (app) {
       required: true
     }
   }), function (req, res) {
-    models.Group.isAdminForGroup(
-      req.valid.groupId,
-      req.user.id
-    ).then(
-      function onSuccess(isAdmin) {
-        if (isAdmin) {
-          return models.Group.removeUser(req.valid.groupId, req.valid.userId);
-        } else {
-          res.send(httpStatus.UNAUTHORIZED, 'You are not the admin of this group');
-        }
-      }
-    ).then(
-      function onUserRemoved(group) {
-        if (group) {
-          res.status(httpStatus.OK);
-          res.json(group.serialize());
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      function onError(err) {
-        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-      }
-    );
+    
+    var promise = models.Group.getGroup(req.valid.groupId)
+      .then(function (group) {
+        return group.ensureAdminRights(req.user);
+      }).then(function (group) {
+        return models.User.getUser(req.valid.userId).then(function (member) {
+          return group.removeUser(member);
+        }).then(function (member) {
+          return group.getMembers();
+        });
+      }).then(function (members) {
+        return utils.serializeAll(members);
+      }).then(function (json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
   
     
@@ -233,24 +213,23 @@ exports.init = function (app) {
       scope: 'query'
     }
   }), function (req, res) {
-    models.Group.find(req.valid.groupId).then(
-      function (group) {
-        if (group) {
-          group.getDistinctClicks(req.valid.after).then(function (clicks) {
-            res.status(httpStatus.OK);
-            res.json(clicks.map(function (click) {
-              return click.serialize();
-            }));
-          }, function (err) {
-            res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-          });
-        } else {
-          res.send(httpStatus.NOT_FOUND);
-        }
-      },
-      function (err) {
-        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
-      }
-    );
+    
+    var promise = models.Group.getGroup(req.valid.groupId)
+      .then(function (group) {
+        return group.getDistinctClicks(req.valid.after);
+      }).then(function (clicks) {
+        return Q.all(clicks.map(function (click) {
+          return click.serialize();
+        }));
+      }).then(function (json) {
+        res.status(httpStatus.OK);
+        res.json(json);
+      });
+    
+    utils.handleModelError(promise, res);
+    
   });
+  
+  
+  
 };

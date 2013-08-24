@@ -2,7 +2,9 @@
 /*global */
 
 var Promise   = require("promise"),
-    Sequelize = require('sequelize');
+    Sequelize = require('sequelize'),
+    Q = require('q'),
+    Error = require('./ModelError');
 
 var ERR_USER_NOT_FOUND = 'User not found',
     ERR_UNKNOWN        = 'Error unknown';
@@ -11,16 +13,6 @@ var ERR_USER_NOT_FOUND = 'User not found',
 
 module.exports = function(sequelize, app) {
   'use strict';
-  
-  function reject(value) {
-    return new Promise(function (resolve, reject) {
-      reject(value);
-    });
-  }
-  
-  function handleDBError(error) {
-    return reject(error);
-  }
   
   var User = sequelize.define('User', {
     name: {
@@ -48,13 +40,29 @@ module.exports = function(sequelize, app) {
       },
       
       getUser: function (id) {
-        return User.find(id);
+        return User.find(id).then(function (user) {
+          if (user) {
+            return user;
+          } else {
+            return Q.reject(
+              new Error(Error.NOT_FOUND, 'User not found')
+            );
+          }
+        });
       },
       
       getUserByEmail: function (email) {
         return User.find({
           where: {
             email: email
+          }
+        }).then(function (user) {
+          if (user) {
+            return user;
+          } else {
+            return Q.reject(
+              new Error(Error.NOT_FOUND, 'User not found')
+            );
           }
         });
       },
@@ -64,19 +72,54 @@ module.exports = function(sequelize, app) {
         return User.update(config, {
           id: userId
         }).then(function () {
-          return User.find(userId);
-        }, handleDBError);
+          return User.getUser(userId);
+        });
+      },
+      
+      
+      serializeAll: function (users) {
+        return Q.all(users.map(function (user) {
+          return user.serialize();
+        }));
       }
       
     },
     
     instanceMethods: {
-      serialize: function () {
-        return {
-          name: this.name,
-          id: this.id,
+      
+      serialize: function (deep) {
+        var models = app.get('models');
+        var json = {
+          name : this.name,
+          id   : this.id,
           email: this.email
         };
+        
+        if (deep) {
+          return Q.all([
+            this.getAdminGroups().then(function (groups) {
+              return models.Group.serializeAll(groups);
+            }),
+            this.getGroups().then(function (groups) {
+              return models.Group.serializeAll(groups);
+            })
+          ]).spread(function(adminGroupsJson, groupsJson) {
+            json.administers = adminGroupsJson;
+            json.belongsTo = groupsJson;
+            return json;
+          });
+        } else {
+          return Q.when(json);
+        }
+      },
+      
+      getAdminGroups: function () {
+        var models = app.get('models');
+        return models.Group.findAll({
+          where: {
+            adminId: this.id
+          }
+        });
       },
       
       click: function (groupId) {
@@ -92,11 +135,10 @@ module.exports = function(sequelize, app) {
               timestamp: new Date().getTime()
             });
           } else {
-            // user doesn't belong to this group
-            return null;
+            return Q.reject(
+              new Error(Error.NOT_FOUND, 'User doesn\'t belong to this group')
+            );
           }
-        }, function (err) {
-          console.log('fail', err);
         });
       }
     }

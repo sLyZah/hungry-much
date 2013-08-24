@@ -3,7 +3,9 @@
 'use strict';
 
 
-var httpStatus = require('./httpStatus');
+var httpStatus = require('./httpStatus'),
+    ModelError = require('../models/ModelError'),
+    Q          = require('q');
 
 exports.handlePromiseResponse = function (promise, response) {
   return promise.then(function success(result) {
@@ -17,6 +19,7 @@ exports.handlePromiseResponse = function (promise, response) {
   });
 };
 
+//TODO: remove when all refernces are gone 
 exports.ensureAuthentication = function (req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -25,6 +28,7 @@ exports.ensureAuthentication = function (req, res, next) {
   }
 };
 
+exports.authenticate = exports.ensureAuthentication;
 
 exports.dbErrorHandler = function (res) {
   return function (error) {
@@ -32,6 +36,31 @@ exports.dbErrorHandler = function (res) {
   };
 };
 
+
+
+function mapModelErrorToHttpStatus(error) {
+  console.log(error.code);
+  switch (error.code) {
+    case ModelError.NOT_FOUND: return httpStatus.NOT_FOUND;
+    case ModelError.DUPLICATE: return httpStatus.BAD_REQUEST;
+    case ModelError.UNAUTHORIZED: return httpStatus.UNAUTHORIZED;
+    case ModelError.REFUSED: return httpStatus.FORBIDDEN;
+    default: return httpStatus.INTERNAL_SERVER_ERROR;
+  }
+}
+
+exports.handleModelError = function (dbPromise, response) {
+  dbPromise.then(null, function (modelError) {
+    var status = mapModelErrorToHttpStatus(modelError);
+    response.send(status, modelError.message);
+  });
+};
+
+exports.serializeAll = function (models, deep) {
+  return Q.all(models.map(function (model) {
+    return model.serialize(deep);
+  }));
+};
 
 // creates a middleware for validating parameters
 exports.validate = function (config) {
