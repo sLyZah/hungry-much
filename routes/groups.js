@@ -9,6 +9,8 @@ exports.init = function (app) {
   
   var models = app.get('models');
   
+  app.all('/groups*', utils.ensureAuthentication);
+  
   app.get('/groups', function (req, res) {
     var name = req.param('name');
     

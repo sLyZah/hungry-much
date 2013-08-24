@@ -1,7 +1,7 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
 /*global */
 
-var Promise = require("promise"),
+var Promise   = require("promise"),
     Sequelize = require('sequelize');
 
 var ERR_USER_NOT_FOUND = 'User not found',
@@ -26,11 +26,28 @@ module.exports = function(sequelize, app) {
   }
   
   var User = sequelize.define('User', {
-    name: { type: Sequelize.STRING, allowNull: false },
-    email: { type: Sequelize.STRING, validate: { isEmail: true } }
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    email: {
+      type: Sequelize.STRING,
+      unique: true,
+      validate: {
+        isEmail: true
+      },
+      allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING
+    }
   }, {
   
     classMethods: {
+      
+      encryptPassword: function (password) {
+        return password;
+      },
       
       getUser: function (id) {
         return User.find(id).then(function (user) {
@@ -38,11 +55,10 @@ module.exports = function(sequelize, app) {
         }, handleDBError);
       },
       
-      
-      getUserByName: function (name) {
+      getUserByEmail: function (email) {
         return User.find({
           where: {
-            name: name
+            email: email
           }
         }).then(function (user) {
           return user !== null ? user : reject({msg: ERR_USER_NOT_FOUND});
@@ -63,8 +79,16 @@ module.exports = function(sequelize, app) {
         }, handleDBError);
       }
       
+    },
+    
+    instanceMethods: {
+      serialize: function () {
+        return this;
+      }
     }
+    
   });
+
 
   return User;
 };

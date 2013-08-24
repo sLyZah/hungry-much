@@ -117,6 +117,10 @@ module.exports = function(sequelize, app) {
 
     },
     instanceMethods: {
+      serialize: function () {
+        return this;
+      },
+      
       getDistinctClicks: function (after) {
         var models = app.get('models');
         
