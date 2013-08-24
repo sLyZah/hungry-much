@@ -4,6 +4,8 @@
 'use strict';
 
 var utils = require('./utils');
+var Q          = require('q'),
+    httpStatus = require('./httpStatus');
 
 exports.init = function (app, passport) {
   
@@ -25,25 +27,13 @@ exports.init = function (app, passport) {
   
   app.post('/clicks', function (req, res) {
     
-    var userId  = req.param('userId');
-    var groupId = req.param('groupId');
+    var groupId = req.body.groupId;
+    var userId = req.user.id;
     
-    if (!userId) {
-      res.status(500);
-      res.json('"userId" not specified');
-      return;
-    }
-    
-    if (parseInt(userId, 10) !== req.user.id) {
-      res.status(401);
-      res.json('Unauthorized');
-      return;
-    }
+    // TODO: check if user belongs to group
     
     if (!groupId) {
-      res.status(500);
-      res.json('"groupId" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"groupId" not specified');
     }
     
     utils.handlePromiseResponse(models.Click.addClick({

@@ -3,7 +3,8 @@
 
 'use strict';
 
-var utils = require("./utils");
+var utils      = require("./utils"),
+    httpStatus = require('./httpStatus');
 
 exports.init = function (app) {
   
@@ -12,38 +13,64 @@ exports.init = function (app) {
   app.all('/users*', utils.ensureAuthentication);
   
   app.get('/users', function (req, res) {
-    var email  = req.param('email');
+    var email = req.query.email;
     
     if (!email) {
-      res.status(500);
-      res.json('"email" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"email" not specified');
     }
     
-    utils.handlePromiseResponse(models.User.getUserByEmail(email), res);
+    models.User.getUserByEmail(email).then(function onSuccess(user) {
+      if (user) {
+        res.status(httpStatus.OK);
+        res.json(user.serialize());
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function onError(err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
+  });
+  
+  app.get('/users/me', function (req, res) {
+    res.redirect('/users/' + req.user.id);
   });
   
   app.get('/users/:userId', function (req, res) {
     var userId  = req.param('userId');
     
     if (!userId) {
-      res.status(500);
-      res.json('"userId" not specified');
-      return;
+      // userId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
-    utils.handlePromiseResponse(models.User.getUser(userId), res);
+    models.User.find(userId).then(function onSuccess(user) {
+      if (user) {
+        res.status(httpStatus.OK);
+        res.json(user.serialize());
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function onError(err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
+  });
+  
+  app.put('/users/me', function (req, res) {
+    res.redirect('/users/' + req.user.id);
   });
   
   app.put('/users/:userId', function (req, res) {
-    var userId = req.param('userId');
-    var name   = req.param('name');
-    var email  = req.param('email');
+    var userId = parseInt(req.param('userId'), 10);
+    var name   = req.body.name;
+    var email  = req.body.email;
     
     if (!userId) {
-      res.status(500);
-      res.json('"userId" not specified');
-      return;
+      // userId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
+    }
+    
+    if (userId !== req.user.id) {
+      return res.send(httpStatus.UNAUTHORIZED, 'this is not you');
     }
     
     var config = {};
@@ -56,7 +83,16 @@ exports.init = function (app) {
       config.email = email;
     }
     
-    utils.handlePromiseResponse(models.User.changeUser(userId, config), res);
+    models.User.changeUser(userId, config).then(function onSuccess(user) {
+      if (user) {
+        res.status(httpStatus.OK);
+        res.json(user.serialize());
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function onError(err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
   });
   
 };

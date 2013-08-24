@@ -4,7 +4,8 @@
 'use strict';
 
 var Q          = require('q'),
-    httpStatus = require('./httpStatus');
+    httpStatus = require('./httpStatus'),
+    utils = require('./utils');
 
 exports.init = function (app, passport) {
   
@@ -25,33 +26,27 @@ exports.init = function (app, passport) {
   });
   
   app.post('/auth/signup', function (req, res) {
-    var name     = req.param('name');
-    var email    = req.param('email');
-    var password = req.param('password');
+    var name     = req.body.name;
+    var email    = req.body.email;
+    var password = req.body.password;
     
     if (!name) {
-      res.status(httpStatus.BAD_REQUEST);
-      res.json('"name" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"name" not specified');
     }
     
     if (!email) {
-      res.status(httpStatus.BAD_REQUEST);
-      res.json('"email" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"email" not specified');
     }
     
     if (!password) {
-      res.status(httpStatus.BAD_REQUEST);
-      res.json('"password" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"password" not specified');
     }
     
     var addUserPromise = models.User.addUser({
       name    : name,
       email   : email,
       password: models.User.encryptPassword(password)
-    }).then(function (user) {
+    }).then(function onSuccess(user) {
       req.login(user, function (err) {
         
         if (err) {
@@ -62,9 +57,12 @@ exports.init = function (app, passport) {
         }
         
       });
-    },function (err) {
-      // TODO: better error handling (duplicate user = 400)
-      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    },function onError(err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.send(httpStatus.BAD_REQUEST, 'User already exists');
+      } else {
+        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+      }
     });
     
   });

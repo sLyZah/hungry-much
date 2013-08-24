@@ -21,3 +21,61 @@ exports.ensureAuthentication = function (req, res, next) {
     return res.send(401, 'Unauthorized');
   }
 };
+
+
+
+
+var validator  = require('validator'),
+    httpStatus = require('./httpStatus');
+
+function Rule(paramName, config) {
+  this.paramName = paramName;
+  this.validators = [];
+  
+  var method;
+  for (method in config) {
+    if (config.hasOwnProperty(method)) {
+      var validate = validator.validators[method];
+      this.validators.push(validate);
+    }
+  }
+}
+
+Rule.prototype.validate = function (request) {
+  var param   = request.param(this.paramName),
+      checker = validator.check(param);
+  
+  this.validators.forEach(function (validate) {
+    validate.apply(checker, [param]);
+  });
+};
+
+// creates a middleware for validating parameters
+exports.validate = function (config) {
+  var rules = [],
+      paramName;
+  
+  for (paramName in config) {
+    if (config.hasOwnProperty(paramName)) {
+      var paramConfig = config[paramName];
+      rules.push(new Rule(paramName, paramConfig));
+    }
+  }
+  
+  return function (req, res, next) {
+    var validationSuccess = true;
+    rules.forEach(function (rule) {
+      try {
+        rule.validate(req);
+      } catch (err) {
+        res.send(httpStatus.BAD_REQUEST, '"' + rule.paramName + '": ' + err.message);
+        validationSuccess = false;
+        return false;
+      }
+    });
+    
+    if (validationSuccess) {
+      next();
+    }
+  };
+};

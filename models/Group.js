@@ -1,7 +1,8 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
 /*global */
 
-var Promise = require("promise"),
+var Q          = require('q'),
+    Promise = require("promise"),
     Sequelize = require('sequelize'),
     sqlQuery   = require('sql-query');
 
@@ -42,9 +43,7 @@ module.exports = function(sequelize, app) {
       getGroupByName: function (name) {
         return Group.find({
           where: { name: name }
-        }).then(function (group) {
-          return group !== null ? group : reject({msg: ERR_GROUP_NOT_FOUND});
-        }, handleDBError);
+        });
       },
       
       addGroup: function (config) {
@@ -54,7 +53,7 @@ module.exports = function(sequelize, app) {
             return group.addMember(admin).then(function () {
               return Group.getGroup(group.id);
             });
-          }, handleDBError);
+          });
         });
       },
       
@@ -63,23 +62,29 @@ module.exports = function(sequelize, app) {
           id: id
         }).then(function (group) {
           return Group.getGroup(id);
-        }, handleDBError);
+        });
       },
       
       getUsers: function (groupId) {
-        return Group.getGroup(groupId).then(function (group) {
-          return group.getMembers();
+        return Group.find(groupId).then(function (group) {
+          if (group) {
+            console.log('getting members');
+            return group.getMembers();
+          } else {
+            return null;
+          }
         });
       },
       
       addUser: function (groupId, userId) {
         var models = app.get('models');
-        return Promise.all([
-          Group.getGroup(groupId),
-          models.User.getUser(userId)
-        ]).then(function (results) {
-          var group = results[0],
-              user  = results[1];
+        return Q.all([
+          Group.find(groupId),
+          models.User.find(userId)
+        ]).spread(function (group, user) {
+          if (!group || !user) {
+            return null;
+          }
           
           return group.addMember(user).then(function () {
             return Group.getGroup(groupId);
@@ -89,12 +94,13 @@ module.exports = function(sequelize, app) {
       
       removeUser: function (groupId, userId) {
         var models = app.get('models');
-        return Promise.all([
-          Group.getGroup(groupId),
-          models.User.getUser(userId)
-        ]).then(function (results) {
-          var group = results[0],
-              user  = results[1];
+        return Q.all([
+          Group.find(groupId),
+          models.User.find(userId)
+        ]).spread(function (group, user) {
+          if (!group || !user) {
+            return null;
+          }
           
           if (user.id === group.adminId) {
             return reject({msg: 'Can\'t remove administrator'});
@@ -103,6 +109,16 @@ module.exports = function(sequelize, app) {
           return group.removeMember(user).then(function (result) {
             return Group.getGroup(groupId);
           });
+        });
+      },
+      
+      isAdminForGroup: function (groupId, adminId) {
+        return Group.find(groupId).then(function (group) {
+          if (group && group.adminId === adminId) {
+            return true;
+          } else {
+            return false;
+          }
         });
       },
       
@@ -118,7 +134,11 @@ module.exports = function(sequelize, app) {
     },
     instanceMethods: {
       serialize: function () {
-        return this;
+        return {
+          name: this.name,
+          id: this.id,
+          admin: this.adminId
+        };
       },
       
       getDistinctClicks: function (after) {

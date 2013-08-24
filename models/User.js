@@ -19,10 +19,7 @@ module.exports = function(sequelize, app) {
   }
   
   function handleDBError(error) {
-    return reject({
-      msg: ERR_UNKNOWN,
-      err: error
-    });
+    return reject(error);
   }
   
   var User = sequelize.define('User', {
@@ -46,13 +43,12 @@ module.exports = function(sequelize, app) {
     classMethods: {
       
       encryptPassword: function (password) {
+        // TODO: fo' real
         return password;
       },
       
       getUser: function (id) {
-        return User.find(id).then(function (user) {
-          return user !== null ? user : reject({msg: ERR_USER_NOT_FOUND});
-        }, handleDBError);
+        return User.find(id);
       },
       
       getUserByEmail: function (email) {
@@ -60,9 +56,7 @@ module.exports = function(sequelize, app) {
           where: {
             email: email
           }
-        }).then(function (user) {
-          return user !== null ? user : reject({msg: ERR_USER_NOT_FOUND});
-        }, handleDBError);
+        });
       },
       
       
@@ -75,7 +69,7 @@ module.exports = function(sequelize, app) {
         return User.update(config, {
           id: userId
         }).then(function () {
-          return User.getUser(userId);
+          return User.find(userId);
         }, handleDBError);
       }
       
@@ -83,7 +77,11 @@ module.exports = function(sequelize, app) {
     
     instanceMethods: {
       serialize: function () {
-        return this;
+        return {
+          name: this.name,
+          id: this.id,
+          email: this.email
+        };
       }
     }
     

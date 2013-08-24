@@ -17,6 +17,8 @@
     "sql-query": "~0.1.11",
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
-    "q": "~0.9.6"
+    "q": "~0.9.6",
+    "validator": "~1.5.0",
+    "express-validator": "~0.8.0"
   }
 }

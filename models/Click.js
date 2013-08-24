@@ -50,7 +50,11 @@ module.exports = function(sequelize, app) {
     
     instanceMethods: {
       serialize: function () {
-        return this;
+        return {
+          timestamp: this.timestamp,
+          userId: this.UserId,
+          groupId: this.GroupId
+        };
       }
     }
     

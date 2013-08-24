@@ -3,7 +3,8 @@
 
 'use strict';
 
-var utils = require('./utils');
+var utils      = require('./utils'),
+    httpStatus = require('./httpStatus');
 
 exports.init = function (app) {
   
@@ -12,64 +13,77 @@ exports.init = function (app) {
   app.all('/groups*', utils.ensureAuthentication);
   
   app.get('/groups', function (req, res) {
-    var name = req.param('name');
+    var name = req.query.name;
     
     if (!name) {
-      res.status(500);
-      res.json('"name" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"name" not specified');
     }
     
-    utils.handlePromiseResponse(models.Group.getGroupByName(name), res);
-    
+    models.Group.getGroupByName(name).then(function onSuccess(group) {
+      if (group) {
+        res.status(httpStatus.OK);
+        res.json(group.serialize());
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function onError(err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
   });
   
   app.post('/groups', function (req, res) {
-    var name     = req.param('name');
-    var admin    = req.param('admin');
-    var treshold = req.param('treshold');
+    var name     = req.body.name;
+    var treshold = req.body.treshold;
     
     if (!name) {
-      res.status(500);
-      res.json('"name" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"name" not specified');
     }
     
-    if (!admin) {
-      res.status(500);
-      res.json('"admin" not specified');
-      return;
-    }
-    
-    utils.handlePromiseResponse(models.Group.addGroup({
+    models.Group.addGroup({
       name: name,
-      adminId: admin,
+      adminId: req.user.id,
       treshold: treshold
-    }), res);
+    }).then(function onSuccess(group) {
+      res.status(httpStatus.OK);
+      res.json(group.serialize());
+    }, function onError(err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.send(httpStatus.BAD_REQUEST, 'Group already exists');
+      } else {
+        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+      }
+    });
   });
   
   app.get('/groups/:groupId', function (req, res) {
-    var groupId = req.param('groupId');
+    var groupId = parseInt(req.param('groupId'), 10);
     
     if (!groupId) {
-      res.status(500);
-      res.json('"groupId" not specified');
-      return;
+      // groupId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
-    utils.handlePromiseResponse(models.Group.getGroup(groupId), res);
+    models.Group.find(groupId).then(function onSuccess(group) {
+      if (group) {
+        res.status(httpStatus.OK);
+        res.json(group.serialize());
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function onError(err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
   });
   
   app.put('/groups/:groupId', function (req, res) {
     var groupId  = req.param('groupId');
-    var admin    = req.param('admin');
-    var name     = req.param('name');
-    var treshold = req.param('treshold');
+    var adminId  = parseInt(req.body.adminId, 10);
+    var name     = req.body.name;
+    var treshold = req.body.treshold;
     
     if (!groupId) {
-      res.status(500);
-      res.json('"groupId" not specified');
-      return;
+      // groupId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
     var config = {};
@@ -82,42 +96,83 @@ exports.init = function (app) {
       config.treshold = treshold;
     }
     
-    if (admin) {
-      config.admin = admin;
+    if (adminId) {
+      config.admin = adminId;
     }
     
-    utils.handlePromiseResponse(models.Group.changeGroup(groupId, config), res);
+    models.Group.isAdminForGroup(groupId, req.user.id).then(function (isAdmin) {
+      if (isAdmin) {
+        return models.Group.changeGroup(groupId, config);
+      } else {
+        res.send(httpStatus.UNAUTHORIZED, 'You are not the admin of this group');
+      }
+    }).then(function onSuccess(group) {
+      res.status(httpStatus.OK);
+      res.json(group.serialize());
+    }, function onError(err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.send(httpStatus.BAD_REQUEST, 'Group already exists');
+      } else {
+        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+      }
+    });
   });
   
   app.post('/groups/:groupId/users', function (req, res) {
     var groupId = req.param('groupId');
-    var userId  = req.param('userId');
+    var userId  = req.body.userId;
     
     if (!groupId) {
-      res.status(500);
-      res.json('"groupId" not specified');
-      return;
+      // groupId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
     if (!userId) {
-      res.status(500);
-      res.json('"userId" not specified');
-      return;
+      return res.send(httpStatus.BAD_REQUEST, '"userId" not specified');
     }
     
-    utils.handlePromiseResponse(models.Group.addUser(groupId, userId), res);
+    models.Group.isAdminForGroup(groupId, req.user.id).then(function (isAdmin) {
+      if (isAdmin) {
+        return models.Group.addUser(groupId, userId);
+      } else {
+        res.send(httpStatus.UNAUTHORIZED, 'You are not the admin of this group');
+      }
+    }).then(function onSuccess(group) {
+      if (group) {
+        res.status(httpStatus.OK);
+        res.json(group.serialize());
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function onError(err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.send(httpStatus.BAD_REQUEST, 'Group already exists');
+      } else {
+        res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+      }
+    });
   });
   
   app.get('/groups/:groupId/users', function (req, res) {
     var groupId = req.param('groupId');
     
     if (!groupId) {
-      res.status(500);
-      res.json('"groupId" not specified');
-      return;
+      // groupId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
-    utils.handlePromiseResponse(models.Group.getUsers(groupId), res);
+    models.Group.getUsers(groupId).then(function (users) {
+      if (users) {
+        res.status(httpStatus.OK);
+        res.json(users.map(function (user) {
+          return user.serialize();
+        }));
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function (err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
   });
   
   app.delete('/groups/:groupId/users/:userId', function (req, res) {
@@ -125,35 +180,62 @@ exports.init = function (app) {
     var userId  = req.param('userId');
     
     if (!groupId) {
-      res.status(500);
-      res.json('"groupId" not specified');
-      return;
+      // groupId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
     if (!userId) {
-      res.status(500);
-      res.json('"userId" not specified');
-      return;
+      // userId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
-    utils.handlePromiseResponse(models.Group.removeUser(groupId, userId), res);
+    models.Group.isAdminForGroup(groupId, req.user.id).then(function (isAdmin) {
+      if (isAdmin) {
+        return models.Group.removeUser(groupId, userId);
+      } else {
+        res.send(httpStatus.UNAUTHORIZED, 'You are not the admin of this group');
+      }
+    }).then(function (group) {
+      if (group) {
+        res.status(httpStatus.OK);
+        res.json(group.serialize());
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function (err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
   });
   
     
   app.get('/groups/:groupId/clicks', function (req, res) {
     var groupId = req.param('groupId');
-    var after   = req.param('after');
+    var after   = req.query.after;
     
     if (!groupId) {
-      res.status(500);
-      res.json('"groupId" not specified');
-      return;
+      // groupId should be specified in the path
+      return res.send(httpStatus.INTERNAL_SERVER_ERROR, 'Unreachable code');
     }
     
     var cfg = {};
     cfg.after = after;
     cfg.groupId = groupId;
     
-    utils.handlePromiseResponse(models.Group.getDistinctClicks(groupId, after), res);
+    models.Group.find(groupId).then(function (group) {
+      if (group) {
+        group.getDistinctClicks(after).then(function (clicks) {
+          res.status(httpStatus.OK);
+          res.json(clicks.map(function (click) {
+            return click.serialize();
+          }));
+        }, function (err) {
+          res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+        });
+      } else {
+        res.send(httpStatus.NOT_FOUND);
+      }
+    }, function (err) {
+      res.send(httpStatus.INTERNAL_SERVER_ERROR, err);
+    });
   });
 };
