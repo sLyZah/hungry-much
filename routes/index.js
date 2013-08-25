@@ -5,7 +5,7 @@
 
 function initRoutes(app, passport) {
   
-  [ 'auth', 'users', 'clicks', 'groups' ].forEach(function(route) {
+  [ 'auth', 'users', 'groups' ].forEach(function(route) {
     require(__dirname + '/' + route).init(app, passport);
   });
 }

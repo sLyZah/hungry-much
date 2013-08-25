@@ -3,9 +3,11 @@
 
 'use strict';
 
-var Q          = require('q'),
-    httpStatus = require('./httpStatus'),
-    utils = require('./utils');
+var Q            = require('q'),
+    validate     = require('../middleware/validate'),
+    authenticate = require('../middleware/authenticate'),
+    httpStatus   = require('../utils/httpStatus'),
+    modelUtils   = require('../utils/modelUtils');
 
 exports.init = function (app, passport) {
   
@@ -20,7 +22,7 @@ exports.init = function (app, passport) {
     *   password
     * returns: the user after he's signed in
     */
-  app.post('/auth/signin', utils.validate({
+  app.post('/auth/signin', validate({
     email: {
       scope: 'body',
       required: true
@@ -36,7 +38,7 @@ exports.init = function (app, passport) {
       res.json(json);      
     });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
@@ -60,7 +62,7 @@ exports.init = function (app, passport) {
     *   password
     * returns: the user after he's created
     */
-  app.post('/auth/signup', utils.validate({
+  app.post('/auth/signup', validate({
     name: {
       scope: 'body',
       required: true
@@ -96,7 +98,7 @@ exports.init = function (app, passport) {
       res.json(json);
     });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   

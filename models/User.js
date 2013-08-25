@@ -1,10 +1,10 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
 /*global */
 
-var Promise   = require("promise"),
-    Sequelize = require('sequelize'),
-    Q = require('q'),
-    Error = require('./ModelError');
+var Sequelize = require('sequelize'),
+    Q         = require('q'),
+    Error     = require('./ModelError'),
+    crypto    = require('crypto');
 
 var ERR_USER_NOT_FOUND = 'User not found',
     ERR_UNKNOWN        = 'Error unknown';
@@ -36,7 +36,8 @@ module.exports = function(sequelize, app) {
       
       encryptPassword: function (password) {
         // TODO: fo' real
-        return password;
+        var hash = crypto.createHash('sha1');
+        return hash.update(password).digest('hex');
       },
       
       getUser: function (id) {

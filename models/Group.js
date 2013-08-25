@@ -2,7 +2,6 @@
 /*global */
 
 var Q          = require('q'),
-    Promise = require("promise"),
     Sequelize = require('sequelize'),
     sqlQuery   = require('sql-query'),
     Error = require('./Modelerror');
@@ -12,19 +11,6 @@ var ERR_GROUP_NOT_FOUND = 'Group not found',
 
 module.exports = function(sequelize, app) {
   'use strict';
-  
-  function reject(value) {
-    return new Promise(function (resolve, reject) {
-      reject(value);
-    });
-  }
-  
-  function handleDBError(error) {
-    return reject({
-      msg: ERR_UNKNOWN,
-      err: error
-    });
-  }
   
   var Group = sequelize.define('Group', {
     name: { type: Sequelize.STRING, allowNull: false, unique: true },
@@ -81,26 +67,6 @@ module.exports = function(sequelize, app) {
           }
           
           return group.addMember(user).then(function () {
-            return Group.getGroup(groupId);
-          });
-        });
-      },
-      
-      removeUser: function (groupId, userId) {
-        var models = app.get('models');
-        return Promise.all([
-          Group.find(groupId),
-          models.User.find(userId)
-        ]).spread(function (group, user) {
-          if (!group || !user) {
-            return null;
-          }
-          
-          if (user.id === group.adminId) {
-            return reject({msg: 'Can\'t remove administrator'});
-          }
-          
-          return group.removeMember(user).then(function (result) {
             return Group.getGroup(groupId);
           });
         });
@@ -204,6 +170,10 @@ module.exports = function(sequelize, app) {
         
         return sequelize.query(q, models.Click);
         
+      },
+      
+      countClicks: function (after) {
+      
       }
     }
   });

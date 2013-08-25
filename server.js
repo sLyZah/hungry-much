@@ -9,8 +9,7 @@ var express       = require('express'),
     path          = require('path'),
     Sequelize     = require('sequelize'),
     passport      = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-    expressValidator = require('express-validator');
+    LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
@@ -62,7 +61,6 @@ require('./models').init(app);
 
 app.use(express.static('jsapp'));
 app.use(express.bodyParser());
-app.use(expressValidator());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'fuckyeahimasessionsecretpleasemakememoresecure'}));

@@ -3,19 +3,22 @@
 
 'use strict';
 
-var utils      = require('./utils'),
-    httpStatus = require('./httpStatus'),
-    Q = require('q');
+var Q            = require('q'),
+    validate     = require('../middleware/validate'),
+    authenticate = require('../middleware/authenticate'),
+    httpStatus   = require('../utils/httpStatus'),
+    modelUtils   = require('../utils/modelUtils');
 
 exports.init = function (app) {
   
   var models = app.get('models');
   
-  //app.all('/groups*', utils.ensureAuthentication);
   
   
-  
-  
+  /**
+    * GET /groups
+    * returns: array of all groups
+    */
   app.get('/groups', function (req, res) {
     
     var promise = models.Group.findAll()
@@ -28,11 +31,21 @@ exports.init = function (app) {
         res.json(json);
       });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
-  app.post('/groups', utils.authenticate, utils.validate({
+  
+  /**
+    * POST /groups
+    * Creates a new group with the currently logged in user as administrator
+    * authenticated
+    * params:
+    *   name
+    *   treshold [optional]
+    * returns: the new group
+    */
+  app.post('/groups', authenticate, validate({
     name: {
       scope: 'body',
       required: true
@@ -52,11 +65,16 @@ exports.init = function (app) {
       res.json(json);
     });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
-  app.get('/groups/:groupId', utils.validate({
+  
+  /**
+    * GET /groups/:groupId
+    * returns: the group with groupId
+    */
+  app.get('/groups/:groupId', validate({
     groupId: {
       required: true
     }
@@ -70,14 +88,23 @@ exports.init = function (app) {
         res.json(json);
       });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
   
   
-  
-  app.put('/groups/:groupId', utils.authenticate, utils.validate({
+  /**
+    * PUT /groups
+    * Changes the properties of a group. You need to be administrator for that
+    * authenticated
+    * params:
+    *   name [optional]
+    *   treshold [optional]
+    *   adminId [optional]
+    * returns: the changed group
+    */
+  app.put('/groups/:groupId', authenticate, validate({
     groupId: {
       required: true
     },
@@ -117,15 +144,22 @@ exports.init = function (app) {
         res.json(json);
       });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
   
   
   
-  
-  app.post('/groups/:groupId/users', utils.authenticate, utils.validate({
+  /**
+    * POST /groups/:groupId/users
+    * Adds a user to a group
+    * authenticated
+    * params:
+    *   userId
+    * returns: a list of the users in the group after the change
+    */
+  app.post('/groups/:groupId/users', authenticate, validate({
     groupId: {
       required: true
     },
@@ -145,17 +179,22 @@ exports.init = function (app) {
           return group.getMembers();
         });
       }).then(function (members) {
-        return utils.serializeAll(members);
+        return modelUtils.serializeAll(members);
       }).then(function (json) {
         res.status(httpStatus.OK);
         res.json(json);
       });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
-  app.get('/groups/:groupId/users', utils.validate({
+  
+  /**
+    * GET /groups/:groupId/users
+    * returns: a list of the users in the group
+    */
+  app.get('/groups/:groupId/users', validate({
     groupId: {
       required: true
     }
@@ -165,17 +204,27 @@ exports.init = function (app) {
       .then(function (group) {
         return group.getMembers();
       }).then(function (members) {
-        return utils.serializeAll(members);
+        return modelUtils.serializeAll(members);
       }).then(function (json) {
         res.status(httpStatus.OK);
         res.json(json);
       });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
-  app.delete('/groups/:groupId/users/:userId', utils.authenticate, utils.validate({
+  
+  
+  /**
+    * DELETE /groups/:groupId/users/:userId
+    * Removes a user from a group
+    * authenticated
+    * params:
+    *   userId
+    * returns: a list of the users in the group after the change
+    */
+  app.delete('/groups/:groupId/users/:userId', authenticate, validate({
     groupId: {
       required: true
     },
@@ -194,18 +243,25 @@ exports.init = function (app) {
           return group.getMembers();
         });
       }).then(function (members) {
-        return utils.serializeAll(members);
+        return modelUtils.serializeAll(members);
       }).then(function (json) {
         res.status(httpStatus.OK);
         res.json(json);
       });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   
-    
-  app.get('/groups/:groupId/clicks', utils.validate({
+  
+  /**
+    * POST /groups/:groupId/users
+    * Returns the clicks for a group
+    * params:
+    *   after [optional]
+    * returns: a list of the clicks for the group
+    */
+  app.get('/groups/:groupId/clicks', validate({
     groupId: {
       required: true
     },
@@ -226,7 +282,7 @@ exports.init = function (app) {
         res.json(json);
       });
     
-    utils.handleModelError(promise, res);
+    modelUtils.handleModelError(promise, res);
     
   });
   

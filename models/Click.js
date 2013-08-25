@@ -1,7 +1,7 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
 /*global */
 
-var Promise = require('promise'),
+var Q = require('q'),
     Sequelize = require('sequelize');
 
 
@@ -26,7 +26,7 @@ module.exports = function(sequelize, app) {
       addClick: function (config) {
         var models = app.get('models');
     
-        return Promise.all([
+        return Q.all([
           models.User.getUser(config.userId),
           models.Group.find(config.groupId)
         ]).then(function (results) {
@@ -36,7 +36,7 @@ module.exports = function(sequelize, app) {
           return Click.create({
             timestamp: new Date().getTime()
           }).then(function (click) {
-            return Promise.all([
+            return Q.all([
               click.setUser(user),
               click.setGroup(group)
             ]).then(function () {
