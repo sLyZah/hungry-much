@@ -53,7 +53,7 @@
               </div>
               <div class="control-group">
                 <div class="controls">
-                  <button type="submit" class="btn btn-info">Sign in</button>
+                  <button type="submit" class="btn btn-info" disabled="disabled" id="btnSignInSubmit">Sign in</button>
                   <button type="button" class="btn btn-link btn-cancel">Cancel</button>
                 </div>
               </div>
@@ -61,7 +61,7 @@
         </div>
 
         <div class="boxLoggIn box">
-            <form class="form-horizontal" id="formSignIn">
+            <form class="form-horizontal" id="formLoggIn">
                 <div class="control-group">
                 <label class="control-label" for="inputUsername">Username</label>
                 <div class="controls">
@@ -103,19 +103,26 @@
 
         <div class="view" id="hungry">
             <h1>Are you hungry ?</h1>
-            <a href="#timetable" class="btn btn-success btn-large showView">Yes <i class="icon-emo-angry"></i></a>
-            <p><a href="#groups" class="btn btn-small showView">Finally no</a></p>
+            <a href="#timetable" class="btn btn-success btn-large showView" id="btnHungry">Yes <i class="icon-emo-angry"></i></a>
+            <p><a href="#groups" class="btn btn-small showView">Back</a></p>
         </div>
 
         <div class="view" id="timetable">
             <h1>Starved people</h1>
             <p><em>List of starved people...</em></p>
-            <a href="#options" class="btn btn-small showView">Account settings</a>
+            <a href="#options" class="btn btn-small showView" id="btnOptions">Account settings</a>
+            <a href="#hungry" class="btn btn-small showView">Back</a>
         </div>
 
         <div class="view" id="options">
             <h1>Account settings</h1>
             <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="inputName">Name</label>
+                    <div class="controls">
+                        <input type="text" id="inputName" placeholder="Name">
+                    </div>
+                </div>
                 <div class="control-group">
                     <label class="control-label" for="inputEmail">Email</label>
                     <div class="controls">
@@ -123,15 +130,9 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPassword">Password</label>
-                    <div class="controls">
-                        <input type="password" id="inputPassword" placeholder="Password">
-                    </div>
-                </div>
-                <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn btn-info">Submit</button>
-                        <a href="#timetable" class="btn btn showView">Back</a>
+                        <a href="#groups" class="btn btn showView">Back</a>
                     </div>
                 </div>
             </form>

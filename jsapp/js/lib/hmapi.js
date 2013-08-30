@@ -71,24 +71,33 @@
 
     addUser = function(arg) {
       var data, method, module;
-      module = 'users';
+      module = 'auth';
       method = 'POST';
       data = {};
+      
       if (arg.name != null) {
         data.name = arg.name;
       } else {
         throw new Error("addUser(): argument.name must be set");
       }
+
       if (arg.email != null) {
         data.email = arg.email;
       } else {
         throw new Error("addUser(): argument.email must be set");
       }
+
+      if (arg.password != null) {
+        data.password = arg.password;
+      } else {
+        throw new Error("addUser(): argument.password must be set");
+      }
+
       return $.ajax({
         type: method,
         cache: false,
         data: data,
-        url: $.hmapi.defaults.apiUrl + module,
+        url: $.hmapi.defaults.apiUrl + module + '/signup',
         async: true,
         dataType: "json",
         success: function(json) {
@@ -193,7 +202,7 @@
     };
     userIsHungryInGroupId = function(arg) {
       var data, method, module;
-      module = 'clicks';
+      module = 'users';
       method = 'POST';
       data = {};
       if (arg.userId != null) {
@@ -210,7 +219,7 @@
         type: method,
         cache: false,
         data: data,
-        url: $.hmapi.defaults.apiUrl + module,
+        url: $.hmapi.defaults.apiUrl + module + '/' + arg.userId + '/clicks',
         async: true,
         dataType: "json",
         success: function(json) {

@@ -14,8 +14,11 @@
 
 		isBoxShow				= false,
 
-		userAuth				= true;
+		currentUser				= false,
+
+		currentGroup			= 0;
 		//userAuth = sessionStorage.getItem('userAuth');
+
 
 
 	// METHODS
@@ -56,11 +59,11 @@
 
 					for(var i = 0; i < groupsCounter; i++) {
 
-						html+= '<tr><td>' + data[i].name + '</td><td><a href="#hungry" class="btn btn-primary btn showView" data-groupId="' + data[i].id + '">Join</a></td></tr>';
+						html+= '<tr><td>' + data[i].name + '</td><td><a href="#hungry" class="btn btn-primary btn showView enterGroup" data-groupid="' + data[i].id + '">Join</a></td></tr>';
 
 					}
 
-					$(html).insertAfter($('#groups tbody').first('tr'));
+					$(html).insertAfter( $('#groups tbody').first('tr') );
 					
 				}         
 
@@ -104,7 +107,8 @@
 		});
 
 		// If the user is logged, we show the group page
-		if(userAuth) {
+		/*
+		if(currentUser) {
 			
 			console.log('loggé');
 
@@ -117,7 +121,7 @@
 
 			$('<a href="#" id="loggOut">Logout</a>').insertAfter('header');
 		}
-
+		*/
 
 
 
@@ -152,15 +156,62 @@
 
 			// Add user inscription here
 
+			var user = { 	
+							'name': $('#formSignIn #inputUsername').val(),
+							'email': $('#formSignIn #inputEmail').val(),
+							'password': $('#formSignIn #inputPassword').val()
+						};
 
-			alert('sign in yeah');
 
-			//$('#signIn').addClass('disabled');
+			// not empty
+			if(user.name != '' && user.email != '' && user.password != '') {
 
 
-			hideBox();
+				// add in data base
+				$('body').hmapi('addUser', user, function(data){
+
+
+					// Logg the membre
+					currentUser = data.id;
+
+					new loadAllGroups();
+
+					hideBox();
+
+					$('#home').hide();
+
+					$('#groups').show();
+
+					$(' <a href="#" id="loggOut">Logout</a> <a href="#options" class="showView" id="btnOptions">Options</a> ').appendTo('header .span12');
+							
+
+				});
+
+			}
+			else{
+
+				console.log('empty');
+
+			}
 
 			return false;
+
+		});
+
+
+		// Active the sigin form submit if the form is not empty
+		$('#formSignIn input').on('keyup', function() {
+
+
+			if( $('#formSignIn #inputUsername').val() != '' && $('#formSignIn #inputPassword').val() != '' && $('#formSignIn #inputPassword').val()) {
+
+				$('#btnSignInSubmit').removeAttr('disabled');
+
+			}
+			else {
+
+				$('#btnSignInSubmit').attr('disabled', 'disabled');			
+			}
 
 		});
 
@@ -179,32 +230,110 @@
 		});
 
 
-		// Logout user
-		$('body').on('click', '#loggOut', function(e) {
+		// Validate the loggin in box
+		$('#formLoggIn').on('submit', function() {
 
-			$('#loggOut').remove();
+			// Checking user login here
+			new loadAllGroups();
 
-			startViews();
+			hideBox();
 
+			currentUser = 1;
 
-			console.log('loggout');
+			$('#home').hide();
 
-			userAuth = false;
+			$('#groups').show();
+
+			$(' <a href="#" id="loggOut">Logout</a> <a href="#options" class="showView" id="btnOptions">Options</a> ').appendTo('header .span12');
+
+			return false;
 
 		});
 
 
+		// Logout user
+		$('body').on('click', '#loggOut', function(e) {
+
+			$('header .span12 a').remove();
+
+			startViews();
+
+			console.log('loggout');
+
+			currentUser = false;
+
+		});
+
+
+
 		// ********************************************************************
-		// Liste group page
+		// List group page
 		// ********************************************************************
 
 		$('#btnJoin').on('click', function(){
 
 			new loadAllGroups();
 
-		} );
-	
-	
+		}); // list group
+
+
+
+		// ********************************************************************
+		// Enter in a group
+		// ********************************************************************
+
+		$('body').on('click', '.enterGroup', function() {
+		
+			currentGroup = $(this).data('groupid');
+
+			console.log('current room ' + currentGroup);
+
+		}); // enter group
+
+
+
+		// ********************************************************************
+		// A user say I WANNA KILL FOR FOOD
+		// ********************************************************************
+		$('#btnHungry').on('click', function() {
+
+			var room = {	'userId': 1, 'groupId': currentGroup };
+
+			$('body').hmapi('userIsHungryInGroupId', room, function(data){
+
+
+				console.log(data);
+
+
+			});
+
+
+		}); // hungry
+
+
+
+		// ********************************************************************
+		// Options page
+		// ********************************************************************
+		$('body').on('click', '#btnOptions', function() {
+
+			console.log(currentUser);
+
+			$('body').hmapi('getUserById', currentUser, function(data){
+
+				console.log(data);
+
+				$('#options #inputName').val(data.name);
+
+				$('#options #inputEmail').val(data.email);
+
+			});
+
+		});
+
+
+
+
 
 	} );
 
