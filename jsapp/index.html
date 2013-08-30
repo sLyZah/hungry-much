@@ -7,7 +7,9 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/fontello.css">
         <link rel="stylesheet" href="css/main.css">
 
         <!--[if lt IE 9]>
@@ -22,11 +24,21 @@
     <body>
 
         <header>
-            Lunch App
+            <div class="row">
+                <div class="span12">
+                    <i class="icon-food"></i> <h1>Lunch App</h1>
+                </div>
+            </div>
         </header>
 
-        <div class="message">
+        <div class="boxSignIn box">
             <form class="form-horizontal" id="formSignIn">
+                <div class="control-group">
+                <label class="control-label" for="inputUsername">Username</label>
+                <div class="controls">
+                  <input type="text" id="inputUsername" placeholder="Username">
+                </div>
+              </div>
               <div class="control-group">
                 <label class="control-label" for="inputEmail">Email</label>
                 <div class="controls">
@@ -41,7 +53,30 @@
               </div>
               <div class="control-group">
                 <div class="controls">
-                  <button type="submit" class="btn btn-info">Sign in</button>
+                  <button type="submit" class="btn btn-info" disabled="disabled" id="btnSignInSubmit">Sign in</button>
+                  <button type="button" class="btn btn-link btn-cancel">Cancel</button>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="boxLoggIn box">
+            <form class="form-horizontal" id="formLoggIn">
+                <div class="control-group">
+                <label class="control-label" for="inputUsername">Username</label>
+                <div class="controls">
+                  <input type="text" id="inputUsername" placeholder="Username">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputPassword">Password</label>
+                <div class="controls">
+                  <input type="password" id="inputPassword" placeholder="Password">
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button type="submit" class="btn btn-info">Logg In</button>
                   <button type="button" class="btn btn-link btn-cancel">Cancel</button>
                 </div>
               </div>
@@ -49,8 +84,10 @@
         </div>
 
         <div class="view" id="home">
-            <a href="#" class="btn btn-primary btn-large" id="signIn">Sign In</a>
-            <a href="#groups" class="btn btn-primary btn-large showView" id="btnJoin">Join Group</a>
+            <h1>Getting started...</h1>
+            <a href="#" class="btn btn-primary btn-large" id="signIn">Create an account</a>
+            <a href="#" class="btn btn-primary btn-large" id="loggIn">I have an account</a>
+            <!--<a href="#groups" class="btn btn-primary btn-large showView" id="btnJoin">Join Group</a>-->
         </div>
 
         <div class="view" id="groups">
@@ -66,19 +103,26 @@
 
         <div class="view" id="hungry">
             <h1>Are you hungry ?</h1>
-            <a href="#timetable" class="btn btn-success btn-large showView">Yes <i class="icon-emo-angry"></i></a>
-            <p><a href="#home" class="btn btn-small showView">Finally no</a></p>
+            <a href="#timetable" class="btn btn-success btn-large showView" id="btnHungry">Yes <i class="icon-emo-angry"></i></a>
+            <p><a href="#groups" class="btn btn-small showView">Back</a></p>
         </div>
 
         <div class="view" id="timetable">
             <h1>Starved people</h1>
             <p><em>List of starved people...</em></p>
-            <a href="#options" class="btn btn-small showView">Account settings</a>
+            <a href="#options" class="btn btn-small showView" id="btnOptions">Account settings</a>
+            <a href="#hungry" class="btn btn-small showView">Back</a>
         </div>
 
         <div class="view" id="options">
             <h1>Account settings</h1>
             <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="inputName">Name</label>
+                    <div class="controls">
+                        <input type="text" id="inputName" placeholder="Name">
+                    </div>
+                </div>
                 <div class="control-group">
                     <label class="control-label" for="inputEmail">Email</label>
                     <div class="controls">
@@ -86,15 +130,9 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPassword">Password</label>
-                    <div class="controls">
-                        <input type="password" id="inputPassword" placeholder="Password">
-                    </div>
-                </div>
-                <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn btn-info">Submit</button>
-                        <a href="#timetable" class="btn btn showView">Back</a>
+                        <a href="#groups" class="btn btn showView">Back</a>
                     </div>
                 </div>
             </form>
