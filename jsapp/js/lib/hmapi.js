@@ -19,13 +19,11 @@
       var data, id, method, module;
       module = 'users';
       method = 'PUT';
-      id = arg.id((function() {
-        if (arg.id != null) {
-
-        } else {
-          throw new Error("updateUserById(): argument.id must be set (user id)");
-        }
-      })());
+      if (arg.id != null) {
+        id = arg.id;
+      } else {
+        throw new Error("updateUserById(): argument.id must be set (user id)");
+      }
       data = {};
       if (arg.name != null) {
         data.name = arg.name;
@@ -52,13 +50,11 @@
       var id, method, module;
       module = 'users';
       method = 'GET';
-      id = arg((function() {
-        if ((arg != null) && typeof arg === 'int') {
-
-        } else {
-          throw new Error("getUserById(): argument must be user id ");
-        }
-      })());
+      if ((arg != null)) {
+        id = arg;
+      } else {
+        throw new Error("getUserById(): argument must be user id ");
+      }
       return $.ajax({
         type: method,
         cache: false,
@@ -75,28 +71,33 @@
 
     addUser = function(arg) {
       var data, method, module;
-      module = 'users';
+      module = 'auth';
       method = 'POST';
       data = {};
-      data.name = arg.name((function() {
-        if (arg.name != null) {
+      
+      if (arg.name != null) {
+        data.name = arg.name;
+      } else {
+        throw new Error("addUser(): argument.name must be set");
+      }
 
-        } else {
-          throw new Error("addUser(): argument.name must be set");
-        }
-      })());
-      data.email = arg.email((function() {
-        if (arg.email != null) {
+      if (arg.email != null) {
+        data.email = arg.email;
+      } else {
+        throw new Error("addUser(): argument.email must be set");
+      }
 
-        } else {
-          throw new Error("addUser(): argument.email must be set");
-        }
-      })());
+      if (arg.password != null) {
+        data.password = arg.password;
+      } else {
+        throw new Error("addUser(): argument.password must be set");
+      }
+
       return $.ajax({
         type: method,
         cache: false,
         data: data,
-        url: $.hmapi.defaults.apiUrl + module,
+        url: $.hmapi.defaults.apiUrl + module + '/signup',
         async: true,
         dataType: "json",
         success: function(json) {
@@ -128,13 +129,11 @@
       module = 'groups';
       method = 'GET';
       data = {};
-      data.name = arg((function() {
-        if (arg != null) {
-
-        } else {
-          throw new Error("getGroupByName(): argument must be name (group name)");
-        }
-      })());
+      if (arg != null) {
+        data.name = arg;
+      } else {
+        throw new Error("getGroupByName(): argument must be name (group name)");
+      }
       return $.ajax({
         type: method,
         cache: false,
@@ -153,13 +152,11 @@
       module = 'groups';
       method = 'GET';
       data = {};
-      id = arg((function() {
-        if (arg != null) {
-
-        } else {
-          throw new Error("getGroupById(): argument must be id (group id)");
-        }
-      })());
+      if (arg != null) {
+        id = arg;
+      } else {
+        throw new Error("getGroupById(): argument must be id (group id)");
+      }
       return $.ajax({
         type: method,
         cache: false,
@@ -177,20 +174,16 @@
       module = 'groups';
       method = 'POST';
       data = {};
-      data.name = arg.name((function() {
-        if (arg.name != null) {
-
-        } else {
-          throw new Error("addGroup(): argument.name must be set");
-        }
-      })());
-      data.admin = arg.admin((function() {
-        if (arg.admin != null) {
-
-        } else {
-          throw new Error("addGroup(): argument.admin must be set (user id)");
-        }
-      })());
+      if (arg.name != null) {
+        data.name = arg.name;
+      } else {
+        throw new Error("addGroup(): argument.name must be set");
+      }
+      if (arg.admin != null) {
+        data.admin = arg.admin;
+      } else {
+        throw new Error("addGroup(): argument.admin must be set (user id)");
+      }
       if (arg.treshold != null) {
         data.treshold = arg.treshold;
       }
@@ -209,28 +202,24 @@
     };
     userIsHungryInGroupId = function(arg) {
       var data, method, module;
-      module = 'clicks';
+      module = 'users';
       method = 'POST';
       data = {};
-      data.userId = arg.userId((function() {
-        if (arg.userId != null) {
-
-        } else {
-          throw new Error("userIsHungryInGroupId(): argument.userId must be set");
-        }
-      })());
-      data.groupId = arg.groupId((function() {
-        if (arg.groupId != null) {
-
-        } else {
-          throw new Error("userIsHungryInGroupId(): argument.groupId must be set");
-        }
-      })());
+      if (arg.userId != null) {
+        data.userId = arg.userId;
+      } else {
+        throw new Error("userIsHungryInGroupId(): argument.userId must be set");
+      }
+      if (arg.groupId != null) {
+        data.groupId = arg.groupId;
+      } else {
+        throw new Error("userIsHungryInGroupId(): argument.groupId must be set");
+      }
       return $.ajax({
         type: method,
         cache: false,
         data: data,
-        url: $.hmapi.defaults.apiUrl + module,
+        url: $.hmapi.defaults.apiUrl + module + '/' + arg.userId + '/clicks',
         async: true,
         dataType: "json",
         success: function(json) {
@@ -243,20 +232,16 @@
       var id, method, module;
       module = 'groups';
       method = 'POST';
-      data.userId = arg.userId((function() {
-        if (arg.userId != null) {
-
-        } else {
-          throw new Error("addUserInGroup(): argument.userId must be set");
-        }
-      })());
-      id = arg.groupId((function() {
-        if (arg.groupId != null) {
-
-        } else {
-          throw new Error("addUserInGroup(): argument.groupId must be set");
-        }
-      })());
+      if (arg.userId != null) {
+        data.userId = arg.userId;
+      } else {
+        throw new Error("addUserInGroup(): argument.userId must be set");
+      }
+      if (arg.groupId != null) {
+        id = arg.groupId;
+      } else {
+        throw new Error("addUserInGroup(): argument.groupId must be set");
+      }
       return $.ajax({
         type: method,
         cache: false,
@@ -314,7 +299,7 @@
     }
   };
   $.hmapi.defaults = {
-    apiUrl: "http://10.0.2.80:3000/"
+    apiUrl: "http://localhost:3000/"
   };
   $.hmapi._this = null;
   return $.hmapi._callback = null;
