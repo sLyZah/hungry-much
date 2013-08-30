@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" ng-app="" ng-csp="">
+  <head>
+    <meta charset="UTF-8">
+    <title>HungryMuch</title>
+    
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  <body ng-controller="Main">
+    <form ng-if="!isAuthenticated">
+      <input type="email" ng-model="email"/>
+      <input type="password" ng-model="password"/>
+      <button ng-click="signIn">Sign In</button>
+    </form>
+    
+    <div ng-if="isAuthenticated">
+      <button ng-click="signalImHungry()">I'm hungry</button>
+    </div>
+  </body>
+</html>
