@@ -18,24 +18,9 @@ angular.module('hungryMuch').controller('main', function (
   
   $scope.application = application;
   
-  
-  $scope.isAuthenticated = false;
-  $scope.user = null;
-  $scope.loading = false;
-  
-  $scope.authentication = {
-    email: 'test@woorank.com',
-    password: 'test'
-  };
-  
-  $scope.signIn = function () {
-    $scope.loading = true;
-    $http.post(config.baseUrl + '/auth/signin', {
-      email   : $scope.authentication.email,
-      password: $scope.authentication.password
-    }).then(function (response) {
-      $scope.user = response.data;
-      $scope.loading = false;
+  $scope.signOut = function () {
+    $http.get(config.baseUrl + '/auth/signout').then(function (response) {
+      application.goTo('start');
     });
   };
   

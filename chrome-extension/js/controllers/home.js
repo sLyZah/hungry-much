@@ -5,10 +5,10 @@ angular.module('hungryMuch').controller('home', function (
   $scope,
   config,
   $http,
-  global,
   application
 ) {
   'use strict';
+  
   
   
 });

@@ -5,7 +5,6 @@ angular.module('hungryMuch').controller('signIn', function (
   $scope,
   config,
   $http,
-  global,
   application
 ) {
   'use strict';
@@ -20,7 +19,7 @@ angular.module('hungryMuch').controller('signIn', function (
       email   : $scope.email,
       password: $scope.password
     }).then(function (response) {
-      global.user = response.data;
+      application.user = response.data;
       $scope.loading = false;
       application.goTo('home');
     }, function () {

@@ -1,4 +1,9 @@
+/*jslint es5: true, devel: true, browser: true, indent: 2, vars: true, white: true, nomen: true */
+/*global angular*/
+
 angular.module('hungryMuch').factory('application', function() {
+  
+  'use strict';
   
   var views = {
     start : 'partials/start.html',
@@ -9,7 +14,7 @@ angular.module('hungryMuch').factory('application', function() {
   
   var application = {
     currentView: views.start
-  }
+  };
   
   application.goTo = function (viewName) {
     application.currentView = views[viewName];
