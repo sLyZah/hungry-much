@@ -1,14 +1,16 @@
 /*jslint es5: true, devel: true, node: true, indent: 2, vars: true, white: true, nomen: true */
-/*global app */
+/*global */
 
-var Promise = require("promise");
+var Q = require('q'),
+    Sequelize = require('sequelize');
 
-module.exports = function(sequelize, DataTypes) {
+
+module.exports = function(sequelize, app) {
   'use strict';
   
   var Click = sequelize.define('Click', {
     timestamp: {
-      type: DataTypes.DATE
+      type: Sequelize.BIGINT
     }
   }, {
     
@@ -24,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       addClick: function (config) {
         var models = app.get('models');
     
-        return Promise.all([
+        return Q.all([
           models.User.getUser(config.userId),
           models.Group.find(config.groupId)
         ]).then(function (results) {
@@ -32,9 +34,9 @@ module.exports = function(sequelize, DataTypes) {
               group = results[1];
           
           return Click.create({
-            timestamp: new Date()
+            timestamp: new Date().getTime()
           }).then(function (click) {
-            return Promise.all([
+            return Q.all([
               click.setUser(user),
               click.setGroup(group)
             ]).then(function () {
@@ -47,10 +49,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     
     instanceMethods: {
-      
+      serialize: function () {
+        return {
+          timestamp: this.timestamp,
+          userId: this.UserId,
+          groupId: this.GroupId
+        };
+      }
     }
     
   });
   
+  
   return Click;
 };
+
+

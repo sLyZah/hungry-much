@@ -5,52 +5,76 @@ Hungry Much is a webapp allowing a team to press the hungry button when they wan
 
 ##API
 
-####GET /users
-Fetch a user by his name.
-
-params:
-
-* name: name of the user
-
-returns (user):
+###Types
+User:
 
     {
         id: integer,
         name: string,
-        email: string,
-        groups: array({id: integer})
+        email: string
     }
+    
+Group:
+    
+    {
+        id: integer,
+        name: string,
+        admin: integer,
+        users: array({id: integer}),
+        clicks: integer,
+        treshold: integer
+    }
+    
+Click:
+    
+    {
+        timestamp: integer,
+        userId: integer,
+        groupId: integer
+    }
+    
+###REST
 
-
-####POST /users
+####POST /auth/signup
 Add a user.
 
 params:
 
-* name [unique]: user name
-* email: user email
-* groups [optional]: array of group ids
+* name: user name
+* email [unique]: user email
+* password: user password
 
-returns (user):
+returns: User
 
-    {
-        id: integer,
-        name: string,
-        email: string,
-        groups: array({id: integer})
-    }
+####POST /auth/signin
+Sign in as a user.
+
+params:
+
+* email [unique]: user email
+* password: user password
+
+returns: User
+  
+####GET /auth/signout
+Sign out.
+
+---
+
+####GET /users
+Fetch a user by his email.
+
+params:
+
+* email: name of the user
+
+returns: User
+
     
 ####GET /users/:id
 Get info about a single user by id.
 
-returns (user):
-
-    {
-        id: integer,
-        name: string,
-        email: string,
-        groups: array({id: integer})
-    }
+returns: User
 
 ####PUT /users/:id
 Change a user.
@@ -61,13 +85,6 @@ params:
 * email [optional]: user email
 
 returns (user):
-
-    {
-        id: integer,
-        name: string,
-        email: string,
-        groups: array({id: integer})
-    }
     
     
 ####GET /groups
@@ -77,16 +94,7 @@ params:
 
 * name: group name
 
-returns (group):
-
-    {
-        id: integer,
-        name: string,
-        admin: integer,
-        users: array({id: integer}),
-        clicks: integer,
-        treshold: integer
-    }
+returns: Group
 
 ####POST /groups
 Create a group.
@@ -97,30 +105,12 @@ params:
 * admin: id of administrator of the group
 * treshold [optional]: treshold for clicks
 
-returns (group):
-
-    {
-        id: integer,
-        name: string,
-        admin: integer,
-        users: array({id: integer}),
-        clicks: integer,
-        treshold: integer
-    }
+returns: Group
 
 ####GET /groups/:id
 Get info about a group by id.
 
-returns (group):
-
-    {
-        id: integer,
-        name: string,
-        admin: integer,
-        users: array({id: integer}),
-        clicks: integer,
-        treshold: integer
-    }
+returns: Group
 
 ####PUT /groups/:id
 Change a group.
@@ -131,16 +121,7 @@ params:
 * admin [optional]: integer
 * treshold [optional]: treshold for clicks
 
-returns (group):
-
-    {
-        id: integer,
-        name: string,
-        admin: integer,
-        users: array({id: integer}),
-        clicks: integer,
-        treshold: integer
-    }
+returns: Group
 
 ####POST /groups/:id/users
 Add a user to a group.
@@ -149,29 +130,23 @@ params:
 
 * userId: user to add
 
-returns (group):
-
-    {
-        id: integer,
-        name: string,
-        admin: integer,
-        users: array({id: integer}),
-        clicks: integer,
-        treshold: integer
-    }
+returns: Group
 
 ####DELETE /groups/:id/users/:userId
 Remove a user from a group.
 
-returns (group):
+returns: Group
+
+####GET /clicks
+params:
+
+* groupId: the group
+* after: integer
+
+Returns: 
 
     {
-        id: integer,
-        name: string,
-        admin: integer,
-        users: array({id: integer}),
-        clicks: integer,
-        treshold: integer
+        clicks: Array(CLick)
     }
     
     
@@ -183,14 +158,4 @@ params:
 * userId: the user that clicked
 * groupId: the group for this click
 
-returns (click):
-
-    {
-        timeStamp: integer,
-        group: {
-            id: integer
-        },
-        user: {
-            id: integer
-        }
-    }
+returns: Click
