@@ -11,7 +11,17 @@ User:
     {
         id: integer,
         name: string,
-        email: string
+        email: string,
+        administers: [
+            {
+                id: integer
+            }
+        ],
+        belongsTo: [
+            {
+                id: integer
+            }
+        ]
     }
     
 Group:
@@ -19,8 +29,14 @@ Group:
     {
         id: integer,
         name: string,
-        admin: integer,
-        users: array({id: integer}),
+        admin: {
+            id: integer
+        },
+        users: [
+            {
+                id: integer
+            }
+        ],
         clicks: integer,
         treshold: integer
     }
@@ -44,7 +60,7 @@ params:
 * email [unique]: user email
 * password: user password
 
-returns: User
+returns: `User`
 
 ####POST /auth/signin
 Sign in as a user.
@@ -54,27 +70,29 @@ params:
 * email [unique]: user email
 * password: user password
 
-returns: User
+returns: `User`
   
 ####GET /auth/signout
 Sign out.
 
+returns: `Ok`
+
 ---
 
 ####GET /users
-Fetch a user by his email.
+Returns a list of all users
+
+TODO: pagination + filtering
 
 params:
 
-* email: name of the user
-
-returns: User
+returns: `[ User ]`
 
     
 ####GET /users/:id
 Get info about a single user by id.
 
-returns: User
+returns: `User`
 
 ####PUT /users/:id
 Change a user.
@@ -84,17 +102,25 @@ params:
 * name [optional, unique]: user name
 * email [optional]: user email
 
-returns (user):
-    
-    
-####GET /groups
-Get a group by its name.
+returns: `User`
+
+###POST /users/:id/clicks
+Add a click
 
 params:
 
-* name: group name
+* groupId: the group for this click
 
-returns: Group
+returns: `Click`
+
+---
+    
+####GET /groups
+Get a list of all groups.
+
+TODO: pagination + filtering
+
+returns: `[ Group ]`
 
 ####POST /groups
 Create a group.
@@ -105,12 +131,12 @@ params:
 * admin: id of administrator of the group
 * treshold [optional]: treshold for clicks
 
-returns: Group
+returns: `Group`
 
 ####GET /groups/:id
 Get info about a group by id.
 
-returns: Group
+returns: `Group`
 
 ####PUT /groups/:id
 Change a group.
@@ -121,7 +147,7 @@ params:
 * admin [optional]: integer
 * treshold [optional]: treshold for clicks
 
-returns: Group
+returns: `Group`
 
 ####POST /groups/:id/users
 Add a user to a group.
@@ -130,32 +156,19 @@ params:
 
 * userId: user to add
 
-returns: Group
+returns: `Group`
 
 ####DELETE /groups/:id/users/:userId
 Remove a user from a group.
 
-returns: Group
+returns: `Group`
 
-####GET /clicks
+####GET /groups/:id/clicks
 params:
 
-* groupId: the group
 * after: integer
 
-Returns: 
-
-    {
-        clicks: Array(CLick)
-    }
+Returns: `[ Click ]`
     
-    
-###POST /clicks
-Add a click
+---
 
-params:
-
-* userId: the user that clicked
-* groupId: the group for this click
-
-returns: Click
