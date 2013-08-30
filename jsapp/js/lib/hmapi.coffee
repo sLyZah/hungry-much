@@ -38,7 +38,7 @@
     getUserById = (arg) ->
       module = 'users'
       method = 'GET'
-      if arg? and typeof arg is 'int' then id = arg else throw new Error "getUserById(): argument must be user id "
+      if arg? then id = arg else throw new Error "getUserById(): argument must be user id "
 
       # ajax call
       $.ajax

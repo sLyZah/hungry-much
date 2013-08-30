@@ -50,7 +50,7 @@
       var id, method, module;
       module = 'users';
       method = 'GET';
-      if ((arg != null) && typeof arg === 'int') {
+      if (arg != null) {
         id = arg;
       } else {
         throw new Error("getUserById(): argument must be user id ");
