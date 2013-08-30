@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="" ng-csp="">
+<html lang="en" ng-app="hungryMuch" ng-csp="">
   <head>
     <meta charset="UTF-8">
     <title>HungryMuch</title>
@@ -10,14 +10,16 @@
     <script src="lib/angular/angular.js"></script>
     <script src="js/main.js"></script>
   </head>
-  <body ng-controller="Main">
-    <form ng-if="!isAuthenticated" id="login-form">
-      <div><input type="email" ng-model="email"/></div>
-      <div><input type="password" ng-model="password"/></div>
-      <div><button ng-click="signIn">Sign In</button></div>
+  <body ng-controller="main">
+    
+    <form ng-if="!user" id="login-form">
+      <input type="email" ng-model="authentication.email"/>
+      <input type="password" ng-model="authentication.password"/>
+      <button ng-click="signIn()" ng-disabled="loading">Sign In</button>
     </form>
     
-    <div ng-if="isAuthenticated">
+    <div ng-if="user">
+      {{user.name}}
       <button ng-click="signalImHungry()">I'm hungry</button>
     </div>
   </body>

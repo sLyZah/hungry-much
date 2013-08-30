@@ -10,5 +10,9 @@
     },
     "default_title": "HungryMuch",
     "default_popup": "popup.html"   
-  }
+  },
+  
+  "permissions": [
+    "http://localhost/*"
+  ]
 }
