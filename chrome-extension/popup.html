@@ -5,18 +5,21 @@
     <title>HungryMuch</title>
     
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-route.js"></script>
+    
     <script src="js/main.js"></script>
+    
+    <script src="js/services/application.js"></script>
+    <script src="js/services/global.js"></script>
+    
+    <script src="js/controllers/start.js"></script>
+    <script src="js/controllers/signIn.js"></script>
+    <script src="js/controllers/home.js"></script>
+    
   </head>
   <body ng-controller="main">
-    <form ng-if="!user">
-      <input type="email" ng-model="authentication.email"/>
-      <input type="password" ng-model="authentication.password"/>
-      <button ng-click="signIn()" ng-disabled="loading">Sign In</button>
-    </form>
     
-    <div ng-if="user">
-      {{user.name}}
-      <button ng-click="signalImHungry()">I'm hungry</button>
-    </div>
+    <div ng-include="application.currentView"></div>
+    
   </body>
 </html>

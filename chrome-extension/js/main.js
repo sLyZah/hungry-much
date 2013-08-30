@@ -2,14 +2,22 @@
 /*global angular*/
 
 
-angular.module('hungryMuch', []);
+angular.module('hungryMuch', ['ngRoute']);
 
 angular.module('hungryMuch').constant('config', {
   baseUrl: 'http://localhost:3000'
 });
 
-angular.module('hungryMuch').controller('main', function ($scope, config, $http) {
+angular.module('hungryMuch').controller('main', function (
+  $scope,
+  config, 
+  $http,
+  application
+) {
   'use strict';
+  
+  $scope.application = application;
+  
   
   $scope.isAuthenticated = false;
   $scope.user = null;
@@ -30,7 +38,5 @@ angular.module('hungryMuch').controller('main', function ($scope, config, $http)
       $scope.loading = false;
     });
   };
-  
-  
   
 });
