@@ -1,0 +1,6 @@
+<div ng-include="'partials/userInfo.html'"></div>
+
+<form ng-controller="signIn" id="login-form">
+  <input type="name" ng-model="email"/>
+  <button ng-click="signIn()" ng-disabled="loading">Create</button>
+</form>

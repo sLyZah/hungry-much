@@ -2,10 +2,17 @@
 /*global angular*/
 
 
-angular.module('hungryMuch', ['ngRoute']);
+angular.module('hungryMuch', ['ngRoute']).config(function ($httpProvider) {
+  'use strict';
+  
+  $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  
+});
 
 angular.module('hungryMuch').constant('config', {
-  baseUrl: 'http://localhost:3000'
+  //baseUrl: 'http://localhost:3000'
+  baseUrl: 'http://ec2-46-137-47-154.eu-west-1.compute.amazonaws.com:3000'
 });
 
 angular.module('hungryMuch').controller('main', function (
@@ -13,6 +20,7 @@ angular.module('hungryMuch').controller('main', function (
   config, 
   $http,
   application
+  
 ) {
   'use strict';
   
@@ -23,5 +31,6 @@ angular.module('hungryMuch').controller('main', function (
       application.goTo('start');
     });
   };
+  
   
 });
