@@ -4,7 +4,7 @@
 var Q          = require('q'),
     Sequelize = require('sequelize'),
     sqlQuery   = require('sql-query'),
-    Error = require('./Modelerror');
+    Error = require('./ModelError');
 
 var ERR_GROUP_NOT_FOUND = 'Group not found',
     ERR_UNKNOWN         = 'Error unknown';

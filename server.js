@@ -59,7 +59,7 @@ passport.deserializeUser(function(id, done) {
 app.set('port', process.env.PORT || 3000);
 require('./models').init(app);
 
-app.use(express.static('jsapp'));
+app.use(express.static('web-app'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());

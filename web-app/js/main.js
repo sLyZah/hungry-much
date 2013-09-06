@@ -5,7 +5,7 @@
 angular.module('hungryMuch', ['ngRoute']);
 
 angular.module('hungryMuch').constant('config', {
-  baseUrl: 'http://ec2-46-137-47-154.eu-west-1.compute.amazonaws.com:3000'
+  baseUrl: 'http://localhost:3000'
 });
 
 angular.module('hungryMuch').controller('main', function (

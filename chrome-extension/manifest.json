@@ -13,6 +13,6 @@
   },
   
   "permissions": [
-    "http://localhost/*"
+    "http://ec2-46-137-47-154.eu-west-1.compute.amazonaws.com/*"
   ]
 }
