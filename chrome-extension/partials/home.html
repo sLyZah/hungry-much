@@ -1,0 +1,20 @@
+<div ng-include="'partials/userInfo.html'"></div>
+
+<div ng-controller="home">
+  {{user.name}}
+  
+  <ul>
+    <li ng-repeat="group in user.belongsTo">
+      <div>
+        {{group.name}}
+        <button ng-click="administer(group)" ng-if="isAdministratorFor(group)">Administer</button>
+      </div>
+    </li>
+  </ul>
+  
+  <button ng-click="createGroup()">Create Group</button>
+  
+  <div ng-show"user.belongsTo">
+    <button ng-click="signalImHungry()">I'm hungry</button>
+  </div>
+</div>

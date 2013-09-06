@@ -2,35 +2,26 @@
 /*global angular*/
 
 
-angular.module('hungryMuch', []);
+angular.module('hungryMuch', ['ngRoute']);
 
 angular.module('hungryMuch').constant('config', {
   baseUrl: 'http://localhost:3000'
 });
 
-angular.module('hungryMuch').controller('main', function ($scope, config, $http) {
+angular.module('hungryMuch').controller('main', function (
+  $scope,
+  config, 
+  $http,
+  application
+) {
   'use strict';
   
-  $scope.isAuthenticated = false;
-  $scope.user = null;
-  $scope.loading = false;
+  $scope.application = application;
   
-  $scope.authentication = {
-    email: 'test@woorank.com',
-    password: 'test'
-  };
-  
-  $scope.signIn = function () {
-    $scope.loading = true;
-    $http.post(config.baseUrl + '/auth/signin', {
-      email   : $scope.authentication.email,
-      password: $scope.authentication.password
-    }).then(function (response) {
-      $scope.user = response.data;
-      $scope.loading = false;
+  $scope.signOut = function () {
+    $http.get(config.baseUrl + '/auth/signout').then(function (response) {
+      application.goTo('start');
     });
   };
-  
-  
   
 });

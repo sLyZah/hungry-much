@@ -17,7 +17,7 @@
     updateUserById = (arg) ->
       module = 'users'
       method = 'PUT'
-      id = arg.id if arg.id? else throw new Error "updateUserById(): argument.id must be set (user id)"
+      if arg.id? then id = arg.id else throw new Error "updateUserById(): argument.id must be set (user id)"
       data = {}
       data.name = arg.name if arg.name?
       data.email = arg.email if arg.email?
@@ -38,7 +38,7 @@
     getUserById = (arg) ->
       module = 'users'
       method = 'GET'
-      id = arg if arg? and typeof arg is 'int' else throw new Error "getUserById(): argument must be user id "
+      if arg? and typeof arg is 'int' then id = arg else throw new Error "getUserById(): argument must be user id "
 
       # ajax call
       $.ajax
@@ -56,8 +56,8 @@
       module = 'users'
       method = 'POST'
       data = {}
-      data.name = arg.name if arg.name? else throw new Error "addUser(): argument.name must be set"
-      data.email = arg.email if arg.email? else throw new Error "addUser(): argument.email must be set"
+      if arg.name? then data.name = arg.name else throw new Error "addUser(): argument.name must be set"
+      if arg.email? then data.email = arg.email else throw new Error "addUser(): argument.email must be set"
 
       # ajax call
       $.ajax
@@ -91,7 +91,7 @@
       module = 'groups'
       method = 'GET'
       data = {}
-      data.name = arg if arg? else throw new Error "getGroupByName(): argument must be name (group name)"
+      if arg? then data.name = arg else throw new Error "getGroupByName(): argument must be name (group name)"
 
       # ajax call
       $.ajax
@@ -109,7 +109,7 @@
       module = 'groups'
       method = 'GET'
       data = {}
-      id = arg if arg? else throw new Error "getGroupById(): argument must be id (group id)"
+      if arg? then id = arg else throw new Error "getGroupById(): argument must be id (group id)"
 
       # ajax call
       $.ajax
@@ -126,8 +126,8 @@
       module = 'groups'
       method = 'POST'
       data = {}
-      data.name = arg.name if arg.name? else throw new Error "addGroup(): argument.name must be set"
-      data.admin = arg.admin if arg.admin? else throw new Error "addGroup(): argument.admin must be set (user id)"
+      if arg.name? then data.name = arg.name else throw new Error "addGroup(): argument.name must be set"
+      if arg.admin? then data.admin = arg.admin else throw new Error "addGroup(): argument.admin must be set (user id)"
       data.treshold = arg.treshold if arg.treshold?
 
       # ajax call
@@ -146,8 +146,8 @@
       module = 'clicks'
       method = 'POST'
       data = {}
-      data.userId = arg.userId if arg.userId? else throw new Error "userIsHungryInGroupId(): argument.userId must be set"
-      data.groupId = arg.groupId if arg.groupId? else throw new Error "userIsHungryInGroupId(): argument.groupId must be set"
+      if arg.userId? then data.userId = arg.userId else throw new Error "userIsHungryInGroupId(): argument.userId must be set"
+      if arg.groupId? then data.groupId = arg.groupId else throw new Error "userIsHungryInGroupId(): argument.groupId must be set"
 
       # ajax call
       $.ajax
@@ -164,8 +164,8 @@
     addUserInGroup = (arg) ->
       module = 'groups'
       method = 'POST'
-      data.userId = arg.userId if arg.userId? else throw new Error "addUserInGroup(): argument.userId must be set"
-      id = arg.groupId if arg.groupId? else throw new Error "addUserInGroup(): argument.groupId must be set"
+      if arg.userId? then data.userId = arg.userId else throw new Error "addUserInGroup(): argument.userId must be set"
+      if arg.groupId? then id = arg.groupId else throw new Error "addUserInGroup(): argument.groupId must be set"
 
       # ajax call
       $.ajax
