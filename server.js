@@ -62,13 +62,16 @@ require('./models').init(app);
 
 // cors
 app.use(function (req, res, next) {
-  if (req.method === 'OPTIONS') {
-    res.send(200);
-  }
+  
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
+  
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  } else {
+    next();
+  }
 });
 
 app.use(express.static('web-app'));
