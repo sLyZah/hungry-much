@@ -9,8 +9,12 @@ angular.module('hungryMuch').controller('home', function (
 ) {
   'use strict';
   
-  $scope.createGroup = function () {
+  $scope.openCreateGroup = function () {
     application.goTo('createGroup');
+  };
+  
+  $scope.openGroups = function () {
+    application.goTo('groups');
   };
   
 });

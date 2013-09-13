@@ -3,6 +3,7 @@
 
 'use strict';
 
+
 var express       = require('express'),
     routes        = require('./routes'),
     http          = require('http'),
@@ -58,6 +59,20 @@ passport.deserializeUser(function(id, done) {
 // all environments
 app.set('port', process.env.PORT || 3000);
 require('./models').init(app);
+
+// cors
+app.use(function (req, res, next) {
+  
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  } else {
+    next();
+  }
+});
 
 app.use(express.static('web-app'));
 app.use(express.bodyParser());

@@ -25,6 +25,10 @@ angular.module('hungryMuch').factory('application', function() {
     createGroup  : {
       template: 'partials/createGroup.html',
       class   : 'create-group'
+    },
+    groups  : {
+      template: 'partials/groups.html',
+      class   : 'groups'
     }
   };
   

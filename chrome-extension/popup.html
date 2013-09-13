@@ -4,28 +4,27 @@
     <meta charset="UTF-8">
     <title>HungryMuch</title>
     
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,300,400italic,300italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="css/base.css" />
-
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular/angular-route.js"></script>
-    
-    <script src="js/main.js"></script>
-    
-    <script src="js/services/application.js"></script>
-    
-    <script src="js/controllers/start.js"></script>
-    <script src="js/controllers/signIn.js"></script>
-    <script src="js/controllers/home.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 400px;
+        height: 600px;
+      }
+      
+      .app-window {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        border: none;
+      }
+    </style>
     
   </head>
   <body ng-controller="main">
     
-    <div
-      ng-include="application.currentView.template" 
-      ng-class="application.currentView.class">
-        
-    </div>
+    <iframe class="app-window" src="http://localhost:3000"></iframe>
     
   </body>
 </html>

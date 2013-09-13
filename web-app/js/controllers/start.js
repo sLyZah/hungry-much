@@ -10,8 +10,8 @@ angular.module('hungryMuch').controller('start', function(
   
   'use strict';
   
-  $http.get(config.baseUrl + '/users/me').then(function onIsSignedIn(user) {
-    application.user = user;
+  $http.get(config.baseUrl + '/users/me').then(function onIsSignedIn(response) {
+    application.user = response.data;
     application.goTo('home');
   }, function onIsNotSignedIn() {
     application.goTo('signIn');
