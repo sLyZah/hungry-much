@@ -103,7 +103,37 @@ textarea {
 body {
   background: #444444;
   padding: 20px;
+  color: white;
   font-family: 'Roboto', sans-serif;
+}
+input {
+  display: inline-block;
+  width: 200px;
+  height: 26px;
+  padding: 4px 12px;
+  background: #f1f1f1;
+  border: none;
+  border-radius: 3px;
+  color: #222222;
+}
+button {
+  width: 224px;
+  height: 32px;
+  background: #75c04e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+button:hover,
+button:focus {
+  background-color: #85c762;
+}
+/*messages*/
+
+.message {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 300;
 }
 /*        Login page
 *********************************/
@@ -115,25 +145,4 @@ body {
 #login-form > div {
   margin-bottom: 20px;
   text-align: center;
-}
-#login-form input {
-  display: inline-block;
-  width: 200px;
-  height: 26px;
-  padding: 4px 12px;
-  background: #f1f1f1;
-  border: none;
-  border-radius: 3px;
-}
-#login-form button {
-  width: 224px;
-  height: 32px;
-  background: #75c04e;
-  color: white;
-  border: none;
-  border-radius: 6px;
-}
-#login-form button:hover,
-#login-form button:focus {
-  background-color: #85c762;
 }
