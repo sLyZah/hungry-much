@@ -1,6 +1,6 @@
 <div ng-include="'partials/userInfo.html'"></div>
 
-<div ng-controller="home">
+<div>
   {{user.name}}
   
   <ul>
@@ -12,9 +12,8 @@
     </li>
   </ul>
   
-  <button ng-click="openCreateGroup()">Create Group</button>
-  
-  <button ng-click="openGroups()">Groups</button>
+  <a ng-href="#/users/me/groups">Groups</a>
+  <a ng-href="#/users/me/creategroup">Create Group</a>
   
   <div ng-show"user.belongsTo">
     <button ng-click="signalImHungry()">I'm hungry</button>

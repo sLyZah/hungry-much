@@ -1,11 +1,6 @@
-<form ng-controller="signIn" id="login-form">
-  <div>
-    <input type="email" ng-model="email"/>
-  </div>
-  <div>
-    <input type="password" ng-model="password"/>
-  </div>
-  <div>
-    <button ng-click="signIn()" ng-disabled="loading">Sign In</button>
-  </div>
+<a href="#/signup">Sign up</a>
+<form id="login-form">
+  <input type="email" ng-model="email"/>
+  <input type="password" ng-model="password"/>
+  <button ng-click="signIn()" ng-disabled="loading">Sign in</button>
 </form>
