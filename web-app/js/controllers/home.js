@@ -5,16 +5,10 @@ angular.module('hungryMuch').controller('home', function (
   $scope,
   config,
   $http,
-  application
+  user
 ) {
   'use strict';
   
-  $scope.openCreateGroup = function () {
-    application.goTo('createGroup');
-  };
-  
-  $scope.openGroups = function () {
-    application.goTo('groups');
-  };
+  $scope.user = user;
   
 });

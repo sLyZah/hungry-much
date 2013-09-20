@@ -3,9 +3,9 @@
 
 angular.module('hungryMuch').controller('createGroup', function (
   $scope,
+  $location,
   config,
-  $http,
-  application
+  $http
 ) {
   'use strict';
   
@@ -15,7 +15,7 @@ angular.module('hungryMuch').controller('createGroup', function (
     $http.post(config.baseUrl + '/groups', {
       name: $scope.name
     }).then(function () {
-      application.goTo('groups');
+      $location.path('/users/me/groups');
     }, function (error) {
       console.error(error);
     });

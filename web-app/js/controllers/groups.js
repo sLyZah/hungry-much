@@ -5,12 +5,9 @@ angular.module('hungryMuch').controller('groups', function (
   $scope,
   config,
   $http,
-  application
+  user
 ) {
   'use strict';
-  
-  $scope.groups = $http.post(config.baseUrl + '/users/' + application.user.id);
-  
-  console.log(application.user);
+
   
 });

@@ -3,9 +3,9 @@
 
 angular.module('hungryMuch').controller('signIn', function (
   $scope,
+  $location,
   config,
-  $http,
-  application
+  $http
 ) {
   'use strict';
   
@@ -19,9 +19,8 @@ angular.module('hungryMuch').controller('signIn', function (
       email   : $scope.email,
       password: $scope.password
     }).then(function (response) {
-      application.user = response.data;
       $scope.loading = false;
-      application.goTo('home');
+      $location.path('/');
     }, function () {
       $scope.loading = false;
     });
