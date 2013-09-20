@@ -4,8 +4,8 @@
 angular.module('hungryMuch').controller('signIn', function (
   $scope,
   $location,
-  config,
-  $http
+  auth,
+  globals
 ) {
   'use strict';
   
@@ -15,7 +15,7 @@ angular.module('hungryMuch').controller('signIn', function (
   
   $scope.signIn = function () {
     $scope.loading = true;
-    $http.post(config.baseUrl + '/auth/signin', {
+    auth.signIn({
       email   : $scope.email,
       password: $scope.password
     }).then(function (response) {
