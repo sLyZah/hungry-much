@@ -1,0 +1,9 @@
+<div ng-include="'partials/userInfo.html'"></div>
+  
+<ul>
+  <li ng-repeat="click in clicks">
+    <a ng-class="'HP-'+getHP(click)">HP</a> -
+    {{getDate(click) | date:'short'}} -
+    {{click.user.name}}
+  </li>
+</ul>

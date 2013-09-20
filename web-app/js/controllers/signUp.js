@@ -4,8 +4,7 @@
 angular.module('hungryMuch').controller('signUp', function (
   $scope,
   $location,
-  config,
-  $http
+  auth
 ) {
   'use strict';
   
@@ -13,12 +12,12 @@ angular.module('hungryMuch').controller('signUp', function (
   $scope.name = 'name';
   $scope.email = 'test@woorank.com';
   $scope.password = 'test';
-  $scope.rretypePassword = 'test';
+  $scope.retypePassword = 'test';
   
   $scope.signUp = function () {
     $scope.loading = true;
-    $http.post(config.baseUrl + '/auth/signup', {
-      name: $scope.name,
+    auth.signUp({
+      name    : $scope.name,
       email   : $scope.email,
       password: $scope.password
     }).then(function (response) {
