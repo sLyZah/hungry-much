@@ -1,6 +1,6 @@
-<div ng-controller="userInfo">
-    {{user.name}}
-    <button ng-click="signOut()">Log out</button>
-    <a ng-href="#/">Home</a>
+<div ng-controller="userInfo" id="top-bar">
+    <a class="button" ng-href="#/"><i class="icon-angle-left"></i>&nbsp;Home</a>
+    &nbsp;&nbsp;{{user.name}}
+    <button class="right" ng-click="signOut()">Log out</button>
 </div>
     

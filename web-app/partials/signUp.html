@@ -1,7 +1,18 @@
-<form>
-  <input type="text"     ng-model="name"     placeholder="name"            ng-required/>
-  <input type="email"    ng-model="email"    placeholder="email"           ng-required/>
-  <input type="password" ng-model="password" placeholder="password"        ng-required/>
-  <input type="password" ng-model="password" placeholder="retype password" ng-required/>
-  <button ng-click="signUp()" ng-disabled="loading">Sign Up</button>
+<h1 id="hm-title">Be hungy Much</h1>
+<form id="signup-form">
+  <div>
+    <input type="text"     ng-model="name"     placeholder="name"            ng-required/>
+  </div>
+  <div>
+    <input type="email"    ng-model="email"    placeholder="email"           ng-required/>
+  </div>
+  <div>
+    <input type="password" ng-model="password" placeholder="password"        ng-required/>
+  </div>
+  <div>
+    <input type="password" ng-model="password" placeholder="retype password" ng-required/>
+  </div>
+  <div>
+    <button ng-click="signUp()" ng-disabled="loading"><i class="icon-ok"></i>&nbsp;Join us</button>
+  </div>
 </form>
