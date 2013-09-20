@@ -1,6 +1,15 @@
-<a href="#/signup">Sign up</a>
+<h1 id="hm-title">Hungry Much</h1>
 <form id="login-form">
-  <input type="email" ng-model="email"/>
-  <input type="password" ng-model="password"/>
-  <button ng-click="signIn()" ng-disabled="loading">Sign in</button>
+  <div>
+    <input type="email" ng-model="email"/>
+  </div>
+  <div>
+    <input type="password" ng-model="password"/>
+  </div>
+  <div>
+    <button ng-click="signIn()" ng-disabled="loading"><i class="icon-ok"></i>&nbsp;Sign in</button>
+    <p class="small">
+      Not sign up yet? <a href="#/signup">Create an account.</a>
+    </p>
+  </div>
 </form>

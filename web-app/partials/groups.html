@@ -1,8 +1,11 @@
-<div>
+<div ng-include="'partials/userInfo.html'"></div>
+
+<h1 id="hm-title">Groups of hungryness</h1>
+<div class="center">
   <ul>
-    <li ng-repeat="group in groups">
+    <li ng-repeat="group in groups" class="spaced">
       {{group.name}} 
-      <button ng-click="joinGroup(group)">join</button>
+      <button ng-click="joinGroup(group)">join&nbsp;<i class="icon-chevron-right "></i></button>
     </li>
   </ul>
 </div>

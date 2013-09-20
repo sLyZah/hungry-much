@@ -1,14 +1,14 @@
 <div ng-include="'partials/userInfo.html'"></div>
-
-<div>
+<h1 id="hm-title">Hungry Much</h1>
+<div class="center">
   <div>
-    Group: {{user.belongsTo.name}}
+    <span class="lighter">Group:&nbsp;&nbsp;</span>{{user.belongsTo.name}}
   </div>
-  
-  <a ng-href="#/groups">Join Group</a>
-  <a ng-href="#/users/me/creategroup">Create Group</a>
-  
-  <div ng-show"user.belongsTo">
-    <button ng-click="sayImHungry()">I'm hungry</button>
+  <div ng-show"user.belongsTo" class="spaced">
+    <button ng-click="sayImHungry()" class="big red">I'm hungry</button>
   </div>
+  <footer>
+    <a class="button" ng-href="#/groups">Join Group</a>
+    <a class="button" ng-href="#/users/me/creategroup">Create Group</a>
+  </footer>
 </div>
