@@ -255,7 +255,7 @@ exports.init = function (app) {
   
   
   /**
-    * POST /groups/:groupId/users
+    * GET /groups/:groupId/clicks
     * Returns the clicks for a group
     * params:
     *   after [optional]

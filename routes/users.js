@@ -113,7 +113,7 @@ exports.init = function (app) {
     *   groupId
     * returns: the click
     */
-  /*app.put('/users/me', authenticate, validate({
+  app.post('/users/me/clicks', authenticate, validate({
     groupId: {
       scope: 'body',
       required: true
@@ -130,8 +130,7 @@ exports.init = function (app) {
     
     modelUtils.handleModelError(promise, res);
     
-  });*/
-  
+  });
   
 };
 
