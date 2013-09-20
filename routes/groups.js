@@ -271,7 +271,7 @@ exports.init = function (app) {
         return group.getDistinctClicks(req.valid.after);
       }).then(function (clicks) {
         return Q.all(clicks.map(function (click) {
-          return click.serialize();
+          return click.serialize(true);
         }));
       }).then(function (json) {
         res.status(httpStatus.OK);

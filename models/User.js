@@ -112,15 +112,6 @@ module.exports = function(sequelize, app) {
         }
       },
       
-      getAdminGroups: function () {
-        var models = app.get('models');
-        return models.Group.findAll({
-          where: {
-            adminId: this.id
-          }
-        });
-      },
-      
       click: function () {
         var models = app.get('models');
         

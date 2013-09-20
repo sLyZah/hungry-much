@@ -41,11 +41,27 @@ module.exports = function(sequelize, app) {
     },
     
     instanceMethods: {
-      serialize: function () {
-        return {
+      serialize: function (deep) {
+        var models = app.get('models');
+        var json = {
           timestamp: this.timestamp,
           userId: this.UserId
         };
+
+        if (deep) {
+          return this.getUser().then(function (user) {
+            if (user) {
+              return user.serialize();
+            } else {
+              return null;
+            }
+          }).then(function(userJson) {
+            json.user = userJson;
+            return json;
+          });
+        } else {
+          return Q.when(json);
+        }
       }
     }
     
