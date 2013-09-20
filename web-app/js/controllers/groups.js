@@ -6,7 +6,7 @@ angular.module('hungryMuch').controller('groups', function (
   config,
   $http,
   groups,
-  user,
+  globals,
   $location
 ) {
   'use strict';
@@ -15,7 +15,7 @@ angular.module('hungryMuch').controller('groups', function (
   
   $scope.joinGroup = function (group) {
     $http.post(config.baseUrl + '/groups/' + group.id + '/users', {
-      userId: user.id
+      userId: globals.user.id
     }).then(function (response) {
       $location.path('/');
     });

@@ -9,9 +9,8 @@ angular.module('hungryMuch', ['ngRoute']).config(function ($routeProvider) {
     templateUrl: '/partials/home.html',
     controller: 'home',
     resolve: {
-      user: function ($http, $location, $q, config) {
-        return $http.get(config.baseUrl + '/users/me').then(function onIsSignedIn(response) {
-          var user = response.data;
+      user: function ($location, $q, auth) {
+        return auth.authorize().then(function onIsSignedIn(user) {
           return user;
         }, function onIsNotSignedIn() {
           $location.path('/signin').replace();
@@ -35,15 +34,6 @@ angular.module('hungryMuch', ['ngRoute']).config(function ($routeProvider) {
     templateUrl: '/partials/groups.html',
     controller: 'groups',
     resolve: {
-      user: function ($http, $location, $q, config) {
-        return $http.get(config.baseUrl + '/users/me').then(function onIsSignedIn(response) {
-          var user = response.data;
-          return user;
-        }, function onIsNotSignedIn() {
-          $location.path('/signin').replace();
-          return $q.reject();
-        });
-      },
       groups: function ($http, $location, $q, config) {
         return $http.get(config.baseUrl + '/groups').then(function onGetGroups(response) {
           var groups = response.data;

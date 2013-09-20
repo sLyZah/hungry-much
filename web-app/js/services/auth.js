@@ -12,6 +12,15 @@ angular.module('hungryMuch').factory('auth', function (
   
   return {
     
+    authorize: function () {
+        return $http.get(config.baseUrl + '/users/me').then(function onIsSignedIn(response) {
+          globals.user = response.data;
+          return response.data;
+        }, function onIsNotSignedIn() {
+          return $q.reject();
+        });
+    },
+    
     signIn: function (cfg) {
       return $http.post(config.baseUrl + '/auth/signin', cfg)
         .then(function (response) {
