@@ -102,9 +102,9 @@ textarea {
 
 body {
   background: #444444;
-  padding: 20px;
   color: white;
   font-family: 'Roboto', sans-serif;
+  margin: 0;
 }
 input {
   display: inline-block;
@@ -139,6 +139,7 @@ button:focus {
 *********************************/
 
 #login-form {
+  padding: 20px;
   font-size: 18px;
   line-height: 26px;
 }
