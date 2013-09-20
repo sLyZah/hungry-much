@@ -5,9 +5,20 @@ angular.module('hungryMuch').controller('groups', function (
   $scope,
   config,
   $http,
-  user
+  groups,
+  user,
+  $location
 ) {
   'use strict';
 
+  $scope.groups = groups;
+  
+  $scope.joinGroup = function (group) {
+    $http.post(config.baseUrl + '/groups/' + group.id + '/users', {
+      userId: user.id
+    }).then(function (response) {
+      $location.path('/');
+    });
+  };
   
 });

@@ -1,7 +1,7 @@
 /*jslint es5: true, devel: true, browser: true, indent: 2, vars: true, white: true, nomen: true */
 /*global angular*/
 
-angular.module('hungryMuch').controller('signUp', function (
+angular.module('hungryMuch').controller('userInfo', function (
   $scope,
   $location,
   config,
@@ -15,17 +15,9 @@ angular.module('hungryMuch').controller('signUp', function (
   $scope.password = 'test';
   $scope.rretypePassword = 'test';
   
-  $scope.signUp = function () {
-    $scope.loading = true;
-    $http.post(config.baseUrl + '/auth/signup', {
-      name: $scope.name,
-      email   : $scope.email,
-      password: $scope.password
-    }).then(function (response) {
-      $scope.loading = false;
+  $scope.signOut = function () {
+    return $http.get(config.baseUrl + '/auth/signout').then(function() {
       $location.path('/');
-    }, function () {
-      $scope.loading = false;
     });
   };
   

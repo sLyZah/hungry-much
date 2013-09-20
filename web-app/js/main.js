@@ -12,7 +12,7 @@ angular.module('hungryMuch', ['ngRoute']).config(function ($routeProvider) {
       user: function ($http, $location, $q, config) {
         return $http.get(config.baseUrl + '/users/me').then(function onIsSignedIn(response) {
           var user = response.data;
-          return response.data;
+          return user;
         }, function onIsNotSignedIn() {
           $location.path('/signin').replace();
           return $q.reject();
@@ -31,17 +31,23 @@ angular.module('hungryMuch', ['ngRoute']).config(function ($routeProvider) {
     controller: 'signUp'
   });
   
-  $routeProvider.when('/users/me/groups', {
+  $routeProvider.when('/groups', {
     templateUrl: '/partials/groups.html',
     controller: 'groups',
     resolve: {
       user: function ($http, $location, $q, config) {
         return $http.get(config.baseUrl + '/users/me').then(function onIsSignedIn(response) {
           var user = response.data;
-          return response.data;
+          return user;
         }, function onIsNotSignedIn() {
           $location.path('/signin').replace();
           return $q.reject();
+        });
+      },
+      groups: function ($http, $location, $q, config) {
+        return $http.get(config.baseUrl + '/groups').then(function onGetGroups(response) {
+          var groups = response.data;
+          return groups;
         });
       }
     }

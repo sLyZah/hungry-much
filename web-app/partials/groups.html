@@ -1,5 +1,8 @@
 <div>
   <ul>
-    <li ng-repeat="group in groups">{{group.name}}</li>
+    <li ng-repeat="group in groups">
+      {{group.name}} 
+      <button ng-click="joinGroup(group)">join</button>
+    </li>
   </ul>
 </div>

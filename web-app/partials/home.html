@@ -1,21 +1,14 @@
 <div ng-include="'partials/userInfo.html'"></div>
 
 <div>
-  {{user.name}}
+  <div>
+    Group: {{user.belongsTo.name}}
+  </div>
   
-  <ul>
-    <li ng-repeat="group in user.belongsTo">
-      <div>
-        {{group.name}}
-        <button ng-click="administer(group)" ng-if="isAdministratorFor(group)">Administer</button>
-      </div>
-    </li>
-  </ul>
-  
-  <a ng-href="#/users/me/groups">Groups</a>
+  <a ng-href="#/groups">Join Group</a>
   <a ng-href="#/users/me/creategroup">Create Group</a>
   
   <div ng-show"user.belongsTo">
-    <button ng-click="signalImHungry()">I'm hungry</button>
+    <button ng-click="sayImHungry()">I'm hungry</button>
   </div>
 </div>

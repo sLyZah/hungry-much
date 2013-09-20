@@ -15,7 +15,7 @@ angular.module('hungryMuch').controller('createGroup', function (
     $http.post(config.baseUrl + '/groups', {
       name: $scope.name
     }).then(function () {
-      $location.path('/users/me/groups');
+      $location.path('/groups');
     }, function (error) {
       console.error(error);
     });
