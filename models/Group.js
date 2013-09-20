@@ -109,15 +109,10 @@ module.exports = function(sequelize, app) {
         };
         
         if (deep) {
-          return Q.all([
-            this.getAdmin().then(function (admin) {
-              return admin.serialize();
-            }),
-            this.getMembers().then(function (members) {
-              return models.User.serializeAll(members);
-            })
-          ]).spread(function(adminJson, membersJson) {
-            json.admin   = adminJson;
+          
+          return this.getMembers().then(function (members) {
+            return models.User.serializeAll(members);
+          }).then(function(membersJson) {
             json.members = membersJson;
             return json;
           });
@@ -156,15 +151,9 @@ module.exports = function(sequelize, app) {
         
         var q = new sqlQuery.Query().select()
           .from('Clicks')
-          .groupBy('groupId', 'userId')
+          .groupBy('userId')
           .where({
-            and: [
-              {
-                groupId: this.id
-              }, {
-                timestamp: sqlQuery.gt(after || 0)
-              }
-            ]
+            timestamp: sqlQuery.gt(after || 0)
           })
           .build();
         

@@ -97,16 +97,14 @@ module.exports = function(sequelize, app) {
         };
         
         if (deep) {
-          return Q.all([
-            this.getAdminGroups().then(function (groups) {
-              return models.Group.serializeAll(groups);
-            }),
-            this.getGroups().then(function (groups) {
-              return models.Group.serializeAll(groups);
-            })
-          ]).spread(function(adminGroupsJson, groupsJson) {
-            json.administers = adminGroupsJson;
-            json.belongsTo = groupsJson;
+          return this.getGroup().then(function (group) {
+            if (group) {
+              return group.serialize();
+            } else {
+              return null;
+            }
+          }).then(function(groupJson) {
+            json.belongsTo = groupJson;
             return json;
           });
         } else {
@@ -123,23 +121,14 @@ module.exports = function(sequelize, app) {
         });
       },
       
-      click: function (groupId) {
+      click: function () {
         var models = app.get('models');
         
         var user = this;
-        
-        return this.getGroups({where: {id: groupId}}).then(function (groups) {
-          if (groups) {
-            return models.Click.create({
-              UserId: user.id,
-              GroupId: groupId,
-              timestamp: new Date().getTime()
-            });
-          } else {
-            return Q.reject(
-              new Error(Error.NOT_FOUND, 'User doesn\'t belong to this group')
-            );
-          }
+      
+        return models.Click.create({
+          UserId: user.id,
+          timestamp: new Date().getTime()
         });
       }
     }

@@ -26,20 +26,12 @@ module.exports = function(sequelize, app) {
       addClick: function (config) {
         var models = app.get('models');
     
-        return Q.all([
-          models.User.getUser(config.userId),
-          models.Group.find(config.groupId)
-        ]).then(function (results) {
-          var user  = results[0],
-              group = results[1];
+        models.User.getUser(config.userId).then(function (user) {
           
           return Click.create({
             timestamp: new Date().getTime()
           }).then(function (click) {
-            return Q.all([
-              click.setUser(user),
-              click.setGroup(group)
-            ]).then(function () {
+            return click.setUser(user).then(function () {
               return click;
             });
           });
@@ -52,8 +44,7 @@ module.exports = function(sequelize, app) {
       serialize: function () {
         return {
           timestamp: this.timestamp,
-          userId: this.UserId,
-          groupId: this.GroupId
+          userId: this.UserId
         };
       }
     }

@@ -134,8 +134,6 @@ exports.init = function (app) {
     
     var promise = models.Group.getGroup(req.valid.groupId)
       .then(function (group) {
-        return group.ensureAdminRights(req.user);
-      }).then(function (group) {
         return group.updateAttributes(attributes);
       }).then(function (group) {
         return group.serialize(true);
@@ -171,8 +169,6 @@ exports.init = function (app) {
     
     var promise = models.Group.getGroup(req.valid.groupId)
       .then(function (group) {
-        return group.ensureAdminRights(req.user);
-      }).then(function (group) {
         return models.User.getUser(req.valid.userId).then(function (user) {
           return group.addMember(user);
         }).then(function (member) {

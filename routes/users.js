@@ -113,14 +113,9 @@ exports.init = function (app) {
     *   groupId
     * returns: the click
     */
-  app.post('/users/me/clicks', authenticate, validate({
-    groupId: {
-      scope: 'body',
-      required: true
-    }
-  }), function (req, res) {
+  app.post('/users/me/clicks', authenticate, function (req, res) {
     
-    var promise = req.user.click(req.valid.groupId)
+    var promise = req.user.click()
       .then(function (click) {
         return click.serialize(true);
       }).then(function (json) {

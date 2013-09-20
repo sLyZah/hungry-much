@@ -39,13 +39,11 @@ module.exports.init = function (app) {
   // describe relationships
   (function(m) {
     m.Group.hasMany(m.User, { as: 'Members' });
-    m.User.hasMany(m.Group);
+    m.User.belongsTo(m.Group);
     
   
-    m.Group.hasMany(m.Click, { as: 'Clicks' });
     m.User.hasMany(m.Click, { as: 'Clicks' });
     m.Click.belongsTo(m.User);
-    m.Click.belongsTo(m.Group);
   }(models));
   
   
