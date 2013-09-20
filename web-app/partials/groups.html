@@ -3,9 +3,9 @@
 <h1 id="hm-title">Groups of hungryness</h1>
 <div class="center">
   <ul>
-    <li ng-repeat="group in groups" class="spaced">
+    <li ng-repeat="group in groups">
       {{group.name}} 
-      <button ng-click="joinGroup(group)">join&nbsp;<i class="icon-chevron-right "></i></button>
+      <button class="right" ng-click="joinGroup(group)">join&nbsp;<i class="icon-chevron-right "></i></button>
     </li>
   </ul>
 </div>

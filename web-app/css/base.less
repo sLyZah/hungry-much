@@ -166,6 +166,7 @@ button, .button{
   text-decoration: none;
   padding: 0 6px;
   line-height: 32px;
+  display: inline-block;
   &:hover, &:focus{
     opacity: .9;
     text-decoration: none;
@@ -180,6 +181,10 @@ button, .button{
     font-size: 36px;
     border-radius: 112px;
     box-shadow: 0px -8px 0px 0px #b73333 inset; 
+  }
+  &.right{
+    display: block;
+    float: right;
   }
 }
 
@@ -221,11 +226,9 @@ button, .button{
   padding : 12px 26px;
 
   button, .button{
-    display: block;
     height: 26px;
     line-height: 26px;
     background-color: #555;
-    float: right;
     width: auto;
   }
 }
@@ -235,16 +238,32 @@ footer{
   bottom: 0;
   width: 100%;
   padding : 12px 0;
+  text-align: left;
   button, .button{
-    float: left;
     margin: 0 0 0 26px;
   }
 }
 
 ul{
   width:380px;
+  margin:auto;
+  text-align: left;
+  list-style-type: none;
   button{
     width:auto;
+    height: 22px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+  li{
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top:12px;
+    padding-top:12px;
+    &:first-child{
+      border:none;
+      margin: 0;
+      padding: 0;
+    }
   }
 }
 

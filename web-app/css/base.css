@@ -131,6 +131,7 @@ button,
   text-decoration: none;
   padding: 0 6px;
   line-height: 32px;
+  display: inline-block;
 }
 button:hover,
 .button:hover,
@@ -151,6 +152,11 @@ button.big,
   font-size: 36px;
   border-radius: 112px;
   box-shadow: 0px -8px 0px 0px #b73333 inset;
+}
+button.right,
+.button.right {
+  display: block;
+  float: right;
 }
 /*messages*/
 
@@ -195,11 +201,9 @@ footer {
 footer button,
 #top-bar .button,
 footer .button {
-  display: block;
   height: 26px;
   line-height: 26px;
   background-color: #555555;
-  float: right;
   width: auto;
 }
 footer {
@@ -207,17 +211,33 @@ footer {
   bottom: 0;
   width: 100%;
   padding: 12px 0;
+  text-align: left;
 }
 footer button,
 footer .button {
-  float: left;
   margin: 0 0 0 26px;
 }
 ul {
   width: 380px;
+  margin: auto;
+  text-align: left;
+  list-style-type: none;
 }
 ul button {
   width: auto;
+  height: 22px;
+  font-size: 14px;
+  line-height: 14px;
+}
+ul li {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+ul li:first-child {
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 form {
   padding: 20px;
