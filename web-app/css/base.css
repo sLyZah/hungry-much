@@ -93,14 +93,12 @@ textarea {
   vertical-align: top;
 }
 /*woo custom reste*/
-
 *:focus,
 *:focus {
   outline: none !important;
 }
 /* vars */
 /* Fonts */
-
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
@@ -115,9 +113,8 @@ textarea {
 }
 /*         all pages
 *********************************/
-
 body {
-  color: white;
+  color: #fff;
   font-family: 'Montserrat', sans-serif !important;
   margin: 0;
   background: #444444 url("../img/bg-texture.png") center top;
@@ -133,14 +130,14 @@ input {
   background: #f1f1f1;
   border: none;
   border-radius: 3px;
-  color: #222222;
+  color: #222;
 }
 button,
 .button {
   width: 224px;
   height: 32px;
   background: #75c04e;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 6px;
   text-decoration: none;
@@ -188,7 +185,6 @@ button.right,
   float: right;
 }
 /*messages*/
-
 .message {
   text-align: center;
   font-size: 22px;
@@ -208,7 +204,6 @@ button.right,
 }
 /*  burger
 ****************/
-
 #hm-title {
   text-align: center;
   min-height: 120px;
@@ -219,7 +214,6 @@ button.right,
 }
 /* top bar & footer
 ***********************/
-
 #top-bar,
 footer {
   background-color: rgba(255, 255, 255, 0.15);
@@ -232,7 +226,7 @@ footer button,
 footer .button {
   height: 26px;
   line-height: 26px;
-  background-color: #555555;
+  background-color: #555;
   width: auto;
 }
 footer {
@@ -278,7 +272,6 @@ form > div {
   text-align: center;
 }
 /* HP icons*/
-
 .healt-3 {
   background: url("../img/icons.png") -84px 0 no-repeat;
 }
