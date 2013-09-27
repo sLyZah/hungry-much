@@ -17,7 +17,7 @@ angular.module('hungryMuch').controller('clicks', function (
   };
 
   $scope.getHp = function (click) {
-    return Math.floor( click.percent / 10) ;
+    return Math.floor( 100 * click.health / 10) ;
   };
   
 });
