@@ -9,7 +9,11 @@
       <span ng-if="!isHungry()">I'm hungry</span>
       <span ng-if="isHungry()"><i class="icon-ok"></i></span>
     </button>
-    <a ng-href="{{getClicksUrl(user.belongsTo)}}">Show me who's hungry</a>
+  </div>
+  <div class="spaced">
+    <p class="small">
+      <a ng-href="{{getClicksUrl(user.belongsTo)}}">Show me who's hungry</a>
+    </p>
   </div>
   <footer>
     <a class="button" ng-href="#/groups">Join Group</a>
