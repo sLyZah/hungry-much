@@ -23,7 +23,7 @@ angular.module('hungryMuch').controller('home', function (
   };
   
   $scope.isHungry = function () {
-    return user.lastClick && user.lastClick.timestamp > user.lastClick.expires;
+    return user.lastClick && (user.lastClick.timestamp > user.lastClick.expires);
   };
   
 });

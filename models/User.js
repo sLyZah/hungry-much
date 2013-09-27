@@ -124,6 +124,7 @@ module.exports = function(sequelize, app) {
       getLastClick: function () {
         var models = app.get('models');
         return models.Click.findAll({
+          where: { userId: this.id }, 
           limit: 1,
           order: 'timestamp DESC'
         }).then(function (clicks) {

@@ -3,7 +3,7 @@
 <h1 id="hm-title">Hungry bros</h1>
 <div class="center">
   <ul>
-    <li ng-repeat="click in clicks | filter:isAlive">
+    <li ng-repeat="click in clicks | filter:isAlive | orderBy:getHp:true">
       {{click.user.name}}
       <span class="hp" ng-class="'hp-'+getHp(click)" title="'hungry since {{click.timestamp | moment:'fromNow'}}"><i></i><i></i><i></i></span>
     </li>
