@@ -156,6 +156,11 @@ button:focus,
   opacity: .9;
   text-decoration: none;
 }
+button:disabled,
+.button:disabled {
+  opacity: 1;
+  cursor: default;
+}
 button.red,
 .button.red {
   background-color: #f94c4c;
