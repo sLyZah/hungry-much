@@ -97,19 +97,42 @@ module.exports = function(sequelize, app) {
         };
         
         if (deep) {
-          return this.getGroup().then(function (group) {
+          return Q.all([
+            this.getGroup(),
+            this.getLastClick()
+          ]).spread(function (group, lastClick) {
+            var groupJsonPromise, clickJsonPromise;
             if (group) {
-              return group.serialize();
-            } else {
-              return null;
+              groupJsonPromise = group.serialize();
             }
-          }).then(function(groupJson) {
+            
+            if (lastClick) {
+              clickJsonPromise = lastClick.serialize();
+            }
+            
+            return [groupJsonPromise, clickJsonPromise];
+          }).spread(function(groupJson, clickJson) {
             json.belongsTo = groupJson;
+            json.lastClick = clickJson;
             return json;
           });
         } else {
           return Q.when(json);
         }
+      },
+      
+      getLastClick: function () {
+        var models = app.get('models');
+        return models.Click.findAll({
+          limit: 1,
+          order: 'timestamp DESC'
+        }).then(function (clicks) {
+          if (clicks) {
+            return clicks[0];
+          } else {
+            return null;
+          }
+        });
       },
       
       click: function () {

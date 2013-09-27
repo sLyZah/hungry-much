@@ -5,7 +5,10 @@
     <span class="lighter">Group:&nbsp;&nbsp;</span>{{user.belongsTo.name}}
   </div>
   <div ng-show"user.belongsTo" class="spaced">
-    <button ng-click="sayImHungry()" class="big red">I'm hungry</button>
+    <button ng-click="sayImHungry()" class="big red" ng-disabled="isHungry()">
+      <span ng-if="!isHungry()">I'm hungry</span>
+      <span ng-if="isHungry()"><i class="icon-check"></i></span>
+    </button>
   </div>
   <footer>
     <a class="button" ng-href="#/groups">Join Group</a>

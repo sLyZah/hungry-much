@@ -14,9 +14,16 @@ angular.module('hungryMuch').controller('home', function (
   
   $scope.sayImHungry = function () {
     $http.post(config.baseUrl + '/users/me/clicks').then(function (response) {
-      console.log(response.data);
       $location.path('/groups/' + user.belongsTo.id + '/clicks');
     });
+  };
+  
+  $scope.isHungry = function () {
+    if (user.lastClick && user.belongsTo) {
+      return user.lastClick.timestamp > new Date().getTime() - user.belongsTo.treshold;
+    }
+    
+    return false;
   };
   
 });

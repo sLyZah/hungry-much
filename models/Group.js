@@ -9,12 +9,13 @@ var Q          = require('q'),
 var ERR_GROUP_NOT_FOUND = 'Group not found',
     ERR_UNKNOWN         = 'Error unknown';
 
+var DEFAULT_TRESHOLD    = 2 * 60 * 60 * 1000;
 module.exports = function(sequelize, app) {
   'use strict';
   
   var Group = sequelize.define('Group', {
     name: { type: Sequelize.STRING, allowNull: false, unique: true },
-    treshold: { type: Sequelize.INTEGER, defaultValue: 3 },
+    treshold: { type: Sequelize.INTEGER, defaultValue: DEFAULT_TRESHOLD },
     adminId: { type: Sequelize.INTEGER, allowNull: false }
   }, {
     classMethods: {
@@ -104,8 +105,9 @@ module.exports = function(sequelize, app) {
         var models = app.get('models');
         
         var json = {
-          name: this.name,
-          id: this.id
+          name    : this.name,
+          id      : this.id,
+          treshold: this.treshold || DEFAULT_TRESHOLD
         };
         
         if (deep) {
