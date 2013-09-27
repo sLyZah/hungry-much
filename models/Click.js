@@ -73,7 +73,6 @@ module.exports = function(sequelize, app) {
         
         return Math.max(0, 1 - health);
       }
-    
     }
     
   });

@@ -442,7 +442,7 @@
 				ORGANIZATIONNAME = WooRank;
 				TargetAttributes = {
 					C4A981F517F580640003EE20 = {
-						DevelopmentTeam = TM335TAVC7;
+						DevelopmentTeam = ZFB99T4U6M;
 					};
 					C4A9821917F580650003EE20 = {
 						TestTargetID = C4A981F517F580640003EE20;
@@ -766,6 +766,7 @@
 				C4A9822D17F580650003EE20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C4A9822E17F580650003EE20 /* Build configuration list for PBXNativeTarget "LunchAppTests" */ = {
 			isa = XCConfigurationList;
@@ -774,6 +775,7 @@
 				C4A9823017F580650003EE20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
