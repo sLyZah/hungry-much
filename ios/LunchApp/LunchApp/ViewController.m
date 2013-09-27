@@ -47,9 +47,16 @@
                                                   error:&error];
     
     if (!error) {
+        // Dev/Production policy
+        NSString *baseURL;
+        if (DEBUG)
+            baseURL = @"http://localhost:3000";
+        else
+            baseURL = @"http://lunchapp.com";
+        
         // Load HTML into the webview
         [self.webview loadHTMLString:html
-                             baseURL:[NSURL URLWithString:@"http://lunchapp.loc"]];
+                             baseURL:[NSURL URLWithString:baseURL]];
     }
     else {
         

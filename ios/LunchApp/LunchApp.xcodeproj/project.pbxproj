@@ -58,6 +58,7 @@
 		C4A9829617F586800003EE20 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A9829517F586800003EE20 /* libGoogleAnalytics_debug.a */; };
 		C4A9829917F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff in Resources */ = {isa = PBXBuildFile; fileRef = C4A9829717F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff */; };
 		C4A9829A17F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff in Resources */ = {isa = PBXBuildFile; fileRef = C4A9829817F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff */; };
+		C4A9829E17F591230003EE20 /* fastclick.min.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9829C17F591180003EE20 /* fastclick.min.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +135,7 @@
 		C4A9829517F586800003EE20 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics_debug.a; path = GAI/libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		C4A9829717F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff; sourceTree = "<group>"; };
 		C4A9829817F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff"; sourceTree = "<group>"; };
+		C4A9829C17F591180003EE20 /* fastclick.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = fastclick.min.js; path = fastclick/fastclick.min.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +322,7 @@
 		C4A9824C17F583BB0003EE20 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				C4A9829B17F591100003EE20 /* fastclick */,
 				C4A9824D17F583BB0003EE20 /* angular */,
 			);
 			path = lib;
@@ -381,6 +384,14 @@
 				C4A9828B17F585C40003EE20 /* AppCache.h */,
 			);
 			name = InAppCache;
+			sourceTree = "<group>";
+		};
+		C4A9829B17F591100003EE20 /* fastclick */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9829C17F591180003EE20 /* fastclick.min.js */,
+			);
+			name = fastclick;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -459,6 +470,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A9829E17F591230003EE20 /* fastclick.min.js in Resources */,
 				C4A9827D17F584400003EE20 /* clicks.js in Resources */,
 				C4A9827E17F584400003EE20 /* createGroup.js in Resources */,
 				C4A9827F17F584400003EE20 /* groups.js in Resources */,
