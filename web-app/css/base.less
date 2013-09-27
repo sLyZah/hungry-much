@@ -99,6 +99,7 @@ button,
 input {
   *overflow: visible; // Inner spacing ie IE6/7
   line-height: normal; // FF3/4 have !important on line-height in UA stylesheet
+  font: inherit;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner { // Inner padding and border oddities in FF3/4
@@ -139,7 +140,7 @@ textarea {
 *********************************/
 body{
   color:#fff;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif !important;
   margin:0;
   background: #444 url("@{base-img-url}bg-texture.png") center top;
 }
@@ -167,6 +168,7 @@ button, .button{
   padding: 0 6px;
   line-height: 32px;
   display: inline-block;
+  white-space: nowrap;
   &:hover, &:focus{
     opacity: .9;
     text-decoration: none;
@@ -178,7 +180,7 @@ button, .button{
     height: 190px;
     width: 190px;
     line-height: 140px;
-    font-size: 36px;
+    font-size: 32px;
     border-radius: 112px;
     box-shadow: 0px -8px 0px 0px #b73333 inset; 
   }
@@ -274,5 +276,83 @@ form{
   >div{
     margin-bottom: 20px;
     text-align: center;
+  }
+}
+
+/* HP icons*/
+.healt-3{
+  background: url("@{base-img-url}icons.png") -84px 0 no-repeat;
+}
+.healt-2{
+  background-position: -54px 0;
+}
+.healt-1{
+  background-position: -24px 0;
+}
+.healt-0{
+  background-position: 0 0;
+}
+
+.hp{
+  display: block;
+  float: right;
+  width: 72px;
+  height: 20px;
+  i{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    .healt-3;
+    &:nth-child(2){
+      margin: 0 6px;
+    }
+  }
+  /*last heart*/
+  &.hp-8{
+    i:last-child{
+      .healt-2;
+    }
+  }
+  &.hp-7{
+    i:last-child{
+      .healt-1;
+    }
+  }
+  &.hp-6, &.hp-5, &.hp-4, &.hp-3, &.hp-2, &.hp-1, &.hp-0{
+    i:last-child{
+      .healt-0;
+    }
+  }
+  /*middle heart*/
+  &.hp-5{
+    i:nth-child(2){
+      .healt-2;
+    }
+  }
+  &.hp-4{
+    i:nth-child(2){
+      .healt-1;
+    }
+  }
+  &.hp-3, &.hp-2, &.hp-1, &.hp-0{
+    i:nth-child(2){
+      .healt-0;
+    }
+  }
+  /*first heart*/
+  &.hp-2{
+    i:first-child{
+      .healt-2;
+    }
+  }
+  &.hp-1{
+    i:first-child{
+      .healt-1;
+    }
+  }
+  &.hp-0{
+    i:first-child{
+      .healt-0;
+    }
   }
 }

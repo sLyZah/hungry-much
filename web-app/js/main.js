@@ -53,7 +53,6 @@ angular.module('hungryMuch', ['ngRoute']).config(function ($routeProvider) {
     controller: 'clicks',
     resolve: {
       clicks: function ($http, $location, $q, config, $route) {
-        console.log('shf');
         var url = config.baseUrl + '/groups/' + $route.current.params.groupId + '/clicks';
         return $http.get(url).then(function onGetClicks(response) {
           var clicks = response.data;

@@ -15,5 +15,9 @@ angular.module('hungryMuch').controller('clicks', function (
   $scope.getDate = function (click) {
     return new Date(click.timestamp);
   };
+
+  $scope.getHp = function (click) {
+    return Math.floor( click.percent / 10) ;
+  };
   
 });
