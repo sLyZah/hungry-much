@@ -56,6 +56,8 @@
 		C4A9828817F584400003EE20 /* angular.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825017F583BB0003EE20 /* angular.js */; };
 		C4A9828C17F585C40003EE20 /* AppCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A9828A17F585C40003EE20 /* AppCache.m */; };
 		C4A9829617F586800003EE20 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A9829517F586800003EE20 /* libGoogleAnalytics_debug.a */; };
+		C4A9829917F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff in Resources */ = {isa = PBXBuildFile; fileRef = C4A9829717F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff */; };
+		C4A9829A17F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff in Resources */ = {isa = PBXBuildFile; fileRef = C4A9829817F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +132,8 @@
 		C4A9829317F586800003EE20 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GAI/GAITrackedViewController.h; sourceTree = "<group>"; };
 		C4A9829417F586800003EE20 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GAI/GAITracker.h; sourceTree = "<group>"; };
 		C4A9829517F586800003EE20 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics_debug.a; path = GAI/libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
+		C4A9829717F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff; sourceTree = "<group>"; };
+		C4A9829817F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +265,8 @@
 		C4A9823617F583BB0003EE20 /* font */ = {
 			isa = PBXGroup;
 			children = (
+				C4A9829717F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff */,
+				C4A9829817F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff */,
 				C4A9823717F583BB0003EE20 /* fontawesome-webfont.eot */,
 				C4A9823817F583BB0003EE20 /* fontawesome-webfont.svg */,
 				C4A9823917F583BB0003EE20 /* fontawesome-webfont.ttf */,
@@ -483,6 +489,8 @@
 				C4A9827517F583BB0003EE20 /* groups.html in Resources */,
 				C4A9825D17F583BB0003EE20 /* base.less in Resources */,
 				C4A9820D17F580640003EE20 /* Main_iPhone.storyboard in Resources */,
+				C4A9829A17F58B450003EE20 /* zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff in Resources */,
+				C4A9829917F58B450003EE20 /* IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff in Resources */,
 				C4A9826117F583BB0003EE20 /* fontawesome-webfont.ttf in Resources */,
 				C4A9826517F583BB0003EE20 /* burger.png in Resources */,
 				C4A9820417F580640003EE20 /* InfoPlist.strings in Resources */,
