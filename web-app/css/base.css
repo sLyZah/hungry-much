@@ -92,17 +92,28 @@ textarea {
   vertical-align: top;
 }
 /*woo custom reste*/
-
 *:focus,
 *:focus {
   outline: none !important;
 }
 /* vars */
+/* Fonts */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat-Regular'), url(http://themes.googleusercontent.com/static/fonts/montserrat/v3/zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff?cached=zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Montserrat-Bold'), url(http://themes.googleusercontent.com/static/fonts/montserrat/v3/IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff?cached=IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff) format('woff');
+}
 /*         all pages
 *********************************/
-
 body {
-  color: white;
+  color: #fff;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   background: #444444 url("../img/bg-texture.png") center top;
@@ -118,14 +129,14 @@ input {
   background: #f1f1f1;
   border: none;
   border-radius: 3px;
-  color: #222222;
+  color: #222;
 }
 button,
 .button {
   width: 224px;
   height: 32px;
   background: #75c04e;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 6px;
   text-decoration: none;
@@ -159,7 +170,6 @@ button.right,
   float: right;
 }
 /*messages*/
-
 .message {
   text-align: center;
   font-size: 22px;
@@ -179,7 +189,6 @@ button.right,
 }
 /*  burger
 ****************/
-
 #hm-title {
   text-align: center;
   min-height: 120px;
@@ -190,7 +199,6 @@ button.right,
 }
 /* top bar & footer
 ***********************/
-
 #top-bar,
 footer {
   background-color: rgba(255, 255, 255, 0.15);
@@ -203,7 +211,7 @@ footer button,
 footer .button {
   height: 26px;
   line-height: 26px;
-  background-color: #555555;
+  background-color: #555;
   width: auto;
 }
 footer {
