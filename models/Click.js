@@ -67,10 +67,10 @@ module.exports = function(sequelize, app) {
 
       getHealth: function () {
         var EXPIRE_TIME = 2 * 60 * 60 * 1000; // 2 hours
-        var diff    = new Date().getTime() - this.timestamp,
-            health  = Math.min(1, diff / (EXPIRE_TIME));
+        var diff    = new Date().getTime() - this.timestamp,
+        health  = Math.min(1, diff / (EXPIRE_TIME));
 
-        return Math.max(0, 1-health);
+        return Math.max(0, 1-health);
       }
 
     }
