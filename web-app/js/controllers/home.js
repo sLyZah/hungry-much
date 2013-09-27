@@ -12,20 +12,19 @@ angular.module('hungryMuch').controller('home', function (
   
   $scope.user = user;
   
-  $scope.showWhosHungry = function () {
-    $location.path('/groups/' + user.belongsTo.id + '/clicks');
+  $scope.getClicksUrl = function (group) {
+    return '#/groups/' + group.id + '/clicks';
   };
   
   $scope.sayImHungry = function () {
-    $http.post(config.baseUrl + '/users/me/clicks').then($scope.showWhosHungry);
+    $http.post(config.baseUrl + '/users/me/clicks').then(function () {
+      $location.path('/groups/' + user.belongsTo.id + '/clicks');
+    });
   };
   
   $scope.isHungry = function () {
-    if (user.lastClick && user.belongsTo) {
-      return user.lastClick.timestamp > new Date().getTime() - user.belongsTo.treshold;
-    }
-    
-    return false;
+    console.log( user.lastClick, user.lastClick.timestamp, user.lastClick.expires);
+    return user.lastClick && user.lastClick.timestamp > user.lastClick.expires;
   };
   
 });

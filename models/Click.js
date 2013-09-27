@@ -4,6 +4,7 @@
 var Q = require('q'),
     Sequelize = require('sequelize');
 
+var EXPIRE_TIME = 2 * 60 * 60 * 1000; // 2 hours
 
 module.exports = function(sequelize, app) {
   'use strict';
@@ -45,8 +46,9 @@ module.exports = function(sequelize, app) {
         var models = app.get('models');
         var json = {
           timestamp: this.timestamp,
-          userId: this.UserId,
-          health: this.getHealth()
+          userId : this.UserId,
+          health : this.getHealth(),
+          expires: new Date().getTime() - EXPIRE_TIME
         };
 
         if (deep) {
@@ -66,13 +68,12 @@ module.exports = function(sequelize, app) {
       },
 
       getHealth: function () {
-        var EXPIRE_TIME = 2 * 60 * 60 * 1000; // 2 hours
-        var diff    = new Date().getTime() - this.timestamp,
-            health  = Math.min(1, diff / (EXPIRE_TIME));
-
-        return Math.max(0, 1-health);
-      }
-
+        var diff   = new Date().getTime() - this.timestamp,
+            health = Math.min(1, diff / (EXPIRE_TIME));
+        
+        return Math.max(0, 1 - health);
+      }
+    
     }
     
   });
