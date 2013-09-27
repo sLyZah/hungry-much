@@ -22,8 +22,17 @@
     // Set-up in-app cache wrapper
     [NSURLCache setSharedURLCache:[AppCache sharedAppCache]];
     
+    // Configure webview
+    [self setupWebView];
+    
     // Load google
     [self loadPage:@"index"];
+}
+
+#pragma mark - WebView
+- (void) setupWebView
+{
+    [self.webview.scrollView setBounces:NO];
 }
 
 - (void) loadPage:(NSString *) fileName
