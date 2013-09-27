@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7DB79907-2E2E-4C9F-A82F-1D18ECE93517</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LunchApp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>99E929EC-CA69-4D3B-9744-9006ABE25053</key>
+		<string>https://github.com/Woorank/hungry-much.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/LunchApp/LunchApp.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>99E929EC-CA69-4D3B-9744-9006ABE25053</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Woorank/hungry-much.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>99E929EC-CA69-4D3B-9744-9006ABE25053</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>99E929EC-CA69-4D3B-9744-9006ABE25053</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LunchAppAPI</string>
+		</dict>
+	</array>
+</dict>
+</plist>
