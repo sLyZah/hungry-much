@@ -154,8 +154,10 @@ module.exports = function(sequelize, app) {
         
         var q = new sqlQuery.Query().select()
           .from('Clicks')
+          .from('Users', 'id', 'Clicks', 'userId')
           .groupBy('userId')
           .where({
+            groupId: this.id,
             timestamp: sqlQuery.gt(after || 0)
           })
           .build();

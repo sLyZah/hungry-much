@@ -10,10 +10,11 @@ angular.module('hungryMuch').controller('signIn', function (
   'use strict';
   
   $scope.loading = false;
-  $scope.email = 'test@woorank.com';
-  $scope.password = 'test';
+  $scope.email = '';
+  $scope.password = '';
   
   $scope.signIn = function () {
+    $scope.error = null;
     $scope.loading = true;
     auth.signIn({
       email   : $scope.email,
@@ -23,6 +24,7 @@ angular.module('hungryMuch').controller('signIn', function (
       $location.path('/');
     }, function () {
       $scope.loading = false;
+      $scope.error = 'Sign in failed';
     });
   };
   

@@ -1,15 +1,16 @@
 <h1 id="hm-title">Hungry Much</h1>
 <form id="login-form">
   <div>
-    <input type="email" ng-model="email"/>
+    <input type="email" ng-model="email" placeholder="email"/>
   </div>
   <div>
-    <input type="password" ng-model="password"/>
+    <input type="password" ng-model="password" placeholder="password"/>
   </div>
   <div>
     <button ng-click="signIn()" ng-disabled="loading"><i class="icon-ok"></i>&nbsp;Sign in</button>
     <p class="small">
       Not sign up yet? <a href="#/signup">Create an account.</a>
     </p>
+    <span class="error">{{error}}</span>
   </div>
 </form>

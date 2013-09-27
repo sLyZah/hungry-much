@@ -9,12 +9,18 @@ angular.module('hungryMuch').controller('signUp', function (
   'use strict';
   
   $scope.loading = false;
-  $scope.name = 'name';
-  $scope.email = 'test@woorank.com';
-  $scope.password = 'test';
-  $scope.retypePassword = 'test';
+  $scope.name = '';
+  $scope.email = '';
+  $scope.password = '';
+  $scope.retypePassword = '';
   
   $scope.signUp = function () {
+    $scope.error = null;
+    if ($scope.password !== $scope.retypePassword) {
+      $scope.error = 'Passwords don\'t match';
+      return;
+    }
+    
     $scope.loading = true;
     auth.signUp({
       name    : $scope.name,
@@ -23,8 +29,9 @@ angular.module('hungryMuch').controller('signUp', function (
     }).then(function (response) {
       $scope.loading = false;
       $location.path('/');
-    }, function () {
+    }, function (error) {
       $scope.loading = false;
+      $scope.error = 'Signup failed';
     });
   };
   

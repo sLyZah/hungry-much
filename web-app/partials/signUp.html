@@ -10,9 +10,10 @@
     <input type="password" ng-model="password" placeholder="password"        ng-required/>
   </div>
   <div>
-    <input type="password" ng-model="password" placeholder="retype password" ng-required/>
+    <input type="password" ng-model="retypePassword" placeholder="retype password" ng-required/>
   </div>
   <div>
     <button ng-click="signUp()" ng-disabled="loading"><i class="icon-ok"></i>&nbsp;Join us</button>
   </div>
+    <span class="error">{{error}}</span>
 </form>
