@@ -15,6 +15,10 @@ angular.module('hungryMuch').controller('clicks', function (
   $scope.getDate = function (click) {
     return new Date(click.timestamp);
   };
+  
+  $scope.isAlive = function (click) {
+    return click.health > 0;
+  };
 
   $scope.getHp = function (click) {
     return Math.floor( 100 * click.health / 10) ;
