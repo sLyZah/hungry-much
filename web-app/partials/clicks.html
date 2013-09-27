@@ -3,9 +3,9 @@
 <h1 id="hm-title">Hungry bros</h1>
 <div class="center">
   <ul>
-    <li ng-repeat="click in clicks | filter:isAlive | orderBy:getHp:true">
+    <li ng-repeat="click in clicks | filter:isAlive | orderBy:'timestamp':true" title="Hungry since {{click.timestamp | moment:'fromNow'}}">
       {{click.user.name}}
-      <span class="hp" ng-class="'hp-'+getHp(click)" title="'hungry since {{click.timestamp | moment:'fromNow'}}"><i></i><i></i><i></i></span>
+      <span class="hp" ng-class="'hp-'+getHp(click)"><i></i><i></i><i></i></span>
     </li>
   </ul>
 </div>
