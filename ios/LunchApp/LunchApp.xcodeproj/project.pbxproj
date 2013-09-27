@@ -441,6 +441,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = WooRank;
 				TargetAttributes = {
+					C4A981F517F580640003EE20 = {
+						DevelopmentTeam = TM335TAVC7;
+					};
 					C4A9821917F580650003EE20 = {
 						TestTargetID = C4A981F517F580640003EE20;
 					};

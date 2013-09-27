@@ -12,10 +12,12 @@ angular.module('hungryMuch').controller('home', function (
   
   $scope.user = user;
   
+  $scope.showWhosHungry = function () {
+    $location.path('/groups/' + user.belongsTo.id + '/clicks');
+  };
+  
   $scope.sayImHungry = function () {
-    $http.post(config.baseUrl + '/users/me/clicks').then(function (response) {
-      $location.path('/groups/' + user.belongsTo.id + '/clicks');
-    });
+    $http.post(config.baseUrl + '/users/me/clicks').then($scope.showWhosHungry);
   };
   
   $scope.isHungry = function () {

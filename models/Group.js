@@ -9,7 +9,8 @@ var Q          = require('q'),
 var ERR_GROUP_NOT_FOUND = 'Group not found',
     ERR_UNKNOWN         = 'Error unknown';
 
-var DEFAULT_TRESHOLD    = 2 * 60 * 60 * 1000;
+var DEFAULT_TRESHOLD = 2;
+
 module.exports = function(sequelize, app) {
   'use strict';
   

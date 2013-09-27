@@ -36,8 +36,8 @@ module.exports = function(sequelize, app) {
             });
           });
         });
-      }
-  
+      },
+
     },
     
     instanceMethods: {
@@ -45,7 +45,8 @@ module.exports = function(sequelize, app) {
         var models = app.get('models');
         var json = {
           timestamp: this.timestamp,
-          userId: this.UserId
+          userId: this.UserId,
+          health: this.getHealth()
         };
 
         if (deep) {
@@ -62,7 +63,16 @@ module.exports = function(sequelize, app) {
         } else {
           return Q.when(json);
         }
-      }
+      },
+
+      getHealth: function () {
+        var EXPIRE_TIME = 2 * 60 * 60 * 1000; // 2 hours
+        var diff    = new Date().getTime() - this.timestamp,
+            health  = Math.min(1, diff / (EXPIRE_TIME));
+
+        return Math.max(0, 1-health);
+      }
+
     }
     
   });
