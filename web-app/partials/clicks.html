@@ -1,9 +1,11 @@
 <div ng-include="'partials/userInfo.html'"></div>
   
-<ul>
-  <li ng-repeat="click in clicks">
-    <a ng-class="'HP-'+getHP(click)">HP</a> -
-    {{getDate(click) | date:'short'}} -
-    {{click.user.name}}
-  </li>
-</ul>
+<h1 id="hm-title">Hungry bros</h1>
+<div class="center">
+  <ul>
+    <li ng-repeat="click in clicks">
+      {{click.user.name}}
+      <span class="hp" ng-class="'hp-'+getHp(click)" title="'hungry since {{click.timestamp | moment:'fromNow'}}"><i></i><i></i><i></i></span>
+    </li>
+  </ul>
+</div>

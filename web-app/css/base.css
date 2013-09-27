@@ -64,6 +64,7 @@ button,
 input {
   *overflow: visible;
   line-height: normal;
+  font: inherit;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
@@ -98,12 +99,26 @@ textarea {
   outline: none !important;
 }
 /* vars */
+/* Fonts */
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Montserrat-Regular'), url("../font//zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff?cached=zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff") format('woff');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Montserrat-Bold'), url("../font//IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff?cached=IQHow_FEYlDC4Gzy_m8fcnbFhgvWbfSbdVg11QabG8w.woff") format('woff');
+}
 /*         all pages
 *********************************/
 
 body {
   color: white;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif !important;
   margin: 0;
   background: #444444 url("../img/bg-texture.png") center top;
 }
@@ -132,6 +147,7 @@ button,
   padding: 0 6px;
   line-height: 32px;
   display: inline-block;
+  white-space: nowrap;
 }
 button:hover,
 .button:hover,
@@ -149,7 +165,7 @@ button.big,
   height: 190px;
   width: 190px;
   line-height: 140px;
-  font-size: 36px;
+  font-size: 32px;
   border-radius: 112px;
   box-shadow: 0px -8px 0px 0px #b73333 inset;
 }
@@ -247,4 +263,75 @@ form {
 form > div {
   margin-bottom: 20px;
   text-align: center;
+}
+/* HP icons*/
+
+.healt-3 {
+  background: url("../img/icons.png") -84px 0 no-repeat;
+}
+.healt-2 {
+  background-position: -54px 0;
+}
+.healt-1 {
+  background-position: -24px 0;
+}
+.healt-0 {
+  background-position: 0 0;
+}
+.hp {
+  display: block;
+  float: right;
+  width: 72px;
+  height: 20px;
+  /*last heart*/
+
+  /*middle heart*/
+
+  /*first heart*/
+
+}
+.hp i {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("../img/icons.png") -84px 0 no-repeat;
+}
+.hp i:nth-child(2) {
+  margin: 0 6px;
+}
+.hp.hp-8 i:last-child {
+  background-position: -54px 0;
+}
+.hp.hp-7 i:last-child {
+  background-position: -24px 0;
+}
+.hp.hp-6 i:last-child,
+.hp.hp-5 i:last-child,
+.hp.hp-4 i:last-child,
+.hp.hp-3 i:last-child,
+.hp.hp-2 i:last-child,
+.hp.hp-1 i:last-child,
+.hp.hp-0 i:last-child {
+  background-position: 0 0;
+}
+.hp.hp-5 i:nth-child(2) {
+  background-position: -54px 0;
+}
+.hp.hp-4 i:nth-child(2) {
+  background-position: -24px 0;
+}
+.hp.hp-3 i:nth-child(2),
+.hp.hp-2 i:nth-child(2),
+.hp.hp-1 i:nth-child(2),
+.hp.hp-0 i:nth-child(2) {
+  background-position: 0 0;
+}
+.hp.hp-2 i:first-child {
+  background-position: -54px 0;
+}
+.hp.hp-1 i:first-child {
+  background-position: -24px 0;
+}
+.hp.hp-0 i:first-child {
+  background-position: 0 0;
 }
