@@ -22,6 +22,39 @@
 		C4A9821E17F580650003EE20 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A981FD17F580640003EE20 /* UIKit.framework */; };
 		C4A9822617F580650003EE20 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4A9822417F580650003EE20 /* InfoPlist.strings */; };
 		C4A9822817F580650003EE20 /* LunchAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A9822717F580650003EE20 /* LunchAppTests.m */; };
+		C4A9825C17F583BB0003EE20 /* base.css in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823317F583BB0003EE20 /* base.css */; };
+		C4A9825D17F583BB0003EE20 /* base.less in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823417F583BB0003EE20 /* base.less */; };
+		C4A9825E17F583BB0003EE20 /* font-awesome.min.css in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823517F583BB0003EE20 /* font-awesome.min.css */; };
+		C4A9825F17F583BB0003EE20 /* fontawesome-webfont.eot in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823717F583BB0003EE20 /* fontawesome-webfont.eot */; };
+		C4A9826017F583BB0003EE20 /* fontawesome-webfont.svg in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823817F583BB0003EE20 /* fontawesome-webfont.svg */; };
+		C4A9826117F583BB0003EE20 /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823917F583BB0003EE20 /* fontawesome-webfont.ttf */; };
+		C4A9826217F583BB0003EE20 /* fontawesome-webfont.woff in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823A17F583BB0003EE20 /* fontawesome-webfont.woff */; };
+		C4A9826317F583BB0003EE20 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823B17F583BB0003EE20 /* FontAwesome.otf */; };
+		C4A9826417F583BB0003EE20 /* bg-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823D17F583BB0003EE20 /* bg-texture.png */; };
+		C4A9826517F583BB0003EE20 /* burger.png in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823E17F583BB0003EE20 /* burger.png */; };
+		C4A9826617F583BB0003EE20 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823F17F583BB0003EE20 /* index.html */; };
+		C4A9826717F583BB0003EE20 /* clicks.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824217F583BB0003EE20 /* clicks.js */; };
+		C4A9826817F583BB0003EE20 /* createGroup.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824317F583BB0003EE20 /* createGroup.js */; };
+		C4A9826917F583BB0003EE20 /* groups.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824417F583BB0003EE20 /* groups.js */; };
+		C4A9826A17F583BB0003EE20 /* home.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824517F583BB0003EE20 /* home.js */; };
+		C4A9826B17F583BB0003EE20 /* signIn.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824617F583BB0003EE20 /* signIn.js */; };
+		C4A9826C17F583BB0003EE20 /* signUp.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824717F583BB0003EE20 /* signUp.js */; };
+		C4A9826D17F583BB0003EE20 /* userInfo.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824817F583BB0003EE20 /* userInfo.js */; };
+		C4A9826E17F583BB0003EE20 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824917F583BB0003EE20 /* main.js */; };
+		C4A9826F17F583BB0003EE20 /* auth.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824B17F583BB0003EE20 /* auth.js */; };
+		C4A9827017F583BB0003EE20 /* angular-animate.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824E17F583BB0003EE20 /* angular-animate.js */; };
+		C4A9827117F583BB0003EE20 /* angular-route.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824F17F583BB0003EE20 /* angular-route.js */; };
+		C4A9827217F583BB0003EE20 /* angular.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9825017F583BB0003EE20 /* angular.js */; };
+		C4A9827317F583BB0003EE20 /* clicks.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825217F583BB0003EE20 /* clicks.html */; };
+		C4A9827417F583BB0003EE20 /* createGroup.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825317F583BB0003EE20 /* createGroup.html */; };
+		C4A9827517F583BB0003EE20 /* groups.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825417F583BB0003EE20 /* groups.html */; };
+		C4A9827617F583BB0003EE20 /* home.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825517F583BB0003EE20 /* home.html */; };
+		C4A9827717F583BB0003EE20 /* signIn.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825617F583BB0003EE20 /* signIn.html */; };
+		C4A9827817F583BB0003EE20 /* signUp.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825717F583BB0003EE20 /* signUp.html */; };
+		C4A9827917F583BB0003EE20 /* start.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825817F583BB0003EE20 /* start.html */; };
+		C4A9827A17F583BB0003EE20 /* userInfo.css in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825917F583BB0003EE20 /* userInfo.css */; };
+		C4A9827B17F583BB0003EE20 /* userInfo.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825A17F583BB0003EE20 /* userInfo.html */; };
+		C4A9827C17F583BB0003EE20 /* webapp in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825B17F583BB0003EE20 /* webapp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +88,39 @@
 		C4A9822317F580650003EE20 /* LunchAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LunchAppTests-Info.plist"; sourceTree = "<group>"; };
 		C4A9822517F580650003EE20 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C4A9822717F580650003EE20 /* LunchAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunchAppTests.m; sourceTree = "<group>"; };
+		C4A9823317F583BB0003EE20 /* base.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = base.css; sourceTree = "<group>"; };
+		C4A9823417F583BB0003EE20 /* base.less */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = base.less; sourceTree = "<group>"; };
+		C4A9823517F583BB0003EE20 /* font-awesome.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "font-awesome.min.css"; sourceTree = "<group>"; };
+		C4A9823717F583BB0003EE20 /* fontawesome-webfont.eot */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.eot"; sourceTree = "<group>"; };
+		C4A9823817F583BB0003EE20 /* fontawesome-webfont.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "fontawesome-webfont.svg"; sourceTree = "<group>"; };
+		C4A9823917F583BB0003EE20 /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
+		C4A9823A17F583BB0003EE20 /* fontawesome-webfont.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.woff"; sourceTree = "<group>"; };
+		C4A9823B17F583BB0003EE20 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
+		C4A9823D17F583BB0003EE20 /* bg-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-texture.png"; sourceTree = "<group>"; };
+		C4A9823E17F583BB0003EE20 /* burger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burger.png; sourceTree = "<group>"; };
+		C4A9823F17F583BB0003EE20 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		C4A9824217F583BB0003EE20 /* clicks.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = clicks.js; sourceTree = "<group>"; };
+		C4A9824317F583BB0003EE20 /* createGroup.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = createGroup.js; sourceTree = "<group>"; };
+		C4A9824417F583BB0003EE20 /* groups.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = groups.js; sourceTree = "<group>"; };
+		C4A9824517F583BB0003EE20 /* home.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = home.js; sourceTree = "<group>"; };
+		C4A9824617F583BB0003EE20 /* signIn.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = signIn.js; sourceTree = "<group>"; };
+		C4A9824717F583BB0003EE20 /* signUp.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = signUp.js; sourceTree = "<group>"; };
+		C4A9824817F583BB0003EE20 /* userInfo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userInfo.js; sourceTree = "<group>"; };
+		C4A9824917F583BB0003EE20 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
+		C4A9824B17F583BB0003EE20 /* auth.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = auth.js; sourceTree = "<group>"; };
+		C4A9824E17F583BB0003EE20 /* angular-animate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "angular-animate.js"; sourceTree = "<group>"; };
+		C4A9824F17F583BB0003EE20 /* angular-route.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "angular-route.js"; sourceTree = "<group>"; };
+		C4A9825017F583BB0003EE20 /* angular.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = angular.js; sourceTree = "<group>"; };
+		C4A9825217F583BB0003EE20 /* clicks.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = clicks.html; sourceTree = "<group>"; };
+		C4A9825317F583BB0003EE20 /* createGroup.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = createGroup.html; sourceTree = "<group>"; };
+		C4A9825417F583BB0003EE20 /* groups.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = groups.html; sourceTree = "<group>"; };
+		C4A9825517F583BB0003EE20 /* home.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = home.html; sourceTree = "<group>"; };
+		C4A9825617F583BB0003EE20 /* signIn.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = signIn.html; sourceTree = "<group>"; };
+		C4A9825717F583BB0003EE20 /* signUp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = signUp.html; sourceTree = "<group>"; };
+		C4A9825817F583BB0003EE20 /* start.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = start.html; sourceTree = "<group>"; };
+		C4A9825917F583BB0003EE20 /* userInfo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = userInfo.css; sourceTree = "<group>"; };
+		C4A9825A17F583BB0003EE20 /* userInfo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = userInfo.html; sourceTree = "<group>"; };
+		C4A9825B17F583BB0003EE20 /* webapp */ = {isa = PBXFileReference; lastKnownFileType = file; path = webapp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +195,7 @@
 		C4A9820017F580640003EE20 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C4A9823117F583BB0003EE20 /* web-app */,
 				C4A9820117F580640003EE20 /* LunchApp-Info.plist */,
 				C4A9820217F580640003EE20 /* InfoPlist.strings */,
 				C4A9820517F580640003EE20 /* main.m */,
@@ -153,6 +220,119 @@
 				C4A9822417F580650003EE20 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C4A9823117F583BB0003EE20 /* web-app */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9823217F583BB0003EE20 /* css */,
+				C4A9823617F583BB0003EE20 /* font */,
+				C4A9823C17F583BB0003EE20 /* img */,
+				C4A9823F17F583BB0003EE20 /* index.html */,
+				C4A9824017F583BB0003EE20 /* js */,
+				C4A9824C17F583BB0003EE20 /* lib */,
+				C4A9825117F583BB0003EE20 /* partials */,
+				C4A9825B17F583BB0003EE20 /* webapp */,
+			);
+			name = "web-app";
+			path = "../../../web-app";
+			sourceTree = "<group>";
+		};
+		C4A9823217F583BB0003EE20 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9823317F583BB0003EE20 /* base.css */,
+				C4A9823417F583BB0003EE20 /* base.less */,
+				C4A9823517F583BB0003EE20 /* font-awesome.min.css */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		C4A9823617F583BB0003EE20 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9823717F583BB0003EE20 /* fontawesome-webfont.eot */,
+				C4A9823817F583BB0003EE20 /* fontawesome-webfont.svg */,
+				C4A9823917F583BB0003EE20 /* fontawesome-webfont.ttf */,
+				C4A9823A17F583BB0003EE20 /* fontawesome-webfont.woff */,
+				C4A9823B17F583BB0003EE20 /* FontAwesome.otf */,
+			);
+			path = font;
+			sourceTree = "<group>";
+		};
+		C4A9823C17F583BB0003EE20 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9823D17F583BB0003EE20 /* bg-texture.png */,
+				C4A9823E17F583BB0003EE20 /* burger.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
+		C4A9824017F583BB0003EE20 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9824117F583BB0003EE20 /* controllers */,
+				C4A9824917F583BB0003EE20 /* main.js */,
+				C4A9824A17F583BB0003EE20 /* services */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+		C4A9824117F583BB0003EE20 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9824217F583BB0003EE20 /* clicks.js */,
+				C4A9824317F583BB0003EE20 /* createGroup.js */,
+				C4A9824417F583BB0003EE20 /* groups.js */,
+				C4A9824517F583BB0003EE20 /* home.js */,
+				C4A9824617F583BB0003EE20 /* signIn.js */,
+				C4A9824717F583BB0003EE20 /* signUp.js */,
+				C4A9824817F583BB0003EE20 /* userInfo.js */,
+			);
+			path = controllers;
+			sourceTree = "<group>";
+		};
+		C4A9824A17F583BB0003EE20 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9824B17F583BB0003EE20 /* auth.js */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
+		C4A9824C17F583BB0003EE20 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9824D17F583BB0003EE20 /* angular */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		C4A9824D17F583BB0003EE20 /* angular */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9824E17F583BB0003EE20 /* angular-animate.js */,
+				C4A9824F17F583BB0003EE20 /* angular-route.js */,
+				C4A9825017F583BB0003EE20 /* angular.js */,
+			);
+			path = angular;
+			sourceTree = "<group>";
+		};
+		C4A9825117F583BB0003EE20 /* partials */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9825217F583BB0003EE20 /* clicks.html */,
+				C4A9825317F583BB0003EE20 /* createGroup.html */,
+				C4A9825417F583BB0003EE20 /* groups.html */,
+				C4A9825517F583BB0003EE20 /* home.html */,
+				C4A9825617F583BB0003EE20 /* signIn.html */,
+				C4A9825717F583BB0003EE20 /* signUp.html */,
+				C4A9825817F583BB0003EE20 /* start.html */,
+				C4A9825917F583BB0003EE20 /* userInfo.css */,
+				C4A9825A17F583BB0003EE20 /* userInfo.html */,
+			);
+			path = partials;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,10 +411,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A9826617F583BB0003EE20 /* index.html in Resources */,
+				C4A9826217F583BB0003EE20 /* fontawesome-webfont.woff in Resources */,
+				C4A9826017F583BB0003EE20 /* fontawesome-webfont.svg in Resources */,
+				C4A9827B17F583BB0003EE20 /* userInfo.html in Resources */,
+				C4A9827A17F583BB0003EE20 /* userInfo.css in Resources */,
+				C4A9827C17F583BB0003EE20 /* webapp in Resources */,
+				C4A9826317F583BB0003EE20 /* FontAwesome.otf in Resources */,
 				C4A9821017F580640003EE20 /* Main_iPad.storyboard in Resources */,
+				C4A9825C17F583BB0003EE20 /* base.css in Resources */,
+				C4A9827717F583BB0003EE20 /* signIn.html in Resources */,
+				C4A9827817F583BB0003EE20 /* signUp.html in Resources */,
 				C4A9821517F580640003EE20 /* Images.xcassets in Resources */,
+				C4A9827917F583BB0003EE20 /* start.html in Resources */,
+				C4A9827317F583BB0003EE20 /* clicks.html in Resources */,
+				C4A9825E17F583BB0003EE20 /* font-awesome.min.css in Resources */,
+				C4A9827417F583BB0003EE20 /* createGroup.html in Resources */,
+				C4A9827517F583BB0003EE20 /* groups.html in Resources */,
+				C4A9825D17F583BB0003EE20 /* base.less in Resources */,
 				C4A9820D17F580640003EE20 /* Main_iPhone.storyboard in Resources */,
+				C4A9826117F583BB0003EE20 /* fontawesome-webfont.ttf in Resources */,
+				C4A9826517F583BB0003EE20 /* burger.png in Resources */,
 				C4A9820417F580640003EE20 /* InfoPlist.strings in Resources */,
+				C4A9827617F583BB0003EE20 /* home.html in Resources */,
+				C4A9825F17F583BB0003EE20 /* fontawesome-webfont.eot in Resources */,
+				C4A9826417F583BB0003EE20 /* bg-texture.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,9 +454,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A9826F17F583BB0003EE20 /* auth.js in Sources */,
+				C4A9826917F583BB0003EE20 /* groups.js in Sources */,
+				C4A9826C17F583BB0003EE20 /* signUp.js in Sources */,
+				C4A9827017F583BB0003EE20 /* angular-animate.js in Sources */,
+				C4A9826E17F583BB0003EE20 /* main.js in Sources */,
 				C4A9821317F580640003EE20 /* ViewController.m in Sources */,
+				C4A9826717F583BB0003EE20 /* clicks.js in Sources */,
+				C4A9827217F583BB0003EE20 /* angular.js in Sources */,
+				C4A9826817F583BB0003EE20 /* createGroup.js in Sources */,
+				C4A9826B17F583BB0003EE20 /* signIn.js in Sources */,
 				C4A9820A17F580640003EE20 /* AppDelegate.m in Sources */,
+				C4A9826A17F583BB0003EE20 /* home.js in Sources */,
 				C4A9820617F580640003EE20 /* main.m in Sources */,
+				C4A9826D17F583BB0003EE20 /* userInfo.js in Sources */,
+				C4A9827117F583BB0003EE20 /* angular-route.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,10 +605,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LunchApp/LunchApp-Prefix.pch";
 				INFOPLIST_FILE = "LunchApp/LunchApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -405,10 +621,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LunchApp/LunchApp-Prefix.pch";
 				INFOPLIST_FILE = "LunchApp/LunchApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
