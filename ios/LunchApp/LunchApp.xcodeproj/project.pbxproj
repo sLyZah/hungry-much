@@ -33,18 +33,6 @@
 		C4A9826417F583BB0003EE20 /* bg-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823D17F583BB0003EE20 /* bg-texture.png */; };
 		C4A9826517F583BB0003EE20 /* burger.png in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823E17F583BB0003EE20 /* burger.png */; };
 		C4A9826617F583BB0003EE20 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9823F17F583BB0003EE20 /* index.html */; };
-		C4A9826717F583BB0003EE20 /* clicks.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824217F583BB0003EE20 /* clicks.js */; };
-		C4A9826817F583BB0003EE20 /* createGroup.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824317F583BB0003EE20 /* createGroup.js */; };
-		C4A9826917F583BB0003EE20 /* groups.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824417F583BB0003EE20 /* groups.js */; };
-		C4A9826A17F583BB0003EE20 /* home.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824517F583BB0003EE20 /* home.js */; };
-		C4A9826B17F583BB0003EE20 /* signIn.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824617F583BB0003EE20 /* signIn.js */; };
-		C4A9826C17F583BB0003EE20 /* signUp.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824717F583BB0003EE20 /* signUp.js */; };
-		C4A9826D17F583BB0003EE20 /* userInfo.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824817F583BB0003EE20 /* userInfo.js */; };
-		C4A9826E17F583BB0003EE20 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824917F583BB0003EE20 /* main.js */; };
-		C4A9826F17F583BB0003EE20 /* auth.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824B17F583BB0003EE20 /* auth.js */; };
-		C4A9827017F583BB0003EE20 /* angular-animate.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824E17F583BB0003EE20 /* angular-animate.js */; };
-		C4A9827117F583BB0003EE20 /* angular-route.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9824F17F583BB0003EE20 /* angular-route.js */; };
-		C4A9827217F583BB0003EE20 /* angular.js in Sources */ = {isa = PBXBuildFile; fileRef = C4A9825017F583BB0003EE20 /* angular.js */; };
 		C4A9827317F583BB0003EE20 /* clicks.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825217F583BB0003EE20 /* clicks.html */; };
 		C4A9827417F583BB0003EE20 /* createGroup.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825317F583BB0003EE20 /* createGroup.html */; };
 		C4A9827517F583BB0003EE20 /* groups.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825417F583BB0003EE20 /* groups.html */; };
@@ -54,7 +42,20 @@
 		C4A9827917F583BB0003EE20 /* start.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825817F583BB0003EE20 /* start.html */; };
 		C4A9827A17F583BB0003EE20 /* userInfo.css in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825917F583BB0003EE20 /* userInfo.css */; };
 		C4A9827B17F583BB0003EE20 /* userInfo.html in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825A17F583BB0003EE20 /* userInfo.html */; };
-		C4A9827C17F583BB0003EE20 /* webapp in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825B17F583BB0003EE20 /* webapp */; };
+		C4A9827D17F584400003EE20 /* clicks.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824217F583BB0003EE20 /* clicks.js */; };
+		C4A9827E17F584400003EE20 /* createGroup.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824317F583BB0003EE20 /* createGroup.js */; };
+		C4A9827F17F584400003EE20 /* groups.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824417F583BB0003EE20 /* groups.js */; };
+		C4A9828017F584400003EE20 /* home.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824517F583BB0003EE20 /* home.js */; };
+		C4A9828117F584400003EE20 /* signIn.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824617F583BB0003EE20 /* signIn.js */; };
+		C4A9828217F584400003EE20 /* signUp.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824717F583BB0003EE20 /* signUp.js */; };
+		C4A9828317F584400003EE20 /* userInfo.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824817F583BB0003EE20 /* userInfo.js */; };
+		C4A9828417F584400003EE20 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824917F583BB0003EE20 /* main.js */; };
+		C4A9828517F584400003EE20 /* auth.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824B17F583BB0003EE20 /* auth.js */; };
+		C4A9828617F584400003EE20 /* angular-animate.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824E17F583BB0003EE20 /* angular-animate.js */; };
+		C4A9828717F584400003EE20 /* angular-route.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9824F17F583BB0003EE20 /* angular-route.js */; };
+		C4A9828817F584400003EE20 /* angular.js in Resources */ = {isa = PBXBuildFile; fileRef = C4A9825017F583BB0003EE20 /* angular.js */; };
+		C4A9828C17F585C40003EE20 /* AppCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A9828A17F585C40003EE20 /* AppCache.m */; };
+		C4A9829617F586800003EE20 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A9829517F586800003EE20 /* libGoogleAnalytics_debug.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,7 +121,15 @@
 		C4A9825817F583BB0003EE20 /* start.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = start.html; sourceTree = "<group>"; };
 		C4A9825917F583BB0003EE20 /* userInfo.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = userInfo.css; sourceTree = "<group>"; };
 		C4A9825A17F583BB0003EE20 /* userInfo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = userInfo.html; sourceTree = "<group>"; };
-		C4A9825B17F583BB0003EE20 /* webapp */ = {isa = PBXFileReference; lastKnownFileType = file; path = webapp; sourceTree = "<group>"; };
+		C4A9828A17F585C40003EE20 /* AppCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCache.m; sourceTree = "<group>"; };
+		C4A9828B17F585C40003EE20 /* AppCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCache.h; sourceTree = "<group>"; };
+		C4A9828F17F586800003EE20 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = GAI/GAI.h; sourceTree = "<group>"; };
+		C4A9829017F586800003EE20 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIDictionaryBuilder.h; path = GAI/GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		C4A9829117F586800003EE20 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAIFields.h; path = GAI/GAIFields.h; sourceTree = "<group>"; };
+		C4A9829217F586800003EE20 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAILogger.h; path = GAI/GAILogger.h; sourceTree = "<group>"; };
+		C4A9829317F586800003EE20 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = GAI/GAITrackedViewController.h; sourceTree = "<group>"; };
+		C4A9829417F586800003EE20 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = GAI/GAITracker.h; sourceTree = "<group>"; };
+		C4A9829517F586800003EE20 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics_debug.a; path = GAI/libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +140,7 @@
 				C4A981FC17F580640003EE20 /* CoreGraphics.framework in Frameworks */,
 				C4A981FE17F580640003EE20 /* UIKit.framework in Frameworks */,
 				C4A981FA17F580640003EE20 /* Foundation.framework in Frameworks */,
+				C4A9829617F586800003EE20 /* libGoogleAnalytics_debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +190,7 @@
 		C4A981FF17F580640003EE20 /* LunchApp */ = {
 			isa = PBXGroup;
 			children = (
+				C4A9828917F585850003EE20 /* lib */,
 				C4A9820817F580640003EE20 /* AppDelegate.h */,
 				C4A9820917F580640003EE20 /* AppDelegate.m */,
 				C4A9820B17F580640003EE20 /* Main_iPhone.storyboard */,
@@ -232,7 +243,6 @@
 				C4A9824017F583BB0003EE20 /* js */,
 				C4A9824C17F583BB0003EE20 /* lib */,
 				C4A9825117F583BB0003EE20 /* partials */,
-				C4A9825B17F583BB0003EE20 /* webapp */,
 			);
 			name = "web-app";
 			path = "../../../web-app";
@@ -335,6 +345,38 @@
 			path = partials;
 			sourceTree = "<group>";
 		};
+		C4A9828917F585850003EE20 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9828E17F586650003EE20 /* InAppCache */,
+				C4A9828D17F586610003EE20 /* GAI */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		C4A9828D17F586610003EE20 /* GAI */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9828F17F586800003EE20 /* GAI.h */,
+				C4A9829017F586800003EE20 /* GAIDictionaryBuilder.h */,
+				C4A9829117F586800003EE20 /* GAIFields.h */,
+				C4A9829217F586800003EE20 /* GAILogger.h */,
+				C4A9829317F586800003EE20 /* GAITrackedViewController.h */,
+				C4A9829417F586800003EE20 /* GAITracker.h */,
+				C4A9829517F586800003EE20 /* libGoogleAnalytics_debug.a */,
+			);
+			name = GAI;
+			sourceTree = "<group>";
+		};
+		C4A9828E17F586650003EE20 /* InAppCache */ = {
+			isa = PBXGroup;
+			children = (
+				C4A9828A17F585C40003EE20 /* AppCache.m */,
+				C4A9828B17F585C40003EE20 /* AppCache.h */,
+			);
+			name = InAppCache;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -411,12 +453,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A9827D17F584400003EE20 /* clicks.js in Resources */,
+				C4A9827E17F584400003EE20 /* createGroup.js in Resources */,
+				C4A9827F17F584400003EE20 /* groups.js in Resources */,
+				C4A9828017F584400003EE20 /* home.js in Resources */,
+				C4A9828117F584400003EE20 /* signIn.js in Resources */,
+				C4A9828217F584400003EE20 /* signUp.js in Resources */,
+				C4A9828317F584400003EE20 /* userInfo.js in Resources */,
+				C4A9828417F584400003EE20 /* main.js in Resources */,
+				C4A9828517F584400003EE20 /* auth.js in Resources */,
+				C4A9828617F584400003EE20 /* angular-animate.js in Resources */,
+				C4A9828717F584400003EE20 /* angular-route.js in Resources */,
+				C4A9828817F584400003EE20 /* angular.js in Resources */,
 				C4A9826617F583BB0003EE20 /* index.html in Resources */,
 				C4A9826217F583BB0003EE20 /* fontawesome-webfont.woff in Resources */,
 				C4A9826017F583BB0003EE20 /* fontawesome-webfont.svg in Resources */,
 				C4A9827B17F583BB0003EE20 /* userInfo.html in Resources */,
 				C4A9827A17F583BB0003EE20 /* userInfo.css in Resources */,
-				C4A9827C17F583BB0003EE20 /* webapp in Resources */,
 				C4A9826317F583BB0003EE20 /* FontAwesome.otf in Resources */,
 				C4A9821017F580640003EE20 /* Main_iPad.storyboard in Resources */,
 				C4A9825C17F583BB0003EE20 /* base.css in Resources */,
@@ -454,21 +507,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4A9826F17F583BB0003EE20 /* auth.js in Sources */,
-				C4A9826917F583BB0003EE20 /* groups.js in Sources */,
-				C4A9826C17F583BB0003EE20 /* signUp.js in Sources */,
-				C4A9827017F583BB0003EE20 /* angular-animate.js in Sources */,
-				C4A9826E17F583BB0003EE20 /* main.js in Sources */,
 				C4A9821317F580640003EE20 /* ViewController.m in Sources */,
-				C4A9826717F583BB0003EE20 /* clicks.js in Sources */,
-				C4A9827217F583BB0003EE20 /* angular.js in Sources */,
-				C4A9826817F583BB0003EE20 /* createGroup.js in Sources */,
-				C4A9826B17F583BB0003EE20 /* signIn.js in Sources */,
 				C4A9820A17F580640003EE20 /* AppDelegate.m in Sources */,
-				C4A9826A17F583BB0003EE20 /* home.js in Sources */,
+				C4A9828C17F585C40003EE20 /* AppCache.m in Sources */,
 				C4A9820617F580640003EE20 /* main.m in Sources */,
-				C4A9826D17F583BB0003EE20 /* userInfo.js in Sources */,
-				C4A9827117F583BB0003EE20 /* angular-route.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +652,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LunchApp/LunchApp-Prefix.pch";
 				INFOPLIST_FILE = "LunchApp/LunchApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/olivierkaisin/Webroot/LunchAppAPI/ios/LunchApp/LunchApp/GAI,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -626,6 +672,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LunchApp/LunchApp-Prefix.pch";
 				INFOPLIST_FILE = "LunchApp/LunchApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/olivierkaisin/Webroot/LunchAppAPI/ios/LunchApp/LunchApp/GAI,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AppCache.h"
 
 @interface ViewController ()
 
@@ -17,7 +18,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    // Set-up in-app cache wrapper
+    [NSURLCache setSharedURLCache:[AppCache sharedAppCache]];
+    
+    // Load google
+    [self loadPage:@"index"];
+}
+
+- (void) loadPage:(NSString *) fileName
+{
+    // Resolve bundle path
+    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"html"];
+
+    // Read HTML contents
+    NSError *error;
+    NSString *html = [NSString stringWithContentsOfFile:path
+                                               encoding:NSUTF8StringEncoding
+                                                  error:&error];
+    
+    if (!error) {
+        // Load HTML into the webview
+        [self.webview loadHTMLString:html
+                             baseURL:[NSURL URLWithString:@"http://lunchapp.loc"]];
+    }
+    else {
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning
