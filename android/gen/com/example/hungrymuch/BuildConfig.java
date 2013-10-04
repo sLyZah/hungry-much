@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.example.myfirstapp;
+package com.example.hungrymuch;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;
